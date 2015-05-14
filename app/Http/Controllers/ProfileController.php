@@ -32,8 +32,6 @@ class ProfileController extends Controller {
 	 */
 	public function show()
 	{
-		//var_dump(Auth::user());
-		
         return view('profile');
 	}
 

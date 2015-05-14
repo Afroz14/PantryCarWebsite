@@ -31,8 +31,6 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		//Mailer::sendSuccessfullSignupMail(array());
-        //return view('emails.welcome-email');
         return view('home');
 	}
 

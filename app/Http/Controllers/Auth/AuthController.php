@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use Auth;
 use Illuminate\Auth\GenericUser;
 use App\Config\Constants;
+use App\Http\Controllers\MailerController as Mailer;
 
 
 class AuthController extends Controller {
@@ -69,16 +70,18 @@ class AuthController extends Controller {
         ), 200);
     }
     else {
+      $verificationToken =  str_random(60);
       $userData = array(
                           'emailId'   => \Input::get('email'),
                           'loginPass' => \Input::get('password'),
                           'contactNo' => \Input::get('phone-number'),
                           'name'      => \Input::get('name'),
+                          'verificationToken' => $verificationToken
       );
-      
+     
        $registerController = new RegisterController;
        if ($registerController->store($userData)){
-        //Mailer::sendSuccessfullSignupMail($userData);
+        $email = Mailer::sendEmailVerificationMail($userData);
         return \Response::json(['success' => true], 200);
        }
       else
@@ -163,7 +166,7 @@ class AuthController extends Controller {
                   return array(true,"");
                }
                else{
-                   return array(false ,"error_message","Error while signup with you $provider account  .Please try again .");
+                   return array(false ,"error_message","Error while signup with you $provider account .Please try again .");
                }
             }
             else{
@@ -172,5 +175,22 @@ class AuthController extends Controller {
             }
             
         }
+  }
+
+  public function activateAccount($code){
+      
+      $userProvider = new CustomUserProvider();
+      if(!empty($code)){
+        if($userProvider->verifyUserAccount($code)){
+           return redirect('/')->with("success_message","Account Verified");
+        }
+        else{
+           return redirect('/')->with("error_message","Error while verifying your account");
+        }
+      }
+      else{
+        return redirect('/')->with("error_message","Link invalid");
+      }
+      
   }
 }

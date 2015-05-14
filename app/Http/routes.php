@@ -61,4 +61,8 @@ Route::get("/viewCart","CartController@show");
 
 Route::get('/getTrainSuggestion/{query}',"RailwaysApiController@getTrainSuggestion");
 
-
+Route::get('account/activate/{code}',array(
+			'as' => 'activate-account',
+			'uses' => 'Auth\AuthController@activateAccount'
+		)
+);

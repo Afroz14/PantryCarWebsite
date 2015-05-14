@@ -40,13 +40,9 @@ class CustomUserProvider implements UserProviderInterface {
     */
     public function retrieveByID($identifier)
     {
-        //echo "hahha";
-        //return new GenericUser(array("id" => "afroz.alam@zomato.com","name" => "Afroz","Phone" => "8293839"));
-        //var_dump($this->user);
         if(!is_null($this->user))
             return $this->user;
 
-        //echo "API Called..";
         $url       = API_ROUTE.USER_DETAIL_ROUTE.$identifier."/";
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -55,7 +51,7 @@ class CustomUserProvider implements UserProviderInterface {
         if(isset($response['status']) && $response['status'] === false){
             return null;
         }  
-        $userArray = array("id" => $response['emailId'],"name" => $response['name'],"contactNo" => "9911869145");
+        $userArray = array("id" => $response['emailId'],"name" => $response['name'],"contactNo" =>  $response['contactNo']);
         $userObject      = new GenericUser($userArray);
         if (is_null($this->user)) {
              \Session::set('user', serialize($userObject));
@@ -101,7 +97,7 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->post($url, json_encode($postParam));
         $response = (array)json_decode($response);
-        if(isset($response['status']) && $response['status'] == true)
+        if(isset($response['status']) && $response['status'] === true)
             return true;
 
         return false;
@@ -132,6 +128,24 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->put($url,json_encode(array("rememberToken" => $token))); 
+  }
+
+    /**
+    * Verificy user account based on the code passed.
+    *
+    * @param verfication_token
+    * @return bool
+    */
+
+   public function verifyUserAccount($code){
+        $url       = API_ROUTE.VERIFIY_ACCOUNT_ROUTE;
+        $this->curl->setOption(CURLOPT_HEADER, true);
+        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        $response = $this->curl->put($url,json_encode(array("verificationToken" => $code))); 
+        $response = (array)json_decode($response);
+        if(isset($response['status']) && $response['status'] === true && isset($response['verified']) && $response['verified'] === true)
+          return true;
+        return false;
   }
 
 }

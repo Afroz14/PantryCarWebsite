@@ -24,4 +24,6 @@ define("PNR_DETAIL_ROUTE","/railways/get_stations_from_pnr/");
 define("TRAIN_BETWEEN_LOCATION_ROUTE","/railways/get_trains_between_locations");
 
 define("STATION_BETWEEN_LOCATION_ROUTE","/railways/get_stations_between_locations");
+
+define("VERIFIY_ACCOUNT_ROUTE","/customers/set_customer_verified");
 ?>

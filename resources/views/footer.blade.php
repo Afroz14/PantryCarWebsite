@@ -1,5 +1,4 @@
-<div id="footer">
-  <div class="container">
+  <div class="col-md-12" id="footer" >
     <div class="bs-docs-section">
       <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-2"></div>
@@ -37,22 +36,20 @@
       </div>
       </div>  
    </div>  
- </div>  
+ 
 
      <!-- Scripts -->
     <script src="{{ asset('/js/jquery-2.1.3.min.js') }} "></script>
     <script src="{{ asset('/js/bootstrap.min.js') }} "></script>
-    <script>window.BASE_PATH = "http://localhost:8888/MAMP/pantrycar/public";</script>
+    <script>window.BASE_PATH = "<?php echo url() ;?>"; </script>
     <script src="{{ asset('/js/bootbox.min.js') }}"></script>
      <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-datepicker.min.js') }}" ></script>
     <script src="{{ asset('/js/main.js') }}" ></script>
     <script src="{{ asset('/js/nanobar.min.js') }}" ></script>
-   <!-- <script src="{{ asset('/js/horizontal.scroll.min.js') }}" ></script>-->
     <script src="{{ asset('/js/typehead.min.js') }}" ></script>
     <script src="{{ asset('/js/owl.carousel.min.js') }}" ></script>
    
-
 
      @if(Session::get('login') === 1)
       <script>
@@ -66,22 +63,24 @@
     @endif
    
     <script>
-      // Javascript to enable link to tab
-      var url = document.location.toString();
-      if (url.match('#')) {
-          $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
-      } 
 
-      // Change hash for page-reload
-      $('.nav-tabs a').on('shown', function (e) {
-          window.location.hash = e.target.hash;
-      })
 
       //running loader at the top
       var nanobar = new Nanobar({"bg":"#e76f62","id":"nano"});
       nanobar.go(100);
  // Let the DOM get ready
  $(document).ready(function(){
+      // Javascript to enable link to tab
+      var url = document.location.toString();
+      if (url.match('#')) {
+          $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show');
+      } 
+
+      // Change hash for page-reload
+      $('body').on('shown.bs.tab','.nav-tabs a', function (e) {
+          window.location.hash = e.target.hash;
+      });
+
 
         $('#station-select-wrap').owlCarousel({
           

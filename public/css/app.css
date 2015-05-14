@@ -1365,24 +1365,56 @@ pre code {
 .container {
   margin-right: auto;
   margin-left: auto;
-  padding-left: 15px;
   padding-right: 15px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 20px;
+  border: 1px solid #eee;
+  overflow: hidden;
 }
 @media (min-width: 768px) {
   .container {
-    width: 750px;
+    width: 650px;
   }
 }
 @media (min-width: 992px) {
   .container {
-    width: 970px;
+    width: 650px;
   }
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1170px;
+    width: 1200px;
   }
 }
+.home-box-container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 20px;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .home-box-container {
+    width: 650px;
+  }
+}
+@media (min-width: 992px) {
+  .home-box-container {
+    width: 650px;
+  }
+}
+@media (min-width: 1200px) {
+  .home-box-container {
+    width: 650;
+  }
+}
+
+
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
@@ -6231,16 +6263,30 @@ label,
 .checkbox label {
   font-weight: 300;
 }
-.form-signin-email-passwd,.form-signup-email-passwd{
+.form-signin-email-passwd,.form-signup-email-passwd,{
   width: 418px;
   position: relative;
   background: url(../img/or-seperator-vertical.png) no-repeat center right;
 }
 
+
 .separator-background{
   position: relative;
   background: url(../img/or-seperator-vertical.png) no-repeat center right;
 }
+
+.form-separator{
+  position: relative;
+  background: url(../img/or-seperator-vertical.png) no-repeat center right;
+}
+
+@media (max-width: 480px){
+
+  .form-separator{
+    /*border-bottom: 1px solid #eee;*/
+  }
+ } 
+
 
 .secondary{
   text-align: center;
@@ -6290,6 +6336,12 @@ label,
 }
 .pb20{
   padding-bottom: 20px
+}
+.pr20{
+  padding-right: 20px
+}
+.pr30{
+  padding-right: 30px
 }
 .pb30{
   padding-bottom: 30px
@@ -6351,12 +6403,13 @@ label,
 .station-select-header-wrap{
      height:40px;
   }
-@media (max-width: 480px){
 
+@media (max-width: 480px){
   .station-select-header-wrap{
     font-size: 11px;
   }
  } 
+
 .station-select-header{
      color: #34495e;
 }
@@ -6888,3 +6941,12 @@ a.pc-btn:hover{
   border-right:1px solid #157153;
 }
 
+.clear{
+  clear:both;
+}
+
+@media (min-width: 768px){
+.modal-dialog {
+  width:800px !important;
+ }
+}
