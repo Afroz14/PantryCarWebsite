@@ -48,7 +48,6 @@
     <script src="{{ asset('/js/main.js') }}" ></script>
     <script src="{{ asset('/js/nanobar.min.js') }}" ></script>
     <script src="{{ asset('/js/typehead.min.js') }}" ></script>
-    <script src="{{ asset('/js/owl.carousel.min.js') }}" ></script>
    
 
      @if(Session::get('login') === 1)
@@ -79,28 +78,6 @@
       // Change hash for page-reload
       $('body').on('shown.bs.tab','.nav-tabs a', function (e) {
           window.location.hash = e.target.hash;
-      });
-
-
-        $('#station-select-wrap').owlCarousel({
-          
-          margin:10,
-          responsiveClass:true,
-          responsive:{
-              0:{
-                  items:1,
-                  nav:true
-              },
-              600:{
-                  items:3,
-                  nav:true
-              },
-              1000:{
-                  items:4,
-                  nav:true,
-                  loop:false
-              }
-          }
       });
 
         

@@ -58,7 +58,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" name="train_num" id="train_num" class="form-control input-class" required placeholder="Enter Train Name/Code (optional)">
+                                        <input type="text" name="train_num" id="train_num" class="form-control input-class"  placeholder="Enter Train Name/Code (optional)">
                                     </div>
 
                                     <div class="form-group">

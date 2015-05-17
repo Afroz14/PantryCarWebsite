@@ -8,7 +8,7 @@
   <link href="{{ asset('/css/owl.default.theme.min.css') }}" rel="stylesheet">
  <div class="full-width-container-other">
  	@if($train_list !== "")
- 	 <div class="col-lg-9 col-lg-offset-1">
+ 	 <div class="col-lg-10 col-lg-offset-1">
  	      <input type="hidden" name="_token" id="csrf_token" value="{{ csrf_token() }}">
  	      <div class="page-header head-common-color" ><h4>SELECT TRAIN</h4></div>
  	      <div class="station-select-header-wrap">
@@ -27,53 +27,24 @@
                   <?php $iterator++; ?>
  	      	  @endforeach	
  	      </div>
- 	    </div> 
- 	    <div class="col-lg-9 col-lg-offset-1" >
 		  <div id="station-select-wrap" class="station-select-wrap pagespan head-common-color" >
-            
-			<!--<button class="backward head-common-color"><i class="icon-angle-left"></i></button>
-			<button class="forward head-common-color"><i class="icon-angle-right"></i></button>-->
-
-			<!--<div class="frame" >
-				<div>-->
-					
+            					
 					@foreach($train_list as $train => $eachTrainDetail)
-	                  <div class="each-train-block">
-	                  	<input type="hidden" name="train_code" value = "{{ $train }}">
-	                  	<input type="hidden" name="source_station" value = "{{ $train_list_header['SRC_STATION'] }}">
-	                  	<input type="hidden" name="destination_station" value = "{{ $train_list_header['DESTINATION_STATION'] }}">
-	                  	<input type="hidden" name="doj" value = "{{ $train_list_header['DATE'] }}">
-	                  	<div class="uppercase pt10 pb10 pl10 textleft">{{ $train }}</div>
-	                  	<div class="uppercase pt10 pb30 pl10 textleft">{{ $eachTrainDetail['TRAIN_NAME'] }}</div>
-	                  	<?php $iterator = 0; ?>
-	                    @foreach($eachTrainDetail as $record)
-	                       @if($iterator > 0)
-	                         <div class="train-subdetails"> {{ $record }}</div>
-	                       @endif  
-	                       <?php $iterator++; ?>
-	                    @endforeach  
-	                    
+	                  <div class="each-train-wrap">
+                          	<div class="train-header">
+                          		{{ $eachTrainDetail['TRAIN_NAME'] }}
+                          	</div>
+				         	    <div class="each-train__inner-block no-border-left">{{ $eachTrainDetail['ARRIVAL_TIME_AT_SOURCE'] }}</div>
+				            	<div class="each-train__inner-block">{{ $eachTrainDetail['DEPARTURE_TIME_AT_SOURCE'] }}</div>
+				            	<div class="each-train__inner-block">{{ $eachTrainDetail['ARRIVAL_TIME_AT_DESTINATION'] }}</div>
+				            	<div class="each-train__inner-block">{{ $eachTrainDetail['DEPARTURE_TIME_AT_DESTINATION'] }}</div>
+				            	<div class="each-train__inner-block select-train-button">
+				            		 <a data-train-code = "{{ $train }}" data-source-station = "{{ $train_list_header['SRC_STATION'] }}" data-destination-station = "{{ $train_list_header['DESTINATION_STATION'] }}" data-doj ="{{ $train_list_header['DATE'] }}"  href="#" class="pc-btn">
+					                        GET MY FOOD
+					                  </a>
+					            </div>
 	                   </div> 
 	                @endforeach
-			<!--	</div>
-			</div>-->
-
-			<!--<div class="scrollbar">
-				<div class="handle">
-					<div class="mousearea"></div>
-				</div>
-			</div>
-
-			<div class="controls">
-				<button data-action="toStart"><i class="icon-double-angle-left"></i> Start</button>
-				<span class="divider"></span>
-				<button class="prev"><i class="icon-angle-left"></i> Prev</button>
-				<span class="divider"></span>
-				<button class="next">Next <i class="icon-angle-right"></i></button>
-				<span class="divider"></span>
-				<button data-action="toEnd">End <i class="icon-double-angle-right"></i></button>
-			</div>-->
-	   		
 		</div>
 	</div>
 		@else

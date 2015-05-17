@@ -136,11 +136,12 @@ Signup process
 Each station selection process
 -------------------------------------------------------
 */
-$('body').on('click','.each-station-block',function(event){
+$('body').on('click','.select-station-button a',function(event){
      event.preventDefault();
+     console.log($(this).data("station-code"));
      var $_token = $('input[name=_token]').val();
      var form  = $(document.createElement('form')).css({display:'none'}).attr("method","POST").attr("action",BASE_PATH + '/selectRestaurant');
-     var input = $(document.createElement('input')).attr('name','stationCodeSelected').val("100256");
+     var input = $(document.createElement('input')).attr('name','station_code').val($(this).data("station-code"));
      var tokenInput = $(document.createElement('input')).attr('name','_token').val($_token);
      form.append(input).append(tokenInput);
      $("body").append(form);
@@ -154,22 +155,22 @@ Each train selection process
 -------------------------------------------------------
 */
 
-$('body').on('click','.each-train-block',function(event){
+$('body').on('click','.select-train-button a',function(event){
      event.preventDefault();
      var $_token = $('input[name=_token]').val();
      var tokenInput = $(document.createElement('input')).attr('name','_token').val($_token);
      var form  = $(document.createElement('form')).css({display:'none'}).attr("method","POST").attr("action",BASE_PATH + '/selectStation');
-     form.append(input).append(tokenInput);
-     var input = $(document.createElement('input')).attr('name','train_num').val($(this).find("input[name='train_code']").val());
-     form.append(input).append(input);
-     var input = $(document.createElement('input')).attr('name','source_station').val($(this).find("input[name='source_station']").val());
-     form.append(input).append(input);
-     var input = $(document.createElement('input')).attr('name','destination_station').val($(this).find("input[name='destination_station']").val());
-     form.append(input).append(input);
-     var input = $(document.createElement('input')).attr('name','journey_date').val($(this).find("input[name='doj']").val());
-     form.append(input).append(input);
+     form.append(tokenInput);
+     var input = $(document.createElement('input')).attr('name','train_num').val($(this).data('train-code'));
+     form.append(input);
+     var input = $(document.createElement('input')).attr('name','source_station').val($(this).data("source-station"));
+     form.append(input);
+     var input = $(document.createElement('input')).attr('name','destination_station').val($(this).data("destination-station"));
+     form.append(input);
+     var input = $(document.createElement('input')).attr('name','journey_date').val($(this).data("doj"));
+     form.append(input);
      var input = $(document.createElement('input')).attr('name','search_type').val("train_search");
-     form.append(input).append(input);
+     form.append(input);
      $("body").append(form);
      form.submit();
 });

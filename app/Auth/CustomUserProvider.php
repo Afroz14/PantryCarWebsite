@@ -43,7 +43,7 @@ class CustomUserProvider implements UserProviderInterface {
         if(!is_null($this->user))
             return $this->user;
 
-        $url       = API_ROUTE.USER_DETAIL_ROUTE.$identifier."/";
+        $url       = API_HOST.USER_DETAIL_ROUTE.$identifier."/";
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->get($url); 
@@ -69,7 +69,7 @@ class CustomUserProvider implements UserProviderInterface {
     public function retrieveByCredentials(array $credentials)
     {
         $postParam = array("emailId" =>$credentials['email'],"loginPass" => $credentials['password']);
-        $url       = API_ROUTE.LOGIN_API_ROUTE;
+        $url       = API_HOST.LOGIN_API_ROUTE;
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json',"Accept: application/json"));
         $response = $this->curl->post($url, json_encode($postParam));
@@ -92,7 +92,7 @@ class CustomUserProvider implements UserProviderInterface {
     public function validateCredentials(\Illuminate\Contracts\Auth\Authenticatable $user, array $credentials)
     {
         $postParam = array("emailId" =>$credentials['email'],"loginPass" => $credentials['password']);
-        $url       = API_ROUTE.LOGIN_API_ROUTE;
+        $url       = API_HOST.LOGIN_API_ROUTE;
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->post($url, json_encode($postParam));
@@ -108,7 +108,7 @@ class CustomUserProvider implements UserProviderInterface {
    */
   public function retrieveByToken($identifier,$token)
   {
-        $url       = API_ROUTE.TOKEN_ROUTE;
+        $url       = API_HOST.TOKEN_ROUTE;
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->get($url,array("token" => $token));  
@@ -124,21 +124,21 @@ class CustomUserProvider implements UserProviderInterface {
    */
   public function updateRememberToken(\Illuminate\Contracts\Auth\Authenticatable $user, $token)
   {
-        $url       = API_ROUTE."/customers/".$user->id."/update_remember_token/";
+        $url       = API_HOST."/customers/".$user->id."/update_remember_token/";
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->put($url,json_encode(array("rememberToken" => $token))); 
   }
 
     /**
-    * Verificy user account based on the code passed.
+    * Verifiy user account based on the code passed.
     *
     * @param verfication_token
     * @return bool
     */
 
    public function verifyUserAccount($code){
-        $url       = API_ROUTE.VERIFIY_ACCOUNT_ROUTE;
+        $url       = API_HOST.VERIFIY_ACCOUNT_ROUTE;
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->put($url,json_encode(array("verificationToken" => $code))); 

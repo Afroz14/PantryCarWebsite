@@ -22,7 +22,7 @@ class StationController extends Controller {
 		if(isset($search_type)) {
             if($search_type == 'pnr_search'){
 			        $pnrNumber = \Input::get("pnr_number");
-				    $url       = API_ROUTE.PNR_DETAIL_ROUTE.$pnrNumber;
+				    $url       = API_HOST.PNR_DETAIL_ROUTE.$pnrNumber;
 			        $this->curl->setOption(CURLOPT_HEADER, true);
 			        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 			        $response = $this->curl->get($url); 
@@ -38,7 +38,7 @@ class StationController extends Controller {
         			}
         			else{
 		        		    $param     = array('src' => $srcStation,'dest' => $destStation,'date' => $journeyDate ,'train' => $trainNum) ; 
-						    $url       = API_ROUTE.STATION_BETWEEN_LOCATION_ROUTE;
+						    $url       = API_HOST.STATION_BETWEEN_LOCATION_ROUTE;
 					        $this->curl->setOption(CURLOPT_HEADER, true);
 					        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 					        $response = $this->curl->get($url,$param); 

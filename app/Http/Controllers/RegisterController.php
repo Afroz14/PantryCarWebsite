@@ -7,7 +7,7 @@ use Auth;
 
 class RegisterController extends Controller {
 
-    private $curl;
+  private $curl;
 
 	public function __construct()
 	{
@@ -16,7 +16,7 @@ class RegisterController extends Controller {
 
    public function store($data){
 
-        $url       = API_ROUTE.SIGNUP_API_ROUTE;
+        $url       = API_HOST.SIGNUP_API_ROUTE;
    	    $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->post($url, json_encode($data));

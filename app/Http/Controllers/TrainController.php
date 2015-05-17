@@ -27,7 +27,7 @@ class TrainController extends Controller {
         }
         else{
             $param     =  array('src' => $srcStation,'dest' => $destStation,'date' => $journeyDate ) ;   
-    	    $url       = API_ROUTE.TRAIN_BETWEEN_LOCATION_ROUTE;
+    	    $url       = API_HOST.TRAIN_BETWEEN_LOCATION_ROUTE;
             $this->curl->setOption(CURLOPT_HEADER, true);
             $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
             $response = $this->curl->get($url,$param); 
