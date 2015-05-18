@@ -6263,12 +6263,17 @@ label,
 .checkbox label {
   font-weight: 300;
 }
-.form-signin-email-passwd,.form-signup-email-passwd,{
+.form-signin-email-passwd,.form-signup-email-passwd{
   width: 418px;
   position: relative;
   background: url(../../img/or-seperator-vertical.png) no-repeat center right;
 }
 
+@media (min-width: 0px) and (max-width: 480px){
+  .form-signin-email-passwd,.form-signup-email-passwd{
+      width:300px
+  }
+ } 
 
 .separator-background{
   position: relative;

@@ -137,5 +137,7 @@ module.exports = function(grunt) {
     });
 
    grunt.registerTask('deploy', ['lock','shell:cleanBuilds','less','cssmin','uglify','shell:deployOnServer','shell:publishBuild','unlock']);
+   grunt.registerTask('localbuild', ['lock','shell:cleanBuilds','less','cssmin','uglify','unlock']);
+   grunt.registerTask('default' ,'localbuild');
 
 };
