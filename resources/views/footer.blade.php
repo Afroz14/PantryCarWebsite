@@ -27,7 +27,7 @@
               <div class="col-lg-3 col-md-3 col-sm-3"></div>
               <div class="footer col-lg-4 col-md-6 center">
                 <p class="grey" >
-                  &copy; 2015 PantryCar.co.in . All rights reserved
+                  &copy; 2015 pantrycar.co.in . All rights reserved
                 </p>
                   <img src="{{ asset('/img/cod.png') }}" class="img-responsive"><br>
               </div>
@@ -39,15 +39,8 @@
  
 
      <!-- Scripts -->
-    <script src="{{ asset('/js/jquery-2.1.3.min.js') }} "></script>
-    <script src="{{ asset('/js/bootstrap.min.js') }} "></script>
-    <script>window.BASE_PATH = "<?php echo url() ;?>"; </script>
-    <script src="{{ asset('/js/bootbox.min.js') }}"></script>
-     <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('/js/bootstrap-datepicker.min.js') }}" ></script>
-    <script src="{{ asset('/js/main.js') }}" ></script>
-    <script src="{{ asset('/js/nanobar.min.js') }}" ></script>
-    <script src="{{ asset('/js/typehead.min.js') }}" ></script>
+     <script src="{{ asset('/js/build/app.min.js') }} "></script>
+     <script>window.BASE_PATH = "<?php echo url() ;?>"; </script>
    
 
      @if(Session::get('login') === 1)
@@ -56,7 +49,7 @@
             bootbox.dialog({
             title: "Login",
             message: $('#loginform').html()
-          }).find("div.modal-dialog").css("width","800px");
+          });
       });
     </script>
     @endif

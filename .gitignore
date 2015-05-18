@@ -6,3 +6,5 @@
 composer.phar
 .DS_Store
 Thumbs.db
+/public/css/build
+/public/js/build
