@@ -102,7 +102,8 @@ module.exports = function(grunt) {
                     'sudo git stash',
                     'sudo git checkout master',
                     'sudo git pull origin master',
-                    'echo "Cleaning build directories ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildCssDir %>/*'
+                    'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildCssDir %>/*',
+                    'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildJsDir %>/*'
                 ].join(' && '),    
             options:{
                 config: 'prodServer'
@@ -135,6 +136,6 @@ module.exports = function(grunt) {
         grunt.file.delete('.lock');
     });
 
-   grunt.registerTask('deploy', ['lock','shell:cleanBuilds','less','cssmin','uglify','shell:publishBuild','unlock']);
+   grunt.registerTask('deploy', ['lock','shell:cleanBuilds','less','cssmin','uglify','shell:deployOnServer','shell:publishBuild','unlock']);
 
 };
