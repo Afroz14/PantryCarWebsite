@@ -6,44 +6,50 @@
 
 var Oven = Oven || {};
 
+
 //All server related configurations must be put here
 Oven.config = {
+
     cssDir: "public/css/less",
+    jsDir: "public/js",
     buildCssDir: "public/css/build",
     buildJsDir: "public/js/build",
-    privateKeyPath:"~/Downloads/main-website.pem", // gets change depending on the machine you are deploying
+    privateKeyPath:"/Users/afroz/Downloads/main-website.pem", // gets change depending on the machine you are deploying
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
-    HostName : '52.25.132.48',
-    userName :'ubuntu',
+    websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
+    websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
+    HostName : '52.25.218.204',
+    userName :'ubuntu'
 };
+
 
 
 module.exports = function(grunt) {
   require('jit-grunt')(grunt);
+  var _privateKey = grunt.file.exists(Oven.config.privateKeyPath) ? grunt.file.read(Oven.config.privateKeyPath) : '';
 
   // Load all modules here
-  grunt.loadNpmTasks('grunt-ssh');
-  grunt.loadNpmTasks('grunt-shell');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+   grunt.loadNpmTasks('grunt-ssh');
+   grunt.loadNpmTasks('grunt-shell');
+   grunt.loadNpmTasks('grunt-contrib-uglify');
+   grunt.loadNpmTasks('grunt-hashres');
   
 
-  grunt.initConfig({
+   grunt.initConfig({
 
     pkg: grunt.file.readJSON("package.json"),
     config: Oven.config,
 
     less: {
-      development: {
-        options: {
-          compress: true,
-          yuicompress: true,
-          optimization: 2
-        },
-        files: {
-          "<%= config.buildCssDir %>/app.css": "<%= config.cssDir %>/app.less" // destination file and source file
-        }
-      }
-    },
+            production: {
+                options: {
+                    cleancss: false
+                },
+                files: {
+                  '<%= config.buildCssDir %>/app.css' : '<%= config.cssDir %>/app.less',
+                }
+            }
+      },
 
     // Take the processed style.css file and minify
     cssmin: {
@@ -64,56 +70,117 @@ module.exports = function(grunt) {
         },
         build: {
             files: {
-                '<%= config.buildJsDir %>/app.min.js': ['public/js/jquery-2.1.3.min.js', 'public/js/bootstrap.min.js','public/js/bootbox.min.js','public/js/jquery-ui.min.js','public/js/bootstrap-datepicker.min.js','public/js/main.js','public/js/nanobar.min.js','public/js/typehead.min.js'],
+                '<%= config.buildJsDir %>/app.min.js': [ '<%= config.jsDir %>/jquery-2.1.3.min.js',
+                                                                                   '<%= config.jsDir %>/bootstrap.min.js',
+                                                                                   '<%= config.jsDir %>/bootbox.min.js',
+                                                                                   '<%= config.jsDir %>/jquery-ui.min.js',
+                                                                                   '<%= config.jsDir %>/bootstrap-datepicker.min.js',
+                                                                                   '<%= config.jsDir %>/main.js',
+                                                                                   '<%= config.jsDir %>/nanobar.min.js',
+                                                                                   '<%= config.jsDir %>/typehead.min.js'
+                                                                                    ],
             }
         }
-  },
+   },
 
-  sshconfig:{
-      prodServer: {
-          host: "<%= config.HostName %>",
-          username: "<%= config.userName %>",
-          agent: process.env.SSH_AUTH_SOCK
-    }
-  },
+
+   sshconfig:{
+       
+        prodServer: {
+            host: "<%= config.HostName %>",
+            username: "<%= config.userName %>",
+            privateKey: _privateKey,
+            agent: process.env.SSH_AUTH_SOCK
+      }
+
+    },
 
 
    shell: {
-       deployOnServer: {
-           command: ['eval `ssh-agent -s`', 'ssh-add <%= config.privateKeyPath %>', 'grunt sshexec:pullAndClean'].join(' && ')
-       },
-       cleanBuilds: {
+
+     cleanBuilds: {
                 command: [
                     'rm -rf <%= config.buildCssDir %>/*',
                     'rm -rf <%= config.buildJsDir %>/*'
                 ].join(' && ')
       },
-       publishBuild:{
-           command:['scp -i <%= config.privateKeyPath %> <%= config.buildCssDir %>/app.min.css <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServer %>/<%= config.buildCssDir %>',
-                    'scp -i <%= config.privateKeyPath %> <%= config.buildJsDir %>/app.min.js <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServer %>/<%= config.buildJsDir %>',
+      publishJsCssBuilds:{
+           command:['scp -i <%= config.privateKeyPath %> <%= config.buildCssDir %>/* <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServerTemp %>/<%= config.buildCssDir %>/',
+                    'scp -i <%= config.privateKeyPath %> <%= config.buildJsDir %>/* <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServerTemp %>/<%= config.buildJsDir %>/',
+                    'scp -i <%= config.privateKeyPath %> resources/views/footer.blade.php <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServerTemp %>resources/views/',
+                    'scp -i <%= config.privateKeyPath %> resources/views/meta.blade.php <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServerTemp %>resources/views/',
                   ].join(' && ')
-       }
+       },
+      pull:{
+        command:[
+                    'git stash',
+                    'git checkout master',
+                    'git pull origin master',
+          ].join(' && ')
+       },
+       readyToShip:{
+           command:[
+                'echo "--------------------------------------------------"',
+                'echo "--------------------------------------------------\n"',
+                'echo "             Ship it \\m\/"',
+                'echo "\n--------------------------------------------------"',
+                'echo "--------------------------------------------------"',
+            ].join(' && ')
+       },
    },
 
-  sshexec: {    
+   sshexec: {    
          pullAndClean: {
                 command: [
-                    'cd <%= config.websiteLocationOnServer %>',
+                    'sudo cp --preserve=mode,ownership,timestamps -r <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerTemp %>',
+                    'cd <%= config.websiteLocationOnServerTemp %>',
                     'sudo git stash',
                     'sudo git checkout master',
                     'sudo git pull origin master',
                     'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildCssDir %>/*',
-                    'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildJsDir %>/*'
+                    'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildJsDir %>/*',
+                    'sudo chmod -R 777 .'
                 ].join(' && '),    
             options:{
                 config: 'prodServer'
             }
           },
-     } ,      
+          makeBuildLive:{
+            command:[
+                'sudo mv <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerBackup %>',
+                'sudo mv <%= config.websiteLocationOnServerTemp %> <%= config.websiteLocationOnServer %>',
+                'sudo rm -rf <%= config.websiteLocationOnServerBackup %> || mv <%= config.websiteLocationOnServerBackup %> <%= config.websiteLocationOnServer %>'         
+            ].join(' && '),    
+            options:{
+                config: 'prodServer'
+            }
+          }
+     } , 
+
+     hashres: {
+        options: {
+            encoding: 'utf8',
+            fileNameFormat: '${name}.${hash}.${ext}',
+            renameFiles: true
+        },
+
+        stage: {
+            
+            options: {
+                // You can override encoding, fileNameFormat or renameFiles
+            },
+            
+            src: [
+                 '<%= config.buildCssDir %>/app.min.css' ,
+                 '<%= config.buildJsDir %>/app.min.js'
+            ],
+            dest: ['resources/views/footer.blade.php','resources/views/meta.blade.php']
+        }
+   },     
 
     watch: {
       styles: {
-        files: ['<%= pkg.cssdir %>**/*.less'], // which files to watch
+        files: ['<%= config.cssDir %>**/*.less'], // which files to watch
         tasks: ['less'],
         options: {
           nospawn: true
@@ -136,8 +203,10 @@ module.exports = function(grunt) {
         grunt.file.delete('.lock');
     });
 
-   grunt.registerTask('deploy', ['lock','shell:cleanBuilds','less','cssmin','uglify','shell:deployOnServer','shell:publishBuild','unlock']);
-   grunt.registerTask('localbuild', ['lock','shell:cleanBuilds','less','cssmin','uglify','unlock']);
-   grunt.registerTask('default' ,'localbuild');
+
+
+    grunt.registerTask('default' ,'localbuild');
+    grunt.registerTask('localbuild', ['lock','shell:cleanBuilds','less:production','cssmin','uglify','hashres','shell:readyToShip','unlock']);
+    grunt.registerTask('deploy' ,['lock','sshexec:pullAndClean','shell:publishJsCssBuilds','sshexec:makeBuildLive','unlock']);
 
 };
