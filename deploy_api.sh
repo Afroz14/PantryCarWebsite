@@ -16,9 +16,10 @@ WAR_LOCATION='/Users/afroz/Downloads/pantry_car.war'
 if [[ $1 == 'revert' ]] 
 then
 	echo "Reverting ...\n"
-	ssh -i $PRIVATE_KEY_PATH ubuntu@$SERVER_NAME 'cp /var/local/apache-tomcat-8.0.22/webapps/pantry_car.war /var/local/apache-tomcat-8.0.22/webapps/pantry_car_backup.war'
+	ssh -i $PRIVATE_KEY_PATH ubuntu@$SERVER_NAME 'cp /var/local/apache-tomcat-8.0.22/webapps/pantry_car_backup.war /var/local/apache-tomcat-8.0.22/webapps/pantry_car.war'
 else 
 	echo "Deploying .. \n"
+	ssh -i $PRIVATE_KEY_PATH ubuntu@$SERVER_NAME 'cp /var/local/apache-tomcat-8.0.22/webapps/pantry_car.war /var/local/apache-tomcat-8.0.22/webapps/pantry_car_backup.war'
 	scp -i $PRIVATE_KEY_PATH $WAR_LOCATION ubuntu@$SERVER_NAME:/var/local/apache-tomcat-8.0.22/webapps/
    
 fi	
