@@ -3,6 +3,7 @@
   Bootbox popup
 -------------------------------------------------------
 */
+alert("test");
 $('.pc_login').click(function(){
 		bootbox.dialog({
 		  title: "Login",
