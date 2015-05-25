@@ -25,7 +25,7 @@ Oven.config = {
 
 
 module.exports = function(grunt) {
-  require('jit-grunt')(grunt);
+  //require('jit-grunt')(grunt);
   var _privateKey = grunt.file.exists(Oven.config.privateKeyPath) ? grunt.file.read(Oven.config.privateKeyPath) : '';
 
   // Load all modules here
@@ -104,13 +104,6 @@ module.exports = function(grunt) {
                     'rm -rf <%= config.buildJsDir %>/*'
                 ].join(' && ')
       },
-      publishJsCssBuilds:{
-           command:['scp -i <%= config.privateKeyPath %> <%= config.buildCssDir %>/* <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServerTemp %>/<%= config.buildCssDir %>/',
-                    'scp -i <%= config.privateKeyPath %> <%= config.buildJsDir %>/* <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServerTemp %>/<%= config.buildJsDir %>/',
-                    'scp -i <%= config.privateKeyPath %> resources/views/footer.blade.php <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServerTemp %>resources/views/',
-                    'scp -i <%= config.privateKeyPath %> resources/views/meta.blade.php <%= config.userName %>@<%= config.HostName %>:<%= config.websiteLocationOnServerTemp %>resources/views/',
-                  ].join(' && ')
-       },
       pull:{
         command:[
                     'git stash',
@@ -127,34 +120,32 @@ module.exports = function(grunt) {
                 'echo "--------------------------------------------------"',
             ].join(' && ')
        },
+       makeBuildLive:{
+            command:[
+                'sudo mv <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerBackup %>',
+                'sudo mv <%= config.websiteLocationOnServerTemp %> <%= config.websiteLocationOnServer %>',
+                'sudo rm -rf <%= config.websiteLocationOnServerBackup %> || mv <%= config.websiteLocationOnServerBackup %> <%= config.websiteLocationOnServer %>'         
+            ].join(' && ')
+         }   
    },
 
    sshexec: {    
-         pullAndClean: {
+         deploy: {
                 command: [
                     'sudo cp --preserve=mode,ownership,timestamps -r <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerTemp %>',
+                    'sudo chmod -R 777 <%= config.websiteLocationOnServerTemp %>',
                     'cd <%= config.websiteLocationOnServerTemp %>',
                     'sudo git stash',
                     'sudo git checkout master',
                     'sudo git pull origin master',
                     'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildCssDir %>/*',
                     'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildJsDir %>/*',
-                    'sudo chmod -R 777 .'
+                    'grunt build'
                 ].join(' && '),    
             options:{
                 config: 'prodServer'
             }
           },
-          makeBuildLive:{
-            command:[
-                'sudo mv <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerBackup %>',
-                'sudo mv <%= config.websiteLocationOnServerTemp %> <%= config.websiteLocationOnServer %>',
-                'sudo rm -rf <%= config.websiteLocationOnServerBackup %> || mv <%= config.websiteLocationOnServerBackup %> <%= config.websiteLocationOnServer %>'         
-            ].join(' && '),    
-            options:{
-                config: 'prodServer'
-            }
-          }
      } , 
 
      hashres: {
@@ -205,8 +196,9 @@ module.exports = function(grunt) {
 
 
 
-    grunt.registerTask('default' ,'localbuild');
-    grunt.registerTask('localbuild', ['lock','shell:cleanBuilds','less:production','cssmin','uglify','hashres','shell:readyToShip','unlock']);
-    grunt.registerTask('deploy' ,['lock','sshexec:pullAndClean','shell:publishJsCssBuilds','sshexec:makeBuildLive','unlock']);
+    grunt.registerTask('default' ,'build');
+    grunt.registerTask('deploy',['lock','sshexec:deploy','unlock'])
+    grunt.registerTask('build', ['lock','shell:cleanBuilds','less:production','cssmin','uglify','hashres','shell:readyToShip','unlock']);
+    grunt.registerTask('shipit',['lock','shell:makeBuildLive','unlock'])
 
 };
