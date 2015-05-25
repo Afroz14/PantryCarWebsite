@@ -31,7 +31,7 @@ module.exports = function(grunt) {
   // Load all modules here
    grunt.loadNpmTasks('grunt-ssh');
    grunt.loadNpmTasks('grunt-contrib-cssmin');
-   grunt.loadNpmTasks('grunt-contrib-less"');
+   grunt.loadNpmTasks('grunt-contrib-less');
    grunt.loadNpmTasks('grunt-shell');
    grunt.loadNpmTasks('grunt-contrib-uglify');
    grunt.loadNpmTasks('grunt-hashres');
