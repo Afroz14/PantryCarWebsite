@@ -121,14 +121,7 @@ module.exports = function(grunt) {
                 'echo "\n--------------------------------------------------"',
                 'echo "--------------------------------------------------"',
             ].join(' && ')
-       },
-       makeBuildLive:{
-            command:[
-                'sudo mv <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerBackup %>',
-                'sudo mv <%= config.websiteLocationOnServerTemp %> <%= config.websiteLocationOnServer %>',
-                'sudo rm -rf <%= config.websiteLocationOnServerBackup %> || mv <%= config.websiteLocationOnServerBackup %> <%= config.websiteLocationOnServer %>'         
-            ].join(' && ')
-         }   
+       }
    },
 
    sshexec: {    
@@ -145,6 +138,16 @@ module.exports = function(grunt) {
                     'sudo chmod 777 resources/views/footer.blade.php',
                     'sudo chmod 777 resources/views/meta.blade.php',
                     'grunt unlock;grunt build'
+                ].join(' && '),    
+            options:{
+                config: 'prodServer'
+            }
+          },
+        makeBuildLive: {
+                command: [
+                'sudo mv <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerBackup %>',
+                'sudo mv <%= config.websiteLocationOnServerTemp %> <%= config.websiteLocationOnServer %>',
+                'sudo rm -rf <%= config.websiteLocationOnServerBackup %> || mv <%= config.websiteLocationOnServerBackup %> <%= config.websiteLocationOnServer %>'
                 ].join(' && '),    
             options:{
                 config: 'prodServer'
@@ -203,6 +206,6 @@ module.exports = function(grunt) {
     grunt.registerTask('default' ,'build');
     grunt.registerTask('deploy',['lock','sshexec:deploy','unlock'])
     grunt.registerTask('build', ['lock','shell:cleanBuilds','less:production','cssmin','uglify','hashres','shell:readyToShip','unlock']);
-    grunt.registerTask('shipit',['lock','shell:makeBuildLive','unlock'])
+    grunt.registerTask('shipit',['lock','sshexec:makeBuildLive','unlock'])
 
 };
