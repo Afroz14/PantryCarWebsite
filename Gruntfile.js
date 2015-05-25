@@ -144,7 +144,7 @@ module.exports = function(grunt) {
                     'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildJsDir %>/*',
                     'sudo chmod 777 resources/views/footer.blade.php',
                     'sudo chmod 777 resources/views/meta.blade.php',
-                    'grunt build'
+                    'grunt unlock;grunt build'
                 ].join(' && '),    
             options:{
                 config: 'prodServer'
