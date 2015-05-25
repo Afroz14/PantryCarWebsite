@@ -142,6 +142,8 @@ module.exports = function(grunt) {
                     'sudo git pull origin master',
                     'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildCssDir %>/*',
                     'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildJsDir %>/*',
+                    'sudo chmod 777 resources/views/footer.blade.php',
+                    'sudo chmod 777 resources/views/meta.blade.php',
                     'grunt build'
                 ].join(' && '),    
             options:{
