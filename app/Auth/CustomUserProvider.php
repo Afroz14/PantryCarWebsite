@@ -48,7 +48,7 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->get($url); 
         $response = (array)json_decode($response);
-        if(isset($response['status']) && $response['status'] === false){
+        if($response == null || isset($response['status']) && $response['status'] === false){
             return null;
         }  
         $userArray = array("id" => $response['emailId'],"name" => $response['name'],"contactNo" =>  $response['contactNo']);
@@ -74,7 +74,7 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json',"Accept: application/json"));
         $response = $this->curl->post($url, json_encode($postParam));
         $response = (array)json_decode($response);
-        if(isset($response['status']) && $response['status'] === false){
+        if($response == null || isset($response['status']) && $response['status'] === false){
             return null;
         } 
         $userArray = array("id" => $response['emailId'],"name" => $response['name']);
@@ -97,7 +97,7 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->post($url, json_encode($postParam));
         $response = (array)json_decode($response);
-        if(isset($response['status']) && $response['status'] === true)
+        if($response == null || isset($response['status']) && $response['status'] === true)
             return true;
 
         return false;
@@ -113,7 +113,7 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->get($url,array("token" => $token));  
         $response = (array)json_decode($response); 
-        if(isset($response['status']) && $response['status'] === false)
+        if($response == null || isset($response['status']) && $response['status'] === false)
             return null;
         $userArray = array("id" => $response['emailId'],"name" => $response['name']);
         return new GenericUser($userArray);
@@ -143,7 +143,7 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->put($url,json_encode(array("verificationToken" => $code))); 
         $response = (array)json_decode($response);
-        if(isset($response['status']) && $response['status'] === true && isset($response['verified']) && $response['verified'] === true)
+        if($response != null && isset($response['status']) && $response['status'] === true && isset($response['verified']) && $response['verified'] === true)
           return true;
         return false;
   }

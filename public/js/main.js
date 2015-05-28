@@ -1,3 +1,8 @@
+
+//running loader at the top
+var nanobar = new Nanobar({"bg":"#e76f62","id":"nano"});
+nanobar.go(100);
+ 
 /*
 -------------------------------------------------------
   Bootbox popup
@@ -68,7 +73,7 @@ Signin process
                         $(".alert-danger").removeClass('hidden');
                     }
                     else if(data.fail == true){
-                            $(".alert-danger").append('<strong>Whoops!</strong> Wrong Username/Password.<br><br>');
+                            $(".alert-danger").append('<strong>Whoops!</strong> Login Failed .Try again<br><br>');
                             $(".alert-danger").removeClass('hidden');
                     } 
                     else {
@@ -138,12 +143,11 @@ Each station selection process
 */
 $('body').on('click','.select-station-button a',function(event){
      event.preventDefault();
-     console.log($(this).data("station-code"));
      var $_token = $('input[name=_token]').val();
-     var form  = $(document.createElement('form')).css({display:'none'}).attr("method","POST").attr("action",BASE_PATH + '/selectRestaurant');
+     var form  = $(document.createElement('form')).css({display:'none'}).attr("method","GET").attr("action",BASE_PATH + '/selectRestaurant');
      var input = $(document.createElement('input')).attr('name','station_code').val($(this).data("station-code"));
-     var tokenInput = $(document.createElement('input')).attr('name','_token').val($_token);
-     form.append(input).append(tokenInput);
+     //var tokenInput = $(document.createElement('input')).attr('name','_token').val($_token);
+     form.append(input);
      $("body").append(form);
      form.submit();
 
@@ -157,10 +161,10 @@ Each train selection process
 
 $('body').on('click','.select-train-button a',function(event){
      event.preventDefault();
-     var $_token = $('input[name=_token]').val();
-     var tokenInput = $(document.createElement('input')).attr('name','_token').val($_token);
-     var form  = $(document.createElement('form')).css({display:'none'}).attr("method","POST").attr("action",BASE_PATH + '/selectStation');
-     form.append(tokenInput);
+     //var $_token = $('input[name=_token]').val();
+     //var tokenInput = $(document.createElement('input')).attr('name','_token').val($_token);
+     var form  = $(document.createElement('form')).css({display:'none'}).attr("method","GET").attr("action",BASE_PATH + '/selectStation');
+     //form.append(tokenInput);
      var input = $(document.createElement('input')).attr('name','train_num').val($(this).data('train-code'));
      form.append(input);
      var input = $(document.createElement('input')).attr('name','source_station').val($(this).data("source-station"));
@@ -175,4 +179,143 @@ $('body').on('click','.select-train-button a',function(event){
      form.submit();
 });
 
+  
+      
+    // Javascript to enable link to tab
+      var url = document.location.toString();
+      if (url.match('#')) {
+          $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show');
+      } 
+
+      // Change hash for page-reload
+      $('body').on('shown.bs.tab','.nav-tabs a', function (e) {
+          window.location.hash = e.target.hash;
+      });
+
+        
+          /*---------------------------------------
+          -----------------------------------------
+           Train suggestion
+          -----------------------------------------
+          -----------------------------------------
+          */
+          var substringMatcher = function(strs) {
+          return function findMatches(q, cb) {
+            var matches, substringRegex;
+         
+            // an array that will be populated with substring matches
+            matches = [];
+         
+            // regex used to determine if a string contains the substring `q`
+            substrRegex = new RegExp(q, 'i');
+         
+            // iterate through the pool of strings and for any string that
+            // contains the substring `q`, add it to the `matches` array
+            $.each(strs, function(i, str) {
+              if (substrRegex.test(str)) {
+                matches.push(str);
+              }
+            });
+         
+            cb(matches);
+          };
+        };
+         
+
+     /* var trainSearcher = new Bloodhound({ 
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              remote: {
+                url: window.BASE_PATH +'/getTrainSuggestion/1255',
+                ajax: {
+                  type: "GET",
+                  dataType: "json",
+                  success: function (data) {
+                      console.log("Got data successfully");
+                      console.log(data.resultSet);
+                  }
+              }
+           }
+     });*/
+
+    var trainSearcher = new Bloodhound({
+    datumTokenizer: function (datum) {
+        return Bloodhound.tokenizers.whitespace(datum.value);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+        url: window.BASE_PATH +'/getTrainSuggestion/1255',
+        filter: function (movies) {
+            // Map the remote source JSON array to a JavaScript object array
+
+            return $.map(movies.value, function (movie) {
+              //var term = "haha";
+                // m = movie.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
+//console.log(m);
+                return {
+                    value: movie
+                };
+            });
+        }
+    }
 });
+
+    /* var trainSearcher = new Bloodhound({
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    limit: 10,
+  prefetch: window.BASE_PATH +'/getTrainSuggestion/1255',
+
+
+  });*/
+      
+      trainSearcher.initialize(); 
+
+      $('#pnr_number').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        },
+        {
+          name: 'states',
+          displayKey: 'value',
+          source: trainSearcher.ttAdapter()
+        });
+
+        $('.typeahead.input-sm').siblings('input.tt-hint').addClass('hint-small');
+        $('.typeahead.input-lg').siblings('input.tt-hint').addClass('hint-large');
+
+          /*---------------------------------------
+          -----------------------------------------
+           Menu Dialog
+          -----------------------------------------
+          -----------------------------------------
+          */
+
+        $(".resMenuDialog").each(function(index){
+              $("#res-menu-dialog-"+index).dialog({
+                  autoOpen: false,
+                  modal:true,
+                  dialogClass: "custom-ui-dialog",
+                  hide: {
+                      effect: "scale",
+                      easing: "easeInBack"
+                  },
+                  show: {
+                      effect: "scale",
+                      easing: "easeOutBack"
+                  },
+                  buttons: {
+                    Cancel: function(){
+                        $( this ).dialog( "close" );
+                    }
+                }
+             });
+      });
+    
+        $(".tag-menu").click(function() {
+           var resMenuId = $(this).data("res-menu-id");
+           $("#res-menu-dialog-"+resMenuId).dialog("open");
+    });
+
+}); // DOM Ready close

@@ -24,8 +24,8 @@
 
                         <div class="col-md-6 form-separator pr30">
                             <center>
-                                <form role="form" id= "search-form" method="post" action="{{ url ('/selectStation') }}">
-                                    <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                                <form role="form" id= "search-form" method="get" action="{{ url ('/selectStation') }}">
+                                    <!--<input name="_token" type="hidden" value="{{ csrf_token() }}">-->
                                     <input name="search_type" type="hidden" value="pnr_search">
 
                                     <div class="form-group">
@@ -46,8 +46,8 @@
                         
                         <div class="col-md-6">
                             <center>
-                             <form role="form" id= "search-form" method="post" action="{{ url ('/selectTrain') }}">
-                                    <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                             <form role="form" id= "search-form" method="get" action="{{ url ('/selectTrain') }}">
+                                    <!--<input name="_token" type="hidden" value="{{ csrf_token() }}">-->
 
                                     <div class="form-group">
                                         <input class="form-control input-class" id="source_station" required="1" name="source_station" type="text" placeholder="Enter Source Station">
@@ -85,6 +85,36 @@
         </div>
   </div>
 </div>
+<!-- How it works section -->
+  <section class="col-md-12 how-it-works-grid">
+    <div class="col-md-12 how-it-works-wrap">
+       <div class="center pc-heading-home pb20">How it works</div>
+        <div class="col-md-4 each-how-it-works-block">
+          <div class="center">
+            <img src="{{ asset ('/img/how_it_works_icon.png') }}" alt="">
+          </div>
+          <div class="center">
+            <h4>Enter PNR/Train Details</h4>
+          </div>
+        </div>
+        <div class="col-md-4 each-how-it-works-block">
+          <div class="center">
+            <img src="{{ asset ('/img/how_it_works_icon.png') }}" alt="">
+          </div>
+          <div class="center">
+            <h4>Choose your favorite menu</h4>
+          </div>
+        </div>
+        <div class="col-md-4 each-how-it-works-block" >
+          <div class="center">
+            <img src="{{ asset ('/img/how_it_works_icon.png') }}" alt="">
+          </div>
+          <div class="center">
+            <h4>Pay and enjoy your meal</h4>
+          </div>
+        </div>
+    </div>
+</section>     
 
 @extends('footer')
 

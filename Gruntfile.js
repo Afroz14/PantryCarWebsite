@@ -77,9 +77,9 @@ module.exports = function(grunt) {
                                                                                    '<%= config.jsDir %>/bootbox.min.js',
                                                                                    '<%= config.jsDir %>/jquery-ui.min.js',
                                                                                    '<%= config.jsDir %>/bootstrap-datepicker.min.js',
-                                                                                   '<%= config.jsDir %>/main.js',
                                                                                    '<%= config.jsDir %>/nanobar.min.js',
-                                                                                   '<%= config.jsDir %>/typehead.min.js'
+                                                                                   '<%= config.jsDir %>/typehead.min.js',
+                                                                                   '<%= config.jsDir %>/main.js',
                                                                                     ],
             }
         }

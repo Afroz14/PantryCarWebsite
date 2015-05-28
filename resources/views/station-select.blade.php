@@ -50,7 +50,7 @@
 		@else
 		<div class="no-result-grid">
 			 <div class="no-result-found">
-			 	No station found against PNR .Please check your PNR and then try again .
+			 	No station found against given input .Please check and try again.
 			 </div>	
 			 <div class="form-group buttons">
 	                    <a href="{{ url('/') }} " class="pc-btn">

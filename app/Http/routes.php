@@ -49,11 +49,11 @@ Route::get('/contact-us', 'HomeController@contactUsPage');
 
 Route::get('/complaints', 'HomeController@complaintsPage');
 
-Route::post('/selectStation','StationController@show');
+Route::get('/selectStation','StationController@show');
 
-Route::post('/selectTrain','TrainController@show');
+Route::get('/selectTrain','TrainController@show');
 
-Route::post('/selectRestaurant','RestaurantController@show');
+Route::get('/selectRestaurant','RestaurantController@show');
 
 Route::get("/profile","ProfileController@show");
 
