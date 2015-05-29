@@ -1,8 +1,7 @@
   <div class="col-md-12" id="footer" >
     <div class="bs-docs-section">
       <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2"></div>
-        <div class="col-lg-8 col-md-8 col-sm-8 secondary">
+        <div class="col-md-12 secondary">
           <ul class="center uppercase">
             <li><a href="{{ url('/about-us') }}">About Us</a></li>
             <li><a href="{{ url('/terms-and-conditons') }}">Terms & Conditions</a></li>

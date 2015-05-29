@@ -1,3 +1,6 @@
+
+@phone_device: 480px;
+@desktop:1200px;
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -1403,17 +1406,6 @@ pre code {
     width: 650px;
   }
 }
-@media (min-width: 992px) {
-  .home-box-container {
-    width: 650px;
-  }
-}
-@media (min-width: 1200px) {
-  .home-box-container {
-    width: 650;
-  }
-}
-
 
 .container-fluid {
   margin-right: auto;
@@ -6269,9 +6261,9 @@ label,
   background: url(../../img/or-seperator-vertical.png) no-repeat center right;
 }
 
-@media (min-width: 0px) and (max-width: 480px){
+@media (min-width: 0px) and (max-width: @phone_device){
   .form-signin-email-passwd,.form-signup-email-passwd{
-      width:300px
+      width:250px
   }
  } 
 
@@ -6457,6 +6449,12 @@ label,
    margin-top: 20px;
 }
 
+@media(max-width:@phone_device){
+    .social-login-links{
+        width:250px;
+   }  
+}
+
 .btn-social, .btn-social:focus, .btn-social:hover {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -6584,6 +6582,11 @@ label,
   height: 180px;
   margin: 2px;
 }
+@media (max-width:@phone_device){
+   .restaurant-section {
+      width:85%;
+   }
+}
 .restaurant-wrapper {
   position: relative;
   width: 100%;
@@ -6591,7 +6594,7 @@ label,
   z-index: 0;
   overflow: hidden;
   background: rgba(0,0,0,.7);
-  width:180px;
+  width:100%
   height: 180px;
 }
 .container-grid{
@@ -6600,26 +6603,11 @@ label,
   padding: 0 12px;
 }
 
-@media (min-width: 0){
+@media (max-width: @phone_device){
   .container-grid  {
-    width: 970px;
+    width: 370px;
   }
 }
-@media (min-width: 980px){
-    .container-grid {
-      width: 974px;
-      position: relative;
-      }
- } 
-@media (min-width: 992px){
-  .container-grid  {
-    width: 970px;
-  }
-}
-.container-grid {
-  min-width: 930px;
-}
-
 
 .res-content{
   position: absolute;
@@ -6786,6 +6774,13 @@ label,
   z-index: 1000;
   position: absolute;
 }
+
+@media( max-width:@phone_device){
+  .custom-ui-dialog{
+     width:87% !important;
+     min-width:0px !important;
+  }
+}
 .resMenuDialog{
   min-height: 400px !important;
 }
@@ -6948,10 +6943,11 @@ a.pc-btn:hover{
   min-width:250px !important;
 }
 
-@media (max-width: 480px){
+@media (max-width: @phone_device){
 
   .each-how-it-works-block{
     margin-bottom:20px;
+    min-width:220px !important;
   }
 } 
 .how-it-works-wrap{
