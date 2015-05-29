@@ -1,7 +1,7 @@
 <?php 
 /* All constants goes here */
 
-define('API_HOST','http://52.26.36.79/api');
+define('API_HOST','http://52.11.133.21/api');
 //define('API_ROUTE','http://api.pantrycar.co.in');
 define('LOGIN_API_ROUTE','/customers/login');
 
