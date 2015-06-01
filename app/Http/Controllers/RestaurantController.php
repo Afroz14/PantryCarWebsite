@@ -1,4 +1,5 @@
 <?php namespace App\Http\Controllers;
+use App\Libraries\Curl;
 
 class RestaurantController extends Controller {
 
@@ -8,8 +9,12 @@ class RestaurantController extends Controller {
 	 *
 	 * @return void
 	 */
+
+	private $curl;
+
 	public function __construct()
 	{
+		$this->curl = new Curl;
 	}
 
 	public function show()
@@ -41,6 +46,30 @@ class RestaurantController extends Controller {
 			                    "18"=> array("RestaurantName" => "Agarwala Food","Rating" => "3.0","MinOrder" => "Rs.200","thumbnai"=>$resThumbDefault)
 			              );
 		return view('restaurant-select')->with("restaurant_header",$restaurantHeader)->with("restaurantsList",$restaurantsList);
+	}
+
+	public function getMenu($restaurantId){
+       
+        if($restaurantId === null || $restaurantId < 0 )
+        	return "No Menu Found for this restaurant";
+
+		$url       = API_HOST.RESTAURANT_MENU_API_ROUTE."RST".$restaurantId."/menu";
+		$this->curl->setOption(CURLOPT_HEADER, true);
+        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        $response = $this->curl->get($url); 
+        $response = (array)json_decode($response);
+        if($response == null || (isset($response['status']) && $response['status'] === false || $response['status'] === 500 ) || (isset($response['menu']) && $response['menu'] === null )){
+            return "No Menu Found for this restaurant";
+        } 
+
+       $restaurantMenu = $response['menu'];
+       $restaurantMenuHTML = "";
+       foreach($restaurantMenu as $category => $menu){
+            $restaurantMenuHTML .= "<h3>".$category."</h3>";
+       }
+       
+
+		return $restaurantMenuHTML;
 	}
 
 

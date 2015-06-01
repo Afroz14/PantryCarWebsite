@@ -26,7 +26,6 @@
  	      </div>
  	      
 	 	   <div class="restaurant-selection-grid">
-         <?php $iterator = 0; ?>
 	 	      @foreach($restaurantsList as $restaurant)
             <div class="restaurant-section">
 	 	      		<div class="restaurant-wrapper ">
@@ -34,15 +33,10 @@
 	 	      			  <div class="tag-restaurant" >
                      {{ $restaurant['RestaurantName'] }}
                   </div>
-                  <div class="tag-menu" data-res-menu-id="<?php echo $iterator;?>">MENU</div>
+                  <div class="tag-menu"><a href="{{ url('/restaurant/RST1') }}">MENU</a></div>
                 </div>
 	 	      		</div>
-	 	        </div>	
-            <div class="resMenuDialog omit pl10" id="res-menu-dialog-<?php echo $iterator ; ?>" >
-                 <div class="page-header head-common-color ui-dialog-header">Menu for {{ $restaurant['RestaurantName'] }}</div>
-                 <div></div>
-            </div>
-            <?php $iterator++ ?>
+	 	        </div>
  	      	  @endforeach
  	       </div> 	
       </div>

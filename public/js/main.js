@@ -285,37 +285,4 @@ $('body').on('click','.select-train-button a',function(event){
         $('.typeahead.input-sm').siblings('input.tt-hint').addClass('hint-small');
         $('.typeahead.input-lg').siblings('input.tt-hint').addClass('hint-large');
 
-          /*---------------------------------------
-          -----------------------------------------
-           Menu Dialog
-          -----------------------------------------
-          -----------------------------------------
-          */
-
-        $(".resMenuDialog").each(function(index){
-              $("#res-menu-dialog-"+index).dialog({
-                  autoOpen: false,
-                  modal:true,
-                  dialogClass: "custom-ui-dialog",
-                  hide: {
-                      effect: "scale",
-                      easing: "easeInBack"
-                  },
-                  show: {
-                      effect: "scale",
-                      easing: "easeOutBack"
-                  },
-                  buttons: {
-                    Cancel: function(){
-                        $( this ).dialog( "close" );
-                    }
-                }
-             });
-      });
-    
-        $(".tag-menu").click(function() {
-           var resMenuId = $(this).data("res-menu-id");
-           $("#res-menu-dialog-"+resMenuId).dialog("open");
-    });
-
 }); // DOM Ready close

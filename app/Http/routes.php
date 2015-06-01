@@ -66,3 +66,7 @@ Route::get('account/activate/{code}',array(
 			'uses' => 'Auth\AuthController@activateAccount'
 		)
 );
+
+Route::get('restaurant/{restaurantId}',"RestaurantController@getDetail");
+
+

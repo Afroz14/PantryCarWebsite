@@ -56,7 +56,7 @@ class StationController extends Controller {
 		        	  $stationHeader     =   array("DATE" => $response['date'],"TRAIN_NAME" => $response['trainName'],"TRAIN_NUMBER" =>$response['trainNum'], "ROUTE" => $response['srcStationName'] ." TO " .$response['destStationName']);
 		        	
 		        	$stationsListDetails  = array();
-		        	foreach ($response['stations'] as $station) {
+		        	foreach ($response['trainStoppages'] as $station) {
 		        		$station = (array)$station;
 		        		$stationsListDetails[$station['stationCode']] = array("STATION_NAME" => $station['stationName'], "ARRIVAL_TIME" =>"ARRIVAL ".$station['arrivalTime'], "HALT" => "HALT ".$station['stoppageTime'],"DAY" =>"DAY " .$station['day']);
 		        	}
