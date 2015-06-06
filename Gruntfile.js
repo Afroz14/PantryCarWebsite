@@ -18,7 +18,7 @@ Oven.config = {
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '52.24.192.177',
+    HostName : '52.11.63.184',
     userName :'ubuntu'
 };
 
@@ -139,6 +139,7 @@ module.exports = function(grunt) {
                     'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildJsDir %>/*',
                     'sudo chmod 777 resources/views/footer.blade.php',
                     'sudo chmod 777 resources/views/meta.blade.php',
+                    'sudo chmod 777 resources/views/restaurant-page.blade.php',
                     'grunt unlock;grunt build'
                 ].join(' && '),    
             options:{
