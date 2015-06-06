@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+@include('meta')
+<body>
+@include('header')
+
+ <div class="full-width-container-other" >
+          <div class="container-grid">
+ 	      <div class="restaurant-header-image">
+ 	      	  <h3 class="restaurant-name">Al Barista</h3>
+ 	      	  <div class="restaurant-address">New Delhi Railway Station</div>
+ 	      </div>
+
+ 	      <div class="restaurant-content-wrapper">
+ 	      	<div class="restaurant-menu-details-wrap">
+ 	      	  <div class="restaurant-menu-label"><i class="icon-food _icon"></i>Menu</div>
+ 	      		<div class="each-menu-category-wrap">
+ 	      		  <div class="menu-category">Veg</div>
+ 	      		    <div class="each-category-menu-item"><span class="item-name" data-product-id="1" data-product-title="Veg Thali" data-product-price="160">Veg Thali</span><span class="item-price">Rs 160</span> <div class="add-to-cart-label">add to cart</div></div>
+ 	      		   <div class="each-category-menu-item"><span class="item-name" data-product-id="2" data-product-title="Chole Bhature" data-product-price="200">Chole Bhature</span><span class="item-price">Rs 200</span><div class="add-to-cart-label">add to cart</div></div>
+ 	      		  
+ 	      		</div> 
+
+ 	      		<div class="each-menu-category-wrap">
+ 	      		  <div class="menu-category">Non - Veg</div>
+ 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="3" data-product-title="Non -Veg Thali" data-product-price="160">Non - Veg Thali</span><span class="item-price">Rs 240</span><div class="add-to-cart-label">add to cart</div></div>
+ 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="4" data-product-title="Chicken Changezi" data-product-price="160">Chicken Changezi</span><span class="item-price">Rs 200</span><div class="add-to-cart-label">add to cart</div></div>
+ 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="5" data-product-title="Butter Chicken" data-product-price="160">Butter Chicken</span><span class="item-price">Rs 180</span><div class="add-to-cart-label">add to cart</div></div>
+ 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="6" data-product-title="Chicken Afgani" data-product-price="160">Chicken Afgani</span><span class="item-price">Rs 280</span><div class="add-to-cart-label">add to cart</div></div>
+ 	      		</div>  
+
+
+               <div class="each-menu-category-wrap">
+ 	      		  <div class="menu-category" >Beverages</div>
+ 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="7" data-product-title="Cold Drink" data-product-price="160">Cold Drink</span><span class="item-price">Rs 20</span><div class="add-to-cart-label">add to cart</div></div>
+ 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="8" data-product-title="Lemonade" data-product-price="160">Lemonade</span><span class="item-price">Rs 30</span><div class="add-to-cart-label">add to cart</div></div>
+ 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="9" data-product-title="Apple Juice" data-product-price="160">Apple Juice</span><span class="item-price">Rs 30</span><div class="add-to-cart-label">add to cart</div></div>
+ 	      		</div>  
+ 	      	</div>
+ 	      	<div class="restaurant-attributes">
+               <div class="each-restaurant-attributes"><i class="glyphicon glyphicon-ok _icon" ></i>Cash On Delivery Availiable</div>
+               <div class="each-restaurant-attributes"><i class="glyphicon glyphicon-tags _icon"></i>Min Booking Amount : Rs 200</div>
+               <div class="each-restaurant-attributes no-border-bottom"><i class="glyphicon glyphicon-ok _icon" ></i>Delivery Charges : Free</div>
+ 	        </div>		
+ 	      </div>	
+      </div>
+</div>
+
+<div id="cd-shadow-layer"></div>
+
+<!-- cd-cart -->
+<div id="cd-cart">
+	 <h2>Cart</h2>
+	 <div class="horizontal-loader hidden"></div>
+	 <div id="cd-cart-items-wrap"></div>
+</div> 	 
+<!-- cd-cart -->
+ 
+@include('footer')
+<script src="{{ asset('/js/build/cart.min.727048e7.js') }} "></script>
+</body>
+</html>

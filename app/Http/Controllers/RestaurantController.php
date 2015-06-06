@@ -48,12 +48,13 @@ class RestaurantController extends Controller {
 		return view('restaurant-select')->with("restaurant_header",$restaurantHeader)->with("restaurantsList",$restaurantsList);
 	}
 
-	public function getMenu($restaurantId){
+	public function getDetail($restaurantId){
        
         if($restaurantId === null || $restaurantId < 0 )
         	return "No Menu Found for this restaurant";
 
-		$url       = API_HOST.RESTAURANT_MENU_API_ROUTE."RST".$restaurantId."/menu";
+
+		/*$url       = API_HOST.RESTAURANT_MENU_API_ROUTE."RST".$restaurantId."/menu";
 		$this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->get($url); 
@@ -66,10 +67,12 @@ class RestaurantController extends Controller {
        $restaurantMenuHTML = "";
        foreach($restaurantMenu as $category => $menu){
             $restaurantMenuHTML .= "<h3>".$category."</h3>";
-       }
+       }*/
        
-
-		return $restaurantMenuHTML;
+       $cartController = new CartController;
+       $cartContent = $cartController->getCartContent();
+       //var_dump($cartContent);die();
+		return view('restaurant-page')->with('cartContent' ,$cartContent);
 	}
 
 

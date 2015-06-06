@@ -146,6 +146,7 @@ return [
 		'App\Providers\RouteServiceProvider',
 		'App\Providers\AuthUserProvider',
 		'Laravel\Socialite\SocialiteServiceProvider',
+		'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
 
 
 	],
@@ -196,6 +197,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Socialize' => 'Laravel\Socialite\Facades\Socialite',
+		'Cart'      => 'Gloudemans\Shoppingcart\Facades\Cart',
 
 	],
 

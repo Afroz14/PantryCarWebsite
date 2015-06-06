@@ -39,6 +39,7 @@
 
      <!-- Scripts -->
      <script>window.BASE_PATH = "<?php echo url() ;?>"; </script>
+     <script>window.X_ACCESS_TOKEN = "<?php echo csrf_token(); ?>"</script>
      <script src="{{ asset('/js/build/app.min.js') }} "></script>
      @if(Session::get('login') === 1)
       <script>
