@@ -135,11 +135,12 @@ module.exports = function(grunt) {
                     'sudo git stash',
                     'sudo git checkout master',
                     'sudo git pull origin master',
-                    'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildCssDir %>/*',
-                    'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServer %>/<%= config.buildJsDir %>/*',
+                    'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildCssDir %>/*',
+                    'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildJsDir %>/*',
                     'sudo chmod 777 resources/views/footer.blade.php',
                     'sudo chmod 777 resources/views/meta.blade.php',
                     'sudo chmod 777 resources/views/restaurant-page.blade.php',
+                    'sudo chmod 777 resources/views/user-cart.blade.php',
                     'grunt unlock;grunt build'
                 ].join(' && '),    
             options:{
