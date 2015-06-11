@@ -130,7 +130,7 @@ function checkIfTheItemToBeRemovedIsLastItem(){
         $(".cart-mobile-footer .checkout-btn").remove();
     }
 
-    if($('.cd-cart-items').children().length == 0){
+    if($('.user-cart .cd-cart-items').children().length == 0){
           $('.cd-cart-items').html("<span class='cart-empty'>Your cart is empty .</span>");
           $(".user-cart .cd-cart-total").remove();
           $(".user-cart .checkout-btn").remove();
@@ -152,7 +152,7 @@ function checkIfTheItemTobeAddedIsFirstItem(){
 
 function animatedlyAddItemToCart(cartItem,itemSelector,target){
 	    var cart = $('.cd-cart-items');
-	    target = $("li[data-index="+target+"]");
+	    target   = $("li[data-index="+target+"]");
 	    
 
         var imgtodrag = $(itemSelector).find('.item-name');

@@ -76,6 +76,6 @@
 <!-- cd-cart -->
  
 @include('footer')
-<script src="{{ asset('/js/build/cart.min.04bbf0c8.js') }} "></script>
+<script src="{{ asset('/js/build/cart.min.js') }} "></script>
 </body>
 </html>
