@@ -27,7 +27,7 @@
 							  <i class="icon-shopping-cart"></i> 
 							   Cart
 							    @if(Cart::count() > 0)
-							      <span id="label-cart-item-count"> {{ Cart::count() }} </span>
+							      <span id="label-cart-item-count"> {{ Cart::count(false) }} </span>
 							   	@endif
 							   </a>
 						</li>

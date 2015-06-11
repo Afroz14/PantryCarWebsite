@@ -69,10 +69,8 @@ Route::get('account/activate/{code}',array(
 
 Route::get('/restaurant/{restaurantId}',"RestaurantController@getDetail");
 
-Route::post('/addItemToCart',"CartController@addItem");
+Route::post('/cartHandler',"CartController@handle");
 
-Route::get('/getCart',"CartController@getCartContent");
-
-Route::post('/removeItemFromCart',"CartController@removeItem");
+Route::get('/getCartMobile',"CartController@getCartContentMobile");
 
 

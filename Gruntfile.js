@@ -18,7 +18,7 @@ Oven.config = {
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '52.11.63.184',
+    HostName : '52.25.137.68',
     userName :'ubuntu'
 };
 
@@ -176,7 +176,7 @@ module.exports = function(grunt) {
                  '<%= config.buildJsDir %>/app.min.js',
                  '<%= config.buildJsDir %>/cart.min.js',
             ],
-            dest: ['resources/views/footer.blade.php','resources/views/meta.blade.php','resources/views/restaurant-page.blade.php']
+            dest: ['resources/views/footer.blade.php','resources/views/meta.blade.php','resources/views/restaurant-page.blade.php','resources/views/user-cart.blade.php']
         }
    },     
 

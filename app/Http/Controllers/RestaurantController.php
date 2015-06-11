@@ -70,9 +70,9 @@ class RestaurantController extends Controller {
        }*/
        
        $cartController = new CartController;
-       $cartContent = $cartController->getCartContent();
-       //var_dump($cartContent);die();
-		return view('restaurant-page')->with('cartContent' ,$cartContent);
+       //$cartContentMobile = $cartController->getCartContentMobile();
+       $cartContent       = $cartController->getCartContent();
+	   return view('restaurant-page')->with('cartContent' ,$cartContent);
 	}
 
 
