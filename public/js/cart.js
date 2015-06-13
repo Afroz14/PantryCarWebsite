@@ -124,14 +124,15 @@ UserCart.prototype.updateItemQty = function(productToBeUpdated,itemSelector){
 
 function checkIfTheItemToBeRemovedIsLastItem(){
 
-    if($('.cart-mobile-summary .cd-cart-items').children().length == 0){
+    if($('#cd-cart-items-wrap .cd-cart-items').children().length == 0){
         $('.cart-mobile-summary').append("<span class='mobile-cart-empty'>Your cart is empty .</span>");
-        $(".cart-mobile-footer .cd-cart-total").remove();
+        $('#cd-cart-items-wrap .cd-cart-items').append("<span class='cart-empty'>Your cart is empty .</span>");
+        $(".cart-mobile-summary .cd-cart-total").remove();
         $(".cart-mobile-footer .checkout-btn").remove();
     }
 
     if($('.user-cart .cd-cart-items').children().length == 0){
-          $('.cd-cart-items').html("<span class='cart-empty'>Your cart is empty .</span>");
+          $('.cd-cart-items').html("<span class='cart-empty'>Your cart is empty2 .</span>");
           $(".user-cart .cd-cart-total").remove();
           $(".user-cart .checkout-btn").remove();
       }  
