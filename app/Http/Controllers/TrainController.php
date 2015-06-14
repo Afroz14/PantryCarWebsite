@@ -21,13 +21,24 @@ class TrainController extends Controller {
         $srcStation  = \Input::get("source_station");
         $destStation = \Input::get("destination_station");
         $journeyDate = \Input::get("journey_date");
+        $trainNum    = \Input::get("train_num");
 
         if(empty($srcStation) || empty($destStation) || empty($destStation)){
           return view('train-select')->with("train_list","")->with("train_list_header","");
+
         }
         else{
+           /* is train num is provided , redirect to station select direct */
+            if(isset($trainNum) && !empty($trainNum))
+              return \Redirect::route('select.station',array("source_station"       => $srcStation ,
+                                                              "destination_station" => $destStation,
+                                                              "journey_date"        => $journeyDate,
+                                                              "train_num"           => $trainNum,
+                                                              "search_type"         => "train_search")
+                                    );
+
             $param     =  array('src' => $srcStation,'dest' => $destStation,'date' => $journeyDate ) ;   
-    	    $url       = API_HOST.TRAIN_BETWEEN_LOCATION_ROUTE;
+    	      $url       = API_HOST.TRAIN_BETWEEN_LOCATION_ROUTE;
             $this->curl->setOption(CURLOPT_HEADER, true);
             $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
             $response = $this->curl->get($url,$param); 
@@ -39,6 +50,8 @@ class TrainController extends Controller {
                                                  "DESTINATION_STATION" =>$response['destStationCode']
                                                 );
             	$trainListDetails  = array();
+
+
             	foreach ($response['trains'] as $train) {
             		$train = (array)$train;
             		$trainListDetails[$train['trainNum']] = array("TRAIN_NAME"                    => $train['trainName'],

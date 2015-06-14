@@ -1,7 +1,7 @@
 <?php 
 /* All constants goes here */
 
-define('API_HOST','http://api.pantrycar.co.in');
+define('API_HOST','http://pantrycar.elasticbeanstalk.com');
 
 define('LOGIN_API_ROUTE','/customers/login');
 
@@ -28,4 +28,6 @@ define("STATION_BETWEEN_LOCATION_ROUTE","/railways/get_stations_between_location
 define("VERIFIY_ACCOUNT_ROUTE","/customers/set_customer_verified");
 
 define("RESTAURANT_MENU_API_ROUTE","/restaurants/");
+
+define("GET_RESTAURANT_BY_STATION_API_ROUTE","/restaurants/get_restaurants_by_station/");
 ?>

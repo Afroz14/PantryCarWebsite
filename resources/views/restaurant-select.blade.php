@@ -6,8 +6,9 @@
 @include('header')
 
  <div class="full-width-container-other" >
-          <div class="container-grid">
+      <div class="container-grid">
  	      <div class="page-header head-common-color">SELECT RESTAURANT</div>
+    @if(isset($restaurantsList) && $restaurantsList !== "")
  	      <div class="station-select-header-wrap">
  	      	<?php $totalRecord = count($restaurant_header);
  	      	 $iterator = 0;
@@ -24,6 +25,9 @@
                   <?php $iterator++; ?>
  	      	  @endforeach	
  	      </div>
+         <div class="result-found">
+            Total {{ count($restaurantsList) }} restaurants found
+         </div> 
  	      
 	 	   <div class="restaurant-selection-grid">
 	 	      @foreach($restaurantsList as $restaurant)
@@ -31,14 +35,26 @@
 	 	      		<div class="restaurant-wrapper ">
                 <div class="res-content">
 	 	      			  <div class="tag-restaurant" >
-                     {{ $restaurant['RestaurantName'] }}
+                     {{ $restaurant['restaurantName'] }}
                   </div>
                   <div class="tag-menu"><a href="{{ url('/restaurant/RST1') }}">MENU</a></div>
                 </div>
 	 	      		</div>
 	 	        </div>
  	      	  @endforeach
- 	       </div> 	
+ 	       </div> 
+            @else
+         <div class="no-result-grid">
+             <div class="no-result-found">
+              No restaurant found against given station .Please check and try again.
+             </div> 
+               <div class="form-group buttons">
+                      <a href="{{ url('/') }} " class="pc-btn">
+                          GO HOME
+                      </a>
+            </div>
+          </div> 
+      @endif
       </div>
 </div>
 

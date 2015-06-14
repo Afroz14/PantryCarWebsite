@@ -59,7 +59,7 @@ Signin process
                     if(data.success == false)
                     {
                         var arr = data.errors;
-                        
+                        $(".alert-danger").html("");
                         $(".alert-danger").append('<strong>Whoops!</strong> There were some problems with your input.<br><br>');
                         $(".alert-danger").append('<ul>');
                         $.each(arr, function(index, value)
@@ -82,7 +82,7 @@ Signin process
             },
             error:function(){
                  $('.bootbox-body .ajax_loader__wrapper').addClass('hidden');
-                 alert('Something went to wrong.Please Try again later...');
+                 alert('Something went wrong.Please Try again later...');
             }
          });
     });
@@ -110,7 +110,7 @@ Signup process
                     if(data.success === false)
                     {
                         var arr = data.errors;
-                        
+                        $(".alert-danger").html("");
                         $(".alert-danger").append('<strong>Whoops!</strong> There were some problems with your input.<br><br>');
                         $(".alert-danger").append('<ul>');
                         $.each(arr, function(index, value)
@@ -132,7 +132,7 @@ Signup process
             },
             error:function(){
                  $('.bootbox-body .ajax_loader__wrapper').addClass('hidden');
-                 alert('Something went to wrong.Please Try again later...');
+                 alert('Something went  wrong.Please Try again later...');
             }
          });
     });
@@ -143,13 +143,12 @@ Each station selection process
 */
 $('body').on('click','.select-station-button a',function(event){
      event.preventDefault();
-     var $_token = $('input[name=_token]').val();
-     var form  = $(document.createElement('form')).css({display:'none'}).attr("method","GET").attr("action",BASE_PATH + '/selectRestaurant');
-     var input = $(document.createElement('input')).attr('name','station_code').val($(this).data("station-code"));
-     //var tokenInput = $(document.createElement('input')).attr('name','_token').val($_token);
-     form.append(input);
-     $("body").append(form);
-     form.submit();
+     var stationCode  = $(this).data("station-code");
+     var newUrl       = window.location.href;
+     var seperator    = (url.indexOf("?") === -1)?"?":"&";
+     var newUrl       = url + seperator + "station_code="+stationCode;
+     newUrl           = newUrl.replace("selectStation","selectRestaurant");
+     window.location.href =  newUrl;
 
 });
 

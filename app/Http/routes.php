@@ -49,7 +49,7 @@ Route::get('/contact-us', 'HomeController@contactUsPage');
 
 Route::get('/complaints', 'HomeController@complaintsPage');
 
-Route::get('/selectStation','StationController@show');
+Route::get('/selectStation',array('as' => 'select.station', 'uses' => 'StationController@show'));
 
 Route::get('/selectTrain','TrainController@show');
 

@@ -41,7 +41,7 @@ class StationController extends Controller {
 						    $url       = API_HOST.STATION_BETWEEN_LOCATION_ROUTE;
 					        $this->curl->setOption(CURLOPT_HEADER, true);
 					        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-					        $response = $this->curl->get($url,$param); 
+					        $response = $this->curl->get($url,$param);
 					        $response = (array)json_decode($response);
         			}
 			  }  

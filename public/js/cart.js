@@ -132,7 +132,7 @@ function checkIfTheItemToBeRemovedIsLastItem(){
     }
 
     if($('.user-cart .cd-cart-items').children().length == 0){
-          $('.cd-cart-items').html("<span class='cart-empty'>Your cart is empty2 .</span>");
+          $('.cd-cart-items').html("<span class='cart-empty'>Your cart is empty .</span>");
           $(".user-cart .cd-cart-total").remove();
           $(".user-cart .checkout-btn").remove();
       }  

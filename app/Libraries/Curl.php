@@ -24,7 +24,7 @@ class Curl
         CURLOPT_VERBOSE        => true,
         CURLOPT_AUTOREFERER    => true,         
         CURLOPT_CONNECTTIMEOUT => 30,
-        CURLOPT_TIMEOUT        => 30,
+        CURLOPT_TIMEOUT        => 10,
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     );

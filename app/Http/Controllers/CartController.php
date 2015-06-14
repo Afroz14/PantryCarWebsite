@@ -152,7 +152,7 @@ class CartController extends Controller {
         	}
 
         }
-         return array("status" => "false1");
+         return array("status" => "false");
 
 	}
 
