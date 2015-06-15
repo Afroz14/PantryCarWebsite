@@ -14,18 +14,19 @@ Oven.config = {
     jsDir: "public/js",
     buildCssDir: "public/css/build",
     buildJsDir: "public/js/build",
-    privateKeyPath:"/Users/afroz/Downloads/main-website.pem", // gets change depending on the machine you are deploying
+    buildImgDir:"public/img",
+    privateKeyPath:"/Users/afroz/Downloads/main-website.pem", // gets changed : Depending on the machine from where you are deploying
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '52.25.137.68',
+    HostName : '52.10.140.143',
     userName :'ubuntu'
 };
 
 
 
 module.exports = function(grunt) {
-  //require('jit-grunt')(grunt);
+
   var _privateKey = grunt.file.exists(Oven.config.privateKeyPath) ? grunt.file.read(Oven.config.privateKeyPath) : '';
 
   // Load all modules here
@@ -35,6 +36,7 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-shell');
    grunt.loadNpmTasks('grunt-contrib-uglify');
    grunt.loadNpmTasks('grunt-hashres');
+   grunt.loadNpmTasks('grunt-contrib-imagemin');
   
 
    grunt.initConfig({
@@ -87,6 +89,32 @@ module.exports = function(grunt) {
         }
    },
 
+  imagemin: {
+            png: {
+                options: {
+                    optimizationLevel: 7
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.buildImgDir %>',
+                    src: ['**/*.png'],
+                    dest: '<%= config.buildImgDir %>',
+                    ext: '.png'
+                }]
+            },
+            jpg: {
+                options: {
+                    progressive: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.buildImgDir %>',
+                    src: ['**/*.jpg'],
+                    dest: '<%= config.buildImgDir %>',
+                    ext: '.jpg'
+                }]
+            }
+    },
 
    sshconfig:{
        
@@ -208,9 +236,12 @@ module.exports = function(grunt) {
 
 
 
-    grunt.registerTask('default' ,'build');
+    grunt.registerTask('default' ,'localbuild');
+    grunt.registerTask('localbuild', ['lock','shell:cleanBuilds','less:production','cssmin','uglify','shell:readyToShip','unlock']);
     grunt.registerTask('deploy',['lock','sshexec:deploy','unlock'])
-    grunt.registerTask('build', ['lock','shell:cleanBuilds','less:production','cssmin','uglify','hashres','shell:readyToShip','unlock']);
-    grunt.registerTask('shipit',['lock','sshexec:makeBuildLive','unlock'])
+    grunt.registerTask('build', ['lock','shell:cleanBuilds','less:production','cssmin','uglify','hashres','imagemin','shell:readyToShip','unlock']);
+    grunt.registerTask('shipit',['lock','sshexec:makeBuildLive','unlock']);
+    grunt.registerTask('imageminify' ,'imagemin');
+
 
 };
