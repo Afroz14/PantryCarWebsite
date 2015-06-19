@@ -23,14 +23,7 @@
 				       @if(Auth::guest())
 						<li><a class="pc_login" href="#">Login</a></li>
 						<li><a class="pc_signup" href="#">Register</a></li>
-						<li><a href="{{ url('/viewCart') }}" id="cart-trigger" role="button" aria-expanded="false">
-							  <i class="icon-shopping-cart"></i> 
-							   Cart
-							    @if(Cart::count() > 0)
-							      <span id="label-cart-item-count"> {{ Cart::count(false) }} </span>
-							   	@endif
-							   </a>
-						</li>
+
 					    @else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ ucwords(Auth::user()->name) }}<span class="caret ml10"></span></a>
@@ -41,7 +34,14 @@
 							</ul>
 						</li>
 						@endif
-					
+						<li><a href="{{ url('/viewCart') }}" id="cart-trigger" role="button" aria-expanded="false">
+							  <i class="icon-shopping-cart"></i> 
+							   Cart
+							    @if(Cart::count() > 0)
+							      <span id="label-cart-item-count"> {{ Cart::count(false) }} </span>
+							   	@endif
+							   </a>
+						</li>
 				</ul>
 			</div>
 		</div>
