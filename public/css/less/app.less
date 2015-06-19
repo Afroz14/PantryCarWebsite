@@ -6379,6 +6379,9 @@ label,
 .textleft{
   text-align: left;
 }
+.textright{
+  text-align: right;
+}
 .landing-background{
   background:url('../../img/landing_page_02.jpg');
 }
@@ -6448,9 +6451,11 @@ label,
   color:#ddd;
 }
 
-#search-form{
+.home-page-search-form{
   position: relative;
-  height: 150px;
+  height:150px;
+  width:100%;
+  display:table;
 }
 .social-login-links{
    width:280px;
@@ -7394,4 +7399,23 @@ body.overflow-hidden {
   padding:10px 0px;
   color:#666;
   font-size:12px;
+}
+.pnr-type-ahead{
+   width:100%;
+   height:0px;
+   transition: height 1s ease-in-out;
+   background:#fff;
+   color:#666;
+   font-size:12px;
+   line-height:25px;
+   overflow:hidden;
+}
+.right-arrow-icon__pnr_result{
+  background:url('../../img/arrow-right-circle-green.png');
+  width:25px;
+  height:25px;
+  position:absolute;
+  top:60px;
+  left: 42%;
+  background-size: cover;
 }

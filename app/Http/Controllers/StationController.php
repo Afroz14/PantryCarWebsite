@@ -22,11 +22,7 @@ class StationController extends Controller {
 		if(isset($search_type)) {
             if($search_type == 'pnr_search'){
 			        $pnrNumber = \Input::get("pnr_number");
-				    $url       = API_HOST.PNR_DETAIL_ROUTE.$pnrNumber;
-			        $this->curl->setOption(CURLOPT_HEADER, true);
-			        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-			        $response = $this->curl->get($url); 
-			        $response = (array)json_decode($response); 
+				    $response =  self::getPnrDetail($pnrNumber);
 			      }
 			 else if($search_type == 'train_search')    {
 			 		$trainNum    = \Input::get("train_num");
@@ -53,7 +49,7 @@ class StationController extends Controller {
 		      	   if(isset($response['doj']))
 		        	 $stationHeader        = array("DATE" => $response['doj'],"TRAIN_NAME" => $response['trainName'],"TRAIN_NUMBER" =>$response['trainNum'], "ROUTE" => $response['srcStationName'] ." TO " .$response['destStationName']);
 		           else
-		        	  $stationHeader     =   array("DATE" => $response['date'],"TRAIN_NAME" => $response['trainName'],"TRAIN_NUMBER" =>$response['trainNum'], "ROUTE" => $response['srcStationName'] ." TO " .$response['destStationName']);
+		        	  $stationHeader       = array("DATE" => $response['date'],"TRAIN_NAME" => $response['trainName'],"TRAIN_NUMBER" =>$response['trainNum'], "ROUTE" => $response['srcStationName'] ." TO " .$response['destStationName']);
 		        	
 		        	$stationsListDetails  = array();
 		        	foreach ($response['trainStoppages'] as $station) {
@@ -71,6 +67,21 @@ class StationController extends Controller {
 			return view('station-select')->with("station_list","")->with("station_header","");
 		}
             
+	}
+
+	public function getPnrDetail($pnrNumber){
+                    if(isset($pnrNumber) && !empty($pnrNumber)){
+                    	$url       = API_HOST.PNR_DETAIL_ROUTE.$pnrNumber;
+				        $this->curl->setOption(CURLOPT_HEADER, true);
+				        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+				        $response = $this->curl->get($url); 
+				        $response = json_decode($response,true); 
+                    }
+				    else{
+				    	$response =  array("status" => "false");
+				    }
+
+				    return $response;
 	}
 
 }

@@ -28,7 +28,7 @@ class TrainController extends Controller {
 
         }
         else{
-           /* is train num is provided , redirect to station select direct */
+           /* If train num is provided , redirect to station select direct */
             if(isset($trainNum) && !empty($trainNum))
               return \Redirect::route('select.station',array("source_station"       => $srcStation ,
                                                               "destination_station" => $destStation,
@@ -44,15 +44,14 @@ class TrainController extends Controller {
             $response = $this->curl->get($url,$param); 
             $response = (array)json_decode($response); 
             if(isset($response['status']) && $response['status'] === true) {
-            	$trainListHeader        = array("DATE" => $response['date'],
+            	$trainListHeader        = array(   "DATE" => $response['date'],
                                                 "ROUTE" => $response['srcStationName'] ." [".$response['srcStationCode']."] TO " .$response['destStationName']." [".$response['destStationCode']."]",
                                                  "SRC_STATION" => $response['srcStationCode'],
                                                  "DESTINATION_STATION" =>$response['destStationCode']
                                                 );
-            	$trainListDetails  = array();
+              $trainListDetails  = array();
 
-
-            	foreach ($response['trains'] as $train) {
+           	  foreach ($response['trains'] as $train) {
             		$train = (array)$train;
             		$trainListDetails[$train['trainNum']] = array("TRAIN_NAME"                    => $train['trainName'],
                                                                   "ARRIVAL_TIME_AT_SOURCE"        => "Source Arrival : ". $train['srcArrivalTime'], 

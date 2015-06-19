@@ -29,8 +29,8 @@ class RestaurantController extends Controller {
 
        	   		$restaurantHeader   = array("DATE"              => $journeyDate,
 			                                "TRAIN_NAME"        => $trainNum,
-			                                "ROUTE"            => $srcStation ." TO ". $destStation,
-			                                "STATION_SELECTED" => $stationCode
+			                                "ROUTE"             => $srcStation ." TO ". $destStation,
+			                                "STATION_SELECTED"  => $stationCode
 			                          );
                 $url       = API_HOST.GET_RESTAURANT_BY_STATION_API_ROUTE.$stationCode;
 		        $this->curl->setOption(CURLOPT_HEADER, true);

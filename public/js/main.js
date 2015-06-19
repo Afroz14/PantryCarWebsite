@@ -1,8 +1,76 @@
 
+$.PC = {};
 //running loader at the top
 var nanobar = new Nanobar({"bg":"#e76f62","id":"nano"});
 nanobar.go(100);
+
+$.PC.showPNRTypehead = function(){
+    $(".pnr-type-ahead").css({"height":"130px",'margin-bottom':"18px"});
+    $("#pnr-search-form").css({"height":"150px"});
+    this.fetchPNRDetail();
+}
+$.PC.removePNRTypehead = function(){
+  $(".pnr-type-ahead").css({"height":"0px",'margin-bottom':"0px"});
+  $("#pnr-search-form").css({"height":"150px"});
+}
  
+$.PC.fetchPNRDetail = function(){
+       var pnrNumber = $("#pnr_number").val();
+        $.ajax({
+            cache: false,
+            dataType: 'json',
+            url: BASE_PATH + '/getPnrDetail/'+ pnrNumber ,
+            method:'GET',
+            beforeSend: function() { 
+                 $(".pnr-type-ahead .horizontal-loader").removeClass("hidden");
+                 $("#pnr-search-result-container #pnr_result_message_any").html(""); 
+                 $("#pnr-search-result-container #pnr_result_message_any").addClass("hidden");
+                 $("#pnr-search-result-container .right-arrow-icon__pnr_result").addClass("hidden");
+            },
+            success:function(data){
+                  $(".pnr-type-ahead .horizontal-loader").addClass("hidden");
+                    if(data && data.status){
+                        if(data.status === true)
+                          {
+                             $("#pnr-search-result-container #pnr_date").html(data.doj);
+                             $("#pnr-search-result-container #pnr_train_num").html(data.trainNum);
+                             $("#pnr-search-result-container #pnr_src_station_name").html(data.srcStationName);
+                             $("#pnr-search-result-container #pnr_src_station_code").html(data.srcStationCode);
+                             $("#pnr-search-result-container #pnr_status").html("Confirmed");
+                             $("#pnr-search-result-container #pnr_train_name").html(data.trainName);
+                             $("#pnr-search-result-container #pnr_dest_station_name").html(data.destStationName);
+                             $("#pnr-search-result-container #pnr_dest_station_code").html(data.destStationCode);
+                             $("#pnr-search-result-container #pnr_seat").html("B2 45");
+                             $("#pnr-search-result-container .right-arrow-icon__pnr_result").removeClass("hidden");
+                         }
+                        else{
+                              $.PC.clearPnrResultWithThisMessage("PNR not found !");
+                          } 
+                    }   
+                    else {
+                             $.PC.clearPnrResultWithThisMessage("PNR not found !");    
+                    } 
+            },
+            error:function(){
+                $(".pnr-type-ahead .horizontal-loader").addClass("hidden");
+            }
+         });
+}
+$.PC.clearPnrResultWithThisMessage = function(message){
+
+                 $("#pnr-search-result-container #pnr_date").html("");
+                 $("#pnr-search-result-container #pnr_train_num").html("");
+                 $("#pnr-search-result-container #pnr_src_station_name").html("");
+                 $("#pnr-search-result-container #pnr_src_station_code").html("");
+                 $("#pnr-search-result-container #pnr_status").html("");
+                 $("#pnr-search-result-container #pnr_train_name").html("");
+                 $("#pnr-search-result-container #pnr_dest_station_name").html("");
+                 $("#pnr-search-result-container #pnr_dest_station_code").html("");
+                 $("#pnr-search-result-container #pnr_seat").html("");
+                 $("#pnr-search-result-container #pnr_result_message_any").html(message);   
+                 $("#pnr-search-result-container #pnr_result_message_any").removeClass("hidden");
+                 $("#pnr-search-result-container .right-arrow-icon__pnr_result").addClass("hidden");
+};
 /*
 -------------------------------------------------------
   Bootbox popup
@@ -35,6 +103,13 @@ $(document).ready(function() {
 	        todayBtn: true,
             format:'dd-mm-yyyy'
     });
+
+  $("#pnr_number").on("input",function(){
+     if($(this).val().length === 10)
+       $.PC.showPNRTypehead();
+     else
+       $.PC.removePNRTypehead();
+  });
 /*
 -------------------------------------------------------
 Signin process
@@ -192,96 +267,6 @@ $('body').on('click','.select-train-button a',function(event){
       });
 
         
-          /*---------------------------------------
-          -----------------------------------------
-           Train suggestion
-          -----------------------------------------
-          -----------------------------------------
-          */
-          var substringMatcher = function(strs) {
-          return function findMatches(q, cb) {
-            var matches, substringRegex;
-         
-            // an array that will be populated with substring matches
-            matches = [];
-         
-            // regex used to determine if a string contains the substring `q`
-            substrRegex = new RegExp(q, 'i');
-         
-            // iterate through the pool of strings and for any string that
-            // contains the substring `q`, add it to the `matches` array
-            $.each(strs, function(i, str) {
-              if (substrRegex.test(str)) {
-                matches.push(str);
-              }
-            });
-         
-            cb(matches);
-          };
-        };
-         
-
-     /* var trainSearcher = new Bloodhound({ 
-              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-              queryTokenizer: Bloodhound.tokenizers.whitespace,
-              remote: {
-                url: window.BASE_PATH +'/getTrainSuggestion/1255',
-                ajax: {
-                  type: "GET",
-                  dataType: "json",
-                  success: function (data) {
-                      console.log("Got data successfully");
-                      console.log(data.resultSet);
-                  }
-              }
-           }
-     });*/
-
-    var trainSearcher = new Bloodhound({
-    datumTokenizer: function (datum) {
-        return Bloodhound.tokenizers.whitespace(datum.value);
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    remote: {
-        url: window.BASE_PATH +'/getTrainSuggestion/1255',
-        filter: function (movies) {
-            // Map the remote source JSON array to a JavaScript object array
-
-            return $.map(movies.value, function (movie) {
-              //var term = "haha";
-                // m = movie.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
-//console.log(m);
-                return {
-                    value: movie
-                };
-            });
-        }
-    }
-});
-
-    /* var trainSearcher = new Bloodhound({
-    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    limit: 10,
-  prefetch: window.BASE_PATH +'/getTrainSuggestion/1255',
-
-
-  });*/
-      
-      trainSearcher.initialize(); 
-
-      $('#pnr_number').typeahead({
-          hint: true,
-          highlight: true,
-          minLength: 1
-        },
-        {
-          name: 'states',
-          displayKey: 'value',
-          source: trainSearcher.ttAdapter()
-        });
-
-        $('.typeahead.input-sm').siblings('input.tt-hint').addClass('hint-small');
-        $('.typeahead.input-lg').siblings('input.tt-hint').addClass('hint-large');
+    
 
 }); // DOM Ready close

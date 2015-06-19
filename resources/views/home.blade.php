@@ -24,16 +24,33 @@
 
                         <div class="col-md-6 form-separator pr30">
                             <center>
-                                <form role="form" id= "search-form" method="get" action="{{ url ('/selectStation') }}">
+                                <form role="form" class="home-page-search-form" id= "pnr-search-form" method="get" action="{{ url ('/selectStation') }}">
                                     <!--<input name="_token" type="hidden" value="{{ csrf_token() }}">-->
                                     <input name="search_type" type="hidden" value="pnr_search">
 
                                     <div class="form-group">
                                         <input class="form-control input-class" id="pnr_number" required="1" name="pnr_number" type="text" placeholder="Enter PNR">
                                     </div>
-                                    <div class="">
+                                    <div class="pnr-type-ahead">
+                                      <div class="horizontal-loader hidden"></div>
+                                      <div class="col-md-12" id="pnr-search-result-container">
+                                        <div class="right-arrow-icon__pnr_result hidden"></div>
+                                        <div id="pnr_result_message_any" class="hidden"></div>
+                                         <div id="pnr_date"></div>
+                                         <div class="floatleft textleft">
+                                                <div id="pnr_train_num"></div>
+                                                <div id="pnr_src_station_name"></div>
+                                                <div id="pnr_src_station_code"></div>
+                                                <div id="pnr_status"></div>
+                                         </div>
+                                         <div class="floatright textleft">
+                                                <div id="pnr_train_name"></div>
+                                                <div id="pnr_dest_station_name"></div>
+                                                <div id="pnr_dest_station_code"></div>
+                                                <div id="pnr_seat"></div>
+                                         </div> 
+                                      </div> 
                                     </div>
-
 
                                     <div class="form-group buttons">
                                         <button type="submit" class="btn btn-search">
@@ -44,9 +61,9 @@
                             </center>
                         </div>
                         
-                        <div class="col-md-6">
+                        <div class="col-md-6 pr30">
                             <center>
-                             <form role="form" id= "search-form" method="get" action="{{ url ('/selectTrain') }}">
+                             <form role="form" id= "station-search-form" class="home-page-search-form" method="get" action="{{ url ('/selectTrain') }}">
                                     <!--<input name="_token" type="hidden" value="{{ csrf_token() }}">-->
 
                                     <div class="form-group">
@@ -76,11 +93,8 @@
                                         </button>
                                     </div>
                                 </form>
-                                 <div class="clear" >&nbsp;</div>
                             </center>
-                            <div class="clear" >&nbsp;</div>
                         </div>
-                        <div class="clear">&nbsp;</div>
                 </div>
         </div>
   </div>

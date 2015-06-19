@@ -30,7 +30,7 @@ class MailerController extends Controller {
 	{
 		$userEmail		  =  $userData['emailId'];
 		$userName  		  =  $userData['name'];
-		$verificationToken =  $userData['verificationToken'];
+		$verificationToken = $userData['verificationToken'];
 		$link 			  =  URL::route('activate-account',$verificationToken);
         Mail::send('emails.confirm-email', array('username'=>$userName,'link' => $link), function($message) use($userEmail,$userName){
             $message->to($userEmail, $userName)->subject('Activate your account ');
