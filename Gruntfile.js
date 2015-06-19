@@ -169,7 +169,7 @@ module.exports = function(grunt) {
                     'sudo chmod 777 resources/views/meta.blade.php',
                     'sudo chmod 777 resources/views/restaurant-page.blade.php',
                     'sudo chmod 777 resources/views/user-cart.blade.php',
-                    'grunt unlock;grunt build'
+                    'grunt unlock;sudo grunt build'
                 ].join(' && '),    
             options:{
                 config: 'prodServer'
