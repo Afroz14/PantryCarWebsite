@@ -902,7 +902,7 @@ html {
 }
 body {
   font-family: "DroidSansRegular", "Times New Roman", Times, serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.42857143;
   color: #333333;
   background-color: #ffffff;
@@ -3664,10 +3664,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-color: #337ab7;
 }
 .nav .nav-divider {
-  height: 1px;
+  height: 30px;
+  width: 1px;
   margin: 9px 0;
   overflow: hidden;
-  background-color: #e5e5e5;
+  background-color: #ccc;
 }
 .nav > li > a > img {
   max-width: none;
@@ -6346,6 +6347,9 @@ label,
 .pb10{
   padding-bottom: 10px;
 }
+.pt15{
+  padding-top:15px;
+}
 .pt20{
   padding-top:20px;
 }
@@ -6402,6 +6406,12 @@ label,
 }
 .landing-background{
   background:url('../../img/landing_page_02.jpg');
+}
+.color-orange{
+  color:#FF6C60;
+}
+.color-grey{
+  color:#5e5e5e;
 }
 .full-width-container-home{
   width:100%;
@@ -7501,7 +7511,6 @@ body.overflow-hidden {
   background-color: #eee;
 }
 .res-category  > li > a {
-  padding: 12px 5px 12px 15px;st
   display: block;
   text-decoration: none;
   color:#666;
@@ -7510,7 +7519,7 @@ body.overflow-hidden {
    min-width:500px;
 }
 #res-category-container{
-  min-width:189px;
+  min-width:198px;
   margin-top:10px;
   border:1px solid #ccc;
   border-right: none;
@@ -7519,8 +7528,35 @@ body.overflow-hidden {
   font-size:17px;
 }
 @media(max-width:@phone_device){
-   #res-menu-item-container,#res-category-container{
+   #res-menu-item-container{
       width:100%;
+      min-width:95%;
+   }
+   #res-category-container{
+      display:none;
+   }
+   .each-menu-category-wrap{
+      display:block !important;
+      visibility:visible !important;
    }
  }
  
+ .mobile-category-nav{
+   position: relative;
+   height: 400px;
+   overflow: hidden
+ }
+
+ .scroller {
+  height: 100%;
+  overflow: auto;
+}
+#helpline-number{
+  text-align:right;
+}
+@media(max-width:@phone_device){
+  #helpline-number{
+     padding-top:0px;
+     text-align:left;
+  }
+}
