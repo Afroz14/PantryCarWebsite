@@ -1,6 +1,7 @@
 
 @phone_device: 480px;
-@desktop:1200px;
+@tab_device_edge:1020px;
+@tab_device_start:700px;
 @pc_green:#1fa67a;
 @pc_blue:#34495E;
 @pc_blue_v2:#5F7989;
@@ -6406,11 +6407,14 @@ label,
 .station-select-header-wrap{
      height:40px;
      font-size:12px;
+     border-top: 1px solid #ccc;
+     border-bottom: 1px solid #ccc;
   }
 
 @media (max-width: @phone_device){
   .station-select-header-wrap{
     font-size: 11px;
+    border:none !important;
   }
   .station-select-header{
      width:100%;
@@ -6997,7 +7001,7 @@ a.pc-btn:hover{
     width: 33%;
 }
 
-@media (max-width:@phone_device){
+@media (max-width:@tab_device_edge){
   .restaurant-menu-details-wrap{
       width:100%;
   }
@@ -7021,7 +7025,7 @@ a.pc-btn:hover{
    min-height:200px;
    width:100%;
 }
-@media(max-width:@phone_device){
+@media(max-width:@tab_device_edge){
   .user-cart-large-wrap{
      display:none;
   }
@@ -7074,7 +7078,7 @@ a.pc-btn:hover{
     transition: 0.4s all;
 }
 
-@media (max-width:@phone_device){
+@media (max-width:@tab_device_edge){
   .each-category-menu-item,.restaurant-attributes{
      width:100%;
   }
@@ -7315,11 +7319,12 @@ body.overflow-hidden {
   padding:10px; 
   z-index:9999;
 }
-@media(max-width:@phone_device){
+@media(max-width:@tab_device_edge){
   .cart-mobile-footer{
      display:block;
   }
 }
+
 .cart-mobile-summary{
   float:left;
   width:70%;
@@ -7428,7 +7433,7 @@ body.overflow-hidden {
 
 
 .pc-breadcrumb {
-  display: inline-block;
+  display: none;
   border:1px solid #ccc;
   overflow: hidden;
   border-radius: 5px;
@@ -7455,3 +7460,8 @@ body.overflow-hidden {
   color:white;
 }
 
+@media(min-width:@tab_device_start){
+  .pc-breadcrumb {
+     display:inline-block;
+  }
+}
