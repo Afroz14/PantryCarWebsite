@@ -6983,6 +6983,7 @@ a.pc-btn:hover{
 .restaurant-menu-details-wrap{
     width: 700px;
     float:left;
+    min-height:500px
 }
 
 .restaurant-attributes{
@@ -7054,15 +7055,14 @@ a.pc-btn:hover{
 .each-menu-category-wrap{
     display:block;
     overflow:hidden;
-    margin-top:20px;
-    border-radius: 5px;
-    padding: 15px;
+    margin-top:10px;
+    padding: 10px;
     border:1px solid rgba(0,0,0,.2);
 }
 
 .each-category-menu-item{
     float:left;
-    width:49%;
+    width:100%;
     margin-top:10px;
     margin-right:5px;
     height: 50px;
@@ -7079,7 +7079,7 @@ a.pc-btn:hover{
 }
 
 @media (max-width:@tab_device_edge){
-  .each-category-menu-item,.restaurant-attributes{
+  .restaurant-attributes{
      width:100%;
   }
   .restaurant-attributes{
@@ -7465,3 +7465,45 @@ body.overflow-hidden {
      display:inline-block;
   }
 }
+.res-category {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.res-category  > li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border-bottom:1px solid #ccc;
+}
+.res-category  > li:last-child{
+  border-bottom:none;
+}
+.res-category  > li.active{
+  font-weight:bold;
+  background-color: #eee;
+}
+.res-category  > li > a {
+  padding: 12px 5px 12px 15px;
+  display: block;
+  text-decoration: none;
+  color:#666;
+}
+#res-menu-item-container{
+   min-width:500px;
+}
+#res-category-container{
+  min-width:189px;
+  margin-top:10px;
+  border:1px solid #ccc;
+  border-right: none;
+}
+.res-category-arrow{
+  font-size:17px;
+}
+@media(max-width:@phone_device){
+   #res-menu-item-container,#res-category-container{
+      width:100%;
+   }
+ }
+ 
