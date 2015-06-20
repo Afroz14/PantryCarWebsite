@@ -2,6 +2,9 @@
 @phone_device: 480px;
 @desktop:1200px;
 @pc_green:#1fa67a;
+@pc_blue:#34495E;
+@pc_blue_v2:#5F7989;
+
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -6299,7 +6302,7 @@ label,
 }
 
 #footer{
-  background-color: #34495E;
+  background-color: @pc_blue;
 }
 #footer li a{
   font-size: 11px;
@@ -6949,6 +6952,7 @@ a.pc-btn:hover{
    width:100%;
    height:160px;
    background:url('../../img/blurback.jpg');
+   margin-top: -32px;
 }
 
 .restaurant-name{
@@ -7419,3 +7423,35 @@ body.overflow-hidden {
   left: 42%;
   background-size: cover;
 }
+
+/* BreadCrumb */
+
+
+.pc-breadcrumb {
+  display: inline-block;
+  border:1px solid #ccc;
+  overflow: hidden;
+  border-radius: 5px;
+  margin-top:10px;
+  margin-bottom:10px;
+  width:100%
+}
+
+.pc-breadcrumb span {
+  outline: none;
+  display: block;
+  float: left;
+  font-size: 12px;
+  line-height: 36px;
+  color: #666;
+  padding: 5px 20px 5px 20px;
+  border-left:1px solid #ccc;
+  position: relative;
+  width: 20%;
+  text-align: center;
+}
+.pc-breadcrumb span.active {
+  background:@pc_blue_v2;
+  color:white;
+}
+

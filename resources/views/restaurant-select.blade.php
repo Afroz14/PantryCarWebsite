@@ -7,7 +7,8 @@
 
  <div class="full-width-container-other" >
       <div class="container-grid">
- 	      <div class="page-header head-common-color">SELECT RESTAURANT</div>
+         {!! $breadcrumb !!}
+ 	      <div class="head-common-color">SELECT RESTAURANT</div>
     @if(isset($restaurantsList) && $restaurantsList !== "")
  	      <div class="station-select-header-wrap">
  	      	<?php $totalRecord = count($restaurant_header);

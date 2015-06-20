@@ -7,8 +7,9 @@
  <link href="{{ asset('/css/owl.carousel.css') }}" rel="stylesheet">
   <link href="{{ asset('/css/owl.default.theme.min.css') }}" rel="stylesheet">
  <div class="full-width-container-other">
- 	@if($train_list !== "")
  	 <div class="col-lg-10 col-lg-offset-1">
+ 	 	{!! $breadcrumb !!}
+ 	 	@if($train_list !== "")
  	      <input type="hidden" name="_token" id="csrf_token" value="{{ csrf_token() }}">
  	      <div class="page-header head-common-color" ><h4>SELECT TRAIN</h4></div>
  	      <div class="station-select-header-wrap">

@@ -14,11 +14,13 @@ class StationController extends Controller {
 	public function __construct()
 	{
 		 $this->curl = new Curl;
+		 $this->breadcrumb = new BreadCrumb();
 	}
 
 	public function show()
 	{
         $search_type = \Input::get("search_type");
+        $breadcrumbHTML = $this->breadcrumb->getBreadCrumb(1);
 		if(isset($search_type)) {
             if($search_type == 'pnr_search'){
 			        $pnrNumber = \Input::get("pnr_number");
@@ -56,15 +58,24 @@ class StationController extends Controller {
 		        		$station = (array)$station;
 		        		$stationsListDetails[$station['stationCode']] = array("STATION_NAME" => $station['stationName'], "ARRIVAL_TIME" =>"ARRIVAL ".$station['arrivalTime'], "HALT" => "HALT ".$station['stoppageTime'],"DAY" =>"DAY " .$station['day']);
 		        	}
-		            return view('station-select')->with("station_list",$stationsListDetails)->with("station_header",$stationHeader);
+		            return view('station-select')
+		                       ->with("station_list",$stationsListDetails)
+		                       ->with("station_header",$stationHeader)
+		                       ->with("breadcrumb",$breadcrumbHTML);
 		       }
 		       else{
-		        	  return view('station-select')->with("station_list","")->with("station_header","");
+		        	  return view('station-select')
+		        	         ->with("station_list","")
+		        	         ->with("station_header","")
+		        	         ->with("breadcrumb",$breadcrumbHTML);
 		        } 
 
 		}
 		else{
-			return view('station-select')->with("station_list","")->with("station_header","");
+			return view('station-select')
+			       ->with("station_list","")
+			       ->with("station_header","")
+			       ->with("breadcrumb",$breadcrumbHTML);
 		}
             
 	}

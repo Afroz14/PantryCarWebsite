@@ -7,10 +7,11 @@
  <link href="{{ asset('/css/owl.carousel.css') }}" rel="stylesheet">
   <link href="{{ asset('/css/owl.default.theme.min.css') }}" rel="stylesheet">
  <div class="full-width-container-other">
- 	@if($station_list !== "")
  	 <div class="col-lg-10 col-lg-offset-1">
+ 	 	 {!! $breadcrumb !!}
+ 	 	@if($station_list !== "")
  	      <input type="hidden" name="_token" id="csrf_token" value="{{ csrf_token() }}">
- 	      <div class="page-header head-common-color" ><h4>SELECT STATION</h4></div>
+ 	      <div class="head-common-color" ><h4>SELECT STATION</h4></div>
  	      <div class="station-select-header-wrap">
  	      	 <?php $totalRecord = count($station_header);
  	      	 $iterator = 0;
@@ -62,6 +63,5 @@
 </div>
 
 @include('footer')
-
 </body>
 </html>

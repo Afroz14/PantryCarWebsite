@@ -15,6 +15,7 @@ class RestaurantController extends Controller {
 	public function __construct()
 	{
 		$this->curl = new Curl;
+		$this->breadcrumb = new BreadCrumb();
 	}
 
 	public function show()
@@ -23,8 +24,10 @@ class RestaurantController extends Controller {
        $stationCode = \Input::get("station_code");
        $trainNum    = \Input::get("train_num");
 	   $srcStation  = \Input::get("source_station");
-       $destStation = \Input::get("destination_station");
+       $destStation = \Input::get("destination_station"); 
        $journeyDate = \Input::get("journey_date");
+       $breadcrumbHTML = $this->breadcrumb->getBreadCrumb(2);
+
        if(!empty($stationCode) && !empty($trainNum) && !empty($srcStation) && !empty($destStation) && !empty($journeyDate) ){
 
        	   		$restaurantHeader   = array("DATE"              => $journeyDate,
@@ -46,37 +49,29 @@ class RestaurantController extends Controller {
 		        }
        }
      
-         if(isset($restaurantsList))
-		     return view('restaurant-select')->with("restaurant_header",$restaurantHeader)->with("restaurantsList",$restaurantsList);
-		 else
-		 	 return view('restaurant-select');
+         if(isset($restaurantsList)){
+		     return view('restaurant-select')
+		             ->with("restaurant_header",$restaurantHeader)
+		             ->with("restaurantsList",$restaurantsList)
+		             ->with("breadcrumb",$breadcrumbHTML);
+		 }
+		 else{
+		 	 return view('restaurant-select')
+		 	            ->with("breadcrumb",$breadcrumbHTML);
+		 	}
 	}
 
 	public function getDetail($restaurantId){
        
         if($restaurantId === null || $restaurantId < 0 )
         	return "No Menu Found for this restaurant";
-
-
-		/*$url       = API_HOST.RESTAURANT_MENU_API_ROUTE."RST".$restaurantId."/menu";
-		$this->curl->setOption(CURLOPT_HEADER, true);
-        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-        $response = $this->curl->get($url); 
-        $response = (array)json_decode($response);
-        if($response == null || (isset($response['status']) && $response['status'] === false || $response['status'] === 500 ) || (isset($response['menu']) && $response['menu'] === null )){
-            return "No Menu Found for this restaurant";
-        } 
-
-       $restaurantMenu = $response['menu'];
-       $restaurantMenuHTML = "";
-       foreach($restaurantMenu as $category => $menu){
-            $restaurantMenuHTML .= "<h3>".$category."</h3>";
-       }*/
        
        $cartController = new CartController;
-       //$cartContentMobile = $cartController->getCartContentMobile();
-       $cartContent       = $cartController->getCartContent();
-	   return view('restaurant-page')->with('cartContent' ,$cartContent);
+       $cartContent    = $cartController->getCartContent();
+       $breadcrumbHTML = $this->breadcrumb->getBreadCrumb(3);
+	   return view('restaurant-page')
+	           ->with('cartContent' ,$cartContent)
+	           ->with("breadcrumb",$breadcrumbHTML);;
 	}
 
 

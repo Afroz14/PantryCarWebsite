@@ -5,7 +5,8 @@
 @include('header')
 
  <div class="full-width-container-other" >
-          <div class="container-grid">
+        <div class="container-grid">
+        	{!! $breadcrumb !!}
  	      <div class="restaurant-header-image">
  	      	  <h3 class="restaurant-name">Al Barista</h3>
  	      	  <div class="restaurant-address">New Delhi Railway Station</div>
