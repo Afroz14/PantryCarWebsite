@@ -73,6 +73,6 @@ Route::post('/cartHandler',"CartController@handle");
 
 Route::get('/getCartMobile',"CartController@getCartContentMobile");
 
-//Route::get('/getPnrDetail/{pnr_number}',"StationController@getPnrDetail");
+Route::get('/getPnrDetail/{pnr_number}',"StationController@getPnrDetail");
 
 
