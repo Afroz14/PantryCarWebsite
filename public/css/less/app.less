@@ -5,6 +5,9 @@
 @pc_green:#1fa67a;
 @pc_blue:#34495E;
 @pc_blue_v2:#5F7989;
+@pc_yellow:#FEC514;
+@pc_green_v2:#8DAB42;
+@pc_dark_green:#437B86;
 
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -6407,8 +6410,8 @@ label,
 .station-select-header-wrap{
      height:40px;
      font-size:12px;
-     border-top: 1px solid #ccc;
-     border-bottom: 1px solid #ccc;
+     border-top: 1px solid @pc_green_v2;
+     border-bottom: 1px solid @pc_green_v2;
   }
 
 @media (max-width: @phone_device){
@@ -7434,12 +7437,11 @@ body.overflow-hidden {
 
 .pc-breadcrumb {
   display: none;
-  border:1px solid #ccc;
   overflow: hidden;
-  border-radius: 5px;
   margin-top:10px;
   margin-bottom:10px;
-  width:100%
+  width:100%;
+  background:@pc_dark_green;
 }
 
 .pc-breadcrumb span {
@@ -7448,7 +7450,7 @@ body.overflow-hidden {
   float: left;
   font-size: 12px;
   line-height: 36px;
-  color: #666;
+  color: white;
   padding: 5px 20px 5px 20px;
   border-left:1px solid #ccc;
   position: relative;
@@ -7458,7 +7460,7 @@ body.overflow-hidden {
   font-weight: bolder;
 }
 .pc-breadcrumb span.active {
-  background:@pc_blue_v2;
+  background:@pc_yellow;
   color:white;
 }
 
@@ -7486,7 +7488,7 @@ body.overflow-hidden {
   background-color: #eee;
 }
 .res-category  > li > a {
-  padding: 12px 5px 12px 15px;
+  padding: 12px 5px 12px 15px;st
   display: block;
   text-decoration: none;
   color:#666;
