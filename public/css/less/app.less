@@ -7560,12 +7560,6 @@ body.overflow-hidden {
 #helpline-number{
   text-align:right;
 }
-@media(max-width:@phone_device){
-  #helpline-number{
-     padding-top:0px;
-     text-align:left;
-  }
-}
 .footer-content{
    color:white;
 }
@@ -7586,4 +7580,16 @@ body.overflow-hidden {
 }
 .linkset a:hover{
    color:#FFF;
+}
+@media(max-width:@phone_device){
+  #helpline-number{
+     padding-top:0px;
+     text-align:left;
+  }
+  .linkset a{
+      margin-right:15px;
+  }
+  .footer-content{
+    margin-bottom:15px;
+  }
 }
