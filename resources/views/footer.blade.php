@@ -49,7 +49,7 @@
                 </p>
                   <img src="{{ asset('/img/cod.png') }}" class="img-responsive"><br>
               </div>
-              <div class="col-lg-4 col-lg-4 linkset">
+              <div class="col-lg-4 col-lg-4 linkset pt20">
                  <a>Terms and Conditions</a>
                  <a>Privacy Policy</a>    
                  <a>Disclaimer</a>   

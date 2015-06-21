@@ -19,7 +19,7 @@ Oven.config = {
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '52.10.140.143',
+    HostName : '52.27.7.65',
     userName :'ubuntu'
 };
 
