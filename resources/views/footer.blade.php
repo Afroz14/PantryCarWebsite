@@ -42,15 +42,18 @@
       <div class="border"></div>
 
       <div class="row pt10">
-          <div class="col-lg-10 col-md-12 col-sm-12 col-lg-offset-2">
-              <div class="col-lg-3 col-md-3 col-sm-3"></div>
-              <div class="footer col-lg-4 col-md-6 center">
+          <div class="col-lg-12 col-md-12 footer-content">
+              <div class="col-lg-8 col-md-8">
                 <p class="grey" >
                   &copy; 2015 pantrycar.co.in . All rights reserved
                 </p>
                   <img src="{{ asset('/img/cod.png') }}" class="img-responsive"><br>
               </div>
-              <div class="col-lg-3 col-md-3 col-sm-3"></div>
+              <div class="col-lg-4 col-lg-4 linkset">
+                 <a>Terms and Conditions</a>
+                 <a>Privacy Policy</a>    
+                 <a>Disclaimer</a>   
+              </div>
           </div>
       </div>
       </div>  
