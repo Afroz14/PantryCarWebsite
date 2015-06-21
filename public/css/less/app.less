@@ -3670,6 +3670,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   overflow: hidden;
   background-color: #ccc;
 }
+@media(max-width:@phone_device){
+  .nav .nav-divider {
+     display:none;
+  }
+}
 .nav > li > a > img {
   max-width: none;
 }
@@ -6447,7 +6452,7 @@ label,
   }
   .station-select-header{
      width:100%;
-     border-bottom:1px solid #ccc;
+     border-bottom:1px solid @pc_green_v2;
      padding:10px 10px 10px 0px;
   }
   .station-select-header-wrap .breadcrumb-arrow{

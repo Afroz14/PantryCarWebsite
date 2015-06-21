@@ -235,10 +235,7 @@ Each train selection process
 
 $('body').on('click','.select-train-button a',function(event){
      event.preventDefault();
-     //var $_token = $('input[name=_token]').val();
-     //var tokenInput = $(document.createElement('input')).attr('name','_token').val($_token);
      var form  = $(document.createElement('form')).css({display:'none'}).attr("method","GET").attr("action",BASE_PATH + '/selectStation');
-     //form.append(tokenInput);
      var input = $(document.createElement('input')).attr('name','train_num').val($(this).data('train-code'));
      form.append(input);
      var input = $(document.createElement('input')).attr('name','source_station').val($(this).data("source-station"));
