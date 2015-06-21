@@ -60,6 +60,7 @@
 	          </div>
           </div> 
 		@endif
+	 </div>	
 </div>
 
 @include('footer')

@@ -33,7 +33,7 @@
 					@foreach($train_list as $train => $eachTrainDetail)
 	                  <div class="each-train-wrap">
                           	<div class="train-header">
-                          		{{ $eachTrainDetail['TRAIN_NAME'] }}
+                          		{{ $train }} {{ $eachTrainDetail['TRAIN_NAME'] }}
                           	</div>
 				         	    <div class="each-train__inner-block no-border-left">{{ $eachTrainDetail['ARRIVAL_TIME_AT_SOURCE'] }}</div>
 				            	<div class="each-train__inner-block">{{ $eachTrainDetail['DEPARTURE_TIME_AT_SOURCE'] }}</div>
@@ -47,7 +47,6 @@
 	                   </div> 
 	                @endforeach
 		</div>
-	</div>
 		@else
 		<div class="no-result-grid">
 			 <div class="no-result-found">
@@ -60,6 +59,7 @@
 	          </div>
           </div> 
 		@endif
+   </div>		
 </div>
 
 @include('footer')

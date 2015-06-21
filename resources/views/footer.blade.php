@@ -1,24 +1,44 @@
   <div class="col-md-12" id="footer" >
     <div class="bs-docs-section">
       <div class="row">
-        <div class="col-md-12 secondary">
-          <ul class="center uppercase">
-            <li><a href="{{ url('/about-us') }}">About Us</a></li>
-            <li><a href="{{ url('/terms-and-conditons') }}">Terms & Conditions</a></li>
-            <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li>
-            <li><a href="{{ url('/disclaimer') }}">Disclaimer</a></li>
-            <li><a href="{{ url('/contact-us') }}">Contact</a></li>
-            <li><a href="{{ url('/complaints') }}">Complaints</a></li>            
-          </ul>
-          <ul class="p10 center">
-           <li><a href="#"><img class="tool" title="Facebook" src="{{ asset('/img/facebook.png') }}" alt=""></a></li>
-            <li><a href="#"><img class="tool" title="Twitter" src="{{ asset('/img/twitter.png') }}" alt="" ></a></li>
-            <li><a href="#"><img class="tool" title="Google+" src="{{ asset('/img/google.png') }}" alt="" ></a></li>
-           </ul>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+           <div class="col-md-offset-1 col-md-3 col-lg-3 footer-content">
+              <h5>PantryCar</h5>
+              <p>Pantry Car is an online food delivery network in Trains </p>
+           </div>
+           <div class="col-md-offset-1 col-lg-3 col-md-3 footer-content">
+              <h5>Contact Us </h5>
+              <p>
+                 <i class="glyphicon glyphicon-map-marker pr10"></i><span>Kormangla ,Bangalore ,Karnataka</span>
+              </p>
+              <p>
+                 <i class="glyphicon glyphicon-phone-alt pr10"></i><span>+91 - 9911869145</span>
+              </p>
+              <p>
+                 <i class="glyphicon glyphicon-envelope pr10"></i><span>care@pantrycar.co.in</span>
+              </p>
+           </div>
+           <div class="col-lg-3 col-md-3 footer-content">
+              <h5>News Letter</h5>
+              <p>Type your email address below and subscribe to our newsletter</p>
+              <p><form role="form">
+                    <div class="input-group">
+                        <input class="form-control input-class" id="news_letter_subscribe_email" required="1" name="news_letter_subscribe_email" type="text" placeholder="Email Address">
+                        <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" id="go">Go!</button>
+                       </span> 
+                    </div>
+                  </form>              
+              </p>
+           </div>
+           <div class="col-md-12 center mt35 mb20">
+            <ul>
+             <li class="floatleft pr10"><a href="#"><img class="tool" title="Facebook" src="{{ asset('/img/facebook.png') }}" alt=""></a></li>
+              <li class="floatleft pr10"><a href="#"><img class="tool" title="Twitter" src="{{ asset('/img/twitter.png') }}" alt="" ></a></li>
+              <li class="floatleft"><a href="#"><img class="tool" title="Google+" src="{{ asset('/img/google.png') }}" alt="" ></a></li>
+             </ul>
+         </div>
       </div>
-      <!-- End of Secondary Menu -->
+      
       <div class="border"></div>
 
       <div class="row pt10">
