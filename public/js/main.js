@@ -8,11 +8,11 @@ $.PC.showPNRTypehead = function(){
     $(".pnr-type-ahead").css({"height":"130px",'margin-bottom':"18px"});
     $("#pnr-search-form").css({"height":"150px"});
     this.fetchPNRDetail();
-}
+};
 $.PC.removePNRTypehead = function(){
   $(".pnr-type-ahead").css({"height":"0px",'margin-bottom':"0px"});
   $("#pnr-search-form").css({"height":"150px"});
-}
+};
  
 $.PC.fetchPNRDetail = function(){
        var pnrNumber = $("#pnr_number").val();
@@ -53,9 +53,10 @@ $.PC.fetchPNRDetail = function(){
             },
             error:function(){
                 $(".pnr-type-ahead .horizontal-loader").addClass("hidden");
+                $.PC.clearPnrResultWithThisMessage("Oops ! some server error occured");  
             }
          });
-}
+};
 $.PC.clearPnrResultWithThisMessage = function(message){
 
                  $("#pnr-search-result-container #pnr_date").html("");
@@ -80,7 +81,7 @@ $('.pc_login').click(function(){
 		bootbox.dialog({
 		  title: "Login",
 		  message: $('#loginform').html(),
-           animate: true,
+           animate: true
 		});
 });
 
@@ -105,11 +106,15 @@ $(document).ready(function() {
     });
 
   $("#pnr_number").on("input",function(){
-     if($(this).val().length === 10)
+     if($(this).val().length === 10){
        $.PC.showPNRTypehead();
-     else
+     }
+     else{
        $.PC.removePNRTypehead();
+     }
   });
+
+
 /*
 -------------------------------------------------------
 Signin process
@@ -131,7 +136,7 @@ Signin process
             },
             success:function(data){
                     $('.bootbox-body .ajax_loader__wrapper').addClass('hidden');
-                    if(data.success == false)
+                    if(data.success === false)
                     {
                         var arr = data.errors;
                         $(".alert-danger").html("");
@@ -139,7 +144,7 @@ Signin process
                         $(".alert-danger").append('<ul>');
                         $.each(arr, function(index, value)
                         {
-                            if (value.length != 0)
+                            if (value.length !== 0)
                             {
                                 $(".alert-danger").append('<li>'+ value +'</li>');
                             }
@@ -147,7 +152,7 @@ Signin process
                         $(".alert-danger").append('</ul>');
                         $(".alert-danger").removeClass('hidden');
                     }
-                    else if(data.fail == true){
+                    else if(data.fail === true){
                             $(".alert-danger").append('<strong>Whoops!</strong> Login Failed .Try again<br><br>');
                             $(".alert-danger").removeClass('hidden');
                     } 
@@ -190,7 +195,7 @@ Signup process
                         $(".alert-danger").append('<ul>');
                         $.each(arr, function(index, value)
                         {
-                            if (value.length != 0)
+                            if (value.length !== 0)
                             {
                                 $(".alert-danger").append('<li>'+ value +'</li>');
                             }
@@ -221,7 +226,7 @@ $('body').on('click','.select-station-button a',function(event){
      var stationCode  = $(this).data("station-code");
      var newUrl       = window.location.href;
      var seperator    = (url.indexOf("?") === -1)?"?":"&";
-     var newUrl       = url + seperator + "station_code="+stationCode;
+     newUrl           = url + seperator + "station_code="+stationCode;
      newUrl           = newUrl.replace("selectStation","selectRestaurant");
      window.location.href =  newUrl;
 
@@ -238,13 +243,13 @@ $('body').on('click','.select-train-button a',function(event){
      var form  = $(document.createElement('form')).css({display:'none'}).attr("method","GET").attr("action",BASE_PATH + '/selectStation');
      var input = $(document.createElement('input')).attr('name','train_num').val($(this).data('train-code'));
      form.append(input);
-     var input = $(document.createElement('input')).attr('name','source_station').val($(this).data("source-station"));
+     input = $(document.createElement('input')).attr('name','source_station').val($(this).data("source-station"));
      form.append(input);
-     var input = $(document.createElement('input')).attr('name','destination_station').val($(this).data("destination-station"));
+     input = $(document.createElement('input')).attr('name','destination_station').val($(this).data("destination-station"));
      form.append(input);
-     var input = $(document.createElement('input')).attr('name','journey_date').val($(this).data("doj"));
+     input = $(document.createElement('input')).attr('name','journey_date').val($(this).data("doj"));
      form.append(input);
-     var input = $(document.createElement('input')).attr('name','search_type').val("train_search");
+     input = $(document.createElement('input')).attr('name','search_type').val("train_search");
      form.append(input);
      $("body").append(form);
      form.submit();

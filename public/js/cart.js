@@ -1,7 +1,7 @@
 /*
 *  Cart Controller and related events
 */
-function UserCart(){};
+function UserCart(){}
 
 
 UserCart.prototype.addItemToCart = function(productToBeAddedInCart,itemSelector) {
@@ -120,18 +120,18 @@ UserCart.prototype.updateItemQty = function(productToBeUpdated,itemSelector){
             error:function(){
             }
          });
-}
+};
 
 function checkIfTheItemToBeRemovedIsLastItem(){
 
-    if($('#cd-cart-items-wrap .cd-cart-items').children().length == 0){
+    if($('#cd-cart-items-wrap .cd-cart-items').children().length === 0){
         $('.cart-mobile-summary').append("<span class='mobile-cart-empty'>Your cart is empty .</span>");
         $('#cd-cart-items-wrap .cd-cart-items').append("<span class='cart-empty'>Your cart is empty .</span>");
         $(".cart-mobile-summary .cd-cart-total").remove();
         $(".cart-mobile-footer .checkout-btn").remove();
     }
 
-    if($('.user-cart .cd-cart-items').children().length == 0){
+    if($('.user-cart .cd-cart-items').children().length === 0){
           $('.cd-cart-items').html("<span class='cart-empty'>Your cart is empty .</span>");
           $(".user-cart .cd-cart-total").remove();
           $(".user-cart .checkout-btn").remove();
@@ -198,7 +198,7 @@ function animatedlyAddItemToCart(cartItem,itemSelector,target){
 	                     'width': 0,
 	                    'height': 0
 	            }, function () {
-	                $(this).detach()
+	                $(this).detach();
 	            });
         }
 }
@@ -207,8 +207,8 @@ function animatedlyAddItemToCart(cartItem,itemSelector,target){
 jQuery(document).ready(function($){
 
         var userCart  = new UserCart();
-		$cart_trigger = $('.cart-mobile-summary'),
-		$lateral_cart = $('#cd-cart'),
+		$cart_trigger = $('.cart-mobile-summary');
+		$lateral_cart = $('#cd-cart');
 		$shadow_layer = $('#cd-shadow-layer');
 
 
@@ -217,8 +217,9 @@ jQuery(document).ready(function($){
 		event.preventDefault();
 		var returnStatus = toggle_panel_visibility($lateral_cart, $shadow_layer, $('body'));
 		$('#cd-cart .horizontal-loader').removeClass('hidden');
-        if(returnStatus == "OPENING_CART")
+        if(returnStatus == "OPENING_CART"){
 		   userCart.showItemInCart();
+        }
 
 	});
 
@@ -238,7 +239,7 @@ jQuery(document).ready(function($){
 		var productToBeAddedInCart = {
            "productId"    : $(this).find('.item-name').attr('data-product-id'),
            "productTitle" : $(this).find('.item-name').attr('data-product-title'),
-           "productPrice" : $(this).find('.item-name').attr('data-product-price'),
+           "productPrice" : $(this).find('.item-name').attr('data-product-price')
         };
          userCart.addItemToCart(productToBeAddedInCart,$(this));
 	   }
@@ -263,10 +264,11 @@ jQuery(document).ready(function($){
          var productId    = $(this).parent().attr('data-product-id');
          var productDetail = { "productId"    : productId };
          var qty =  $(this).siblings('.user-cart-qty').val();
-         if(parseInt(qty) === 1)
+         if(parseInt(qty,10) === 1)
          {
-         	 if(confirm("Do you want to remove this item from your order ?"))
+         	 if(confirm("Do you want to remove this item from your order ?")){
          	 	 userCart.removeItemFromCart(productDetail,$(this));
+                }
              
          }
          else{
@@ -275,12 +277,13 @@ jQuery(document).ready(function($){
      });
 
     $('body').on('change','.user-cart-qty',function(event){
-          var qty =  parseInt($(this).val());
+          var qty =  parseInt($(this).val(),10);
           var productId    = $(this).parent().attr('data-product-id');
           var productDetail = { "productId"    : productId ,"newQty" : qty};
           if(qty === 0){
-               if(confirm("Do you want to remove this item from your order ?"))
+               if(confirm("Do you want to remove this item from your order ?")){
                   userCart.removeItemFromCart(productDetail,$(this));
+              }
           } 
           else if(!qty){ /* pass */} 
           else{
@@ -304,7 +307,7 @@ function toggle_panel_visibility ($lateral_panel, $background_layer, $body) {
 			$body.addClass('overflow-hidden');
 		});
 		$background_layer.addClass('is-visible');
-        return "OPENING_CART"
+        return "OPENING_CART";
 	}
 }
 

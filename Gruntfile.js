@@ -37,6 +37,9 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-uglify');
    grunt.loadNpmTasks('grunt-hashres');
    grunt.loadNpmTasks('grunt-contrib-imagemin');
+   grunt.loadNpmTasks('grunt-phplint');
+   grunt.loadNpmTasks('grunt-jsvalidate');
+   grunt.loadNpmTasks('grunt-contrib-jshint');
   
 
    grunt.initConfig({
@@ -64,8 +67,35 @@ module.exports = function(grunt) {
       }
     },
 
+   jshint: {
+            options: {
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
+            },
+            all: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/awesomplete.min.js','!<%= config.jsDir %>/bootbox.min.js','!<%= config.jsDir %>/bootstrap.min.js','!<%= config.jsDir %>/horizontal.scroll.min.js','!<%= config.jsDir %>/jquery-2.1.3.min.js','!<%= config.jsDir %>/jquery-ui.min.js','!<%= config.jsDir %>/typehead.min.js','!<%= config.jsDir %>/nanobar.min.js','!<%= config.jsDir %>/bootstrap-datepicker.min.js']
+      },
 
-    uglify: {
+    jsvalidate: {
+            options:{
+                globals: {},
+                esprimaOptions: {},
+                verbose: false
+            },
+            files: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js']
+        },
+
+     phplint: {
+            options: {
+                swapPath: '/tmp',
+                phpArgs: {
+                "-l": null,
+                "-d" :"display_errors=1"
+              }
+            },
+            all: ['app/**/*.php','/resources/**/*.php']
+      },
+
+     uglify: {
         options: {
                  mangle: true,
                   compress: {
@@ -77,46 +107,45 @@ module.exports = function(grunt) {
                 '<%= config.buildJsDir %>/app.min.js': [ '<%= config.jsDir %>/jquery-2.1.3.min.js',
                                                                                    '<%= config.jsDir %>/bootstrap.min.js',
                                                                                    '<%= config.jsDir %>/bootbox.min.js',
-                                                                                   '<%= config.jsDir %>/jquery-ui.min.js',
                                                                                    '<%= config.jsDir %>/bootstrap-datepicker.min.js',
                                                                                    '<%= config.jsDir %>/nanobar.min.js',
-                                                                                   '<%= config.jsDir %>/typehead.min.js',
                                                                                    '<%= config.jsDir %>/main.js',
                                                                                    
                                                                                     ],
-                '<%= config.buildJsDir %>/cart.min.js':  ['<%= config.jsDir %>/cart.js']
+                '<%= config.buildJsDir %>/cart.min.js':  ['<%= config.jsDir %>/cart.js'],
+                '<%= config.buildJsDir %>/autosuggest-inputs.js':  ['<%= config.jsDir %>/awesomplete.min.js','<%= config.jsDir %>/autosuggest-inputs.js']
             }
         }
    },
 
-  imagemin: {
-            png: {
-                options: {
-                    optimizationLevel: 7
-                },
-                files: [{
-                    expand: true,
-                    cwd: '<%= config.buildImgDir %>',
-                    src: ['**/*.png'],
-                    dest: '<%= config.buildImgDir %>',
-                    ext: '.png'
-                }]
-            },
-            jpg: {
-                options: {
-                    progressive: true
-                },
-                files: [{
-                    expand: true,
-                    cwd: '<%= config.buildImgDir %>',
-                    src: ['**/*.jpg'],
-                    dest: '<%= config.buildImgDir %>',
-                    ext: '.jpg'
-                }]
-            }
-    },
+    imagemin: {
+              png: {
+                  options: {
+                      optimizationLevel: 7
+                  },
+                  files: [{
+                      expand: true,
+                      cwd: '<%= config.buildImgDir %>',
+                      src: ['**/*.png'],
+                      dest: '<%= config.buildImgDir %>',
+                      ext: '.png'
+                  }]
+              },
+              jpg: {
+                  options: {
+                      progressive: true
+                  },
+                  files: [{
+                      expand: true,
+                      cwd: '<%= config.buildImgDir %>',
+                      src: ['**/*.jpg'],
+                      dest: '<%= config.buildImgDir %>',
+                      ext: '.jpg'
+                  }]
+              }
+      },
 
-   sshconfig:{
+    sshconfig:{
        
         prodServer: {
             host: "<%= config.HostName %>",
@@ -204,8 +233,9 @@ module.exports = function(grunt) {
                  '<%= config.buildCssDir %>/app.min.css' ,
                  '<%= config.buildJsDir %>/app.min.js',
                  '<%= config.buildJsDir %>/cart.min.js',
+                 '<%= config.buildJsDir %>/autosuggest-inputs.js'
             ],
-            dest: ['resources/views/footer.blade.php','resources/views/meta.blade.php','resources/views/restaurant-page.blade.php','resources/views/user-cart.blade.php']
+            dest: ['resources/views/footer.blade.php','resources/views/meta.blade.php','resources/views/restaurant-page.blade.php','resources/views/user-cart.blade.php','resources/views/home.blade.php']
         }
    },     
 
@@ -237,11 +267,10 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('default' ,'localbuild');
-    grunt.registerTask('localbuild', ['lock','shell:cleanBuilds','less:production','cssmin','uglify','shell:readyToShip','unlock']);
+    grunt.registerTask('localbuild', ['lock','phplint' ,'jsvalidate','jshint' ,'shell:cleanBuilds','less:production','cssmin','uglify','shell:readyToShip','unlock']);
     grunt.registerTask('deploy',['lock','sshexec:deploy','unlock'])
-    grunt.registerTask('build', ['lock','shell:cleanBuilds','less:production','cssmin','uglify','hashres','imagemin','shell:readyToShip','unlock']);
+    grunt.registerTask('build', ['lock','phplint' ,'jsvalidate','jshint','shell:cleanBuilds','less:production','cssmin','uglify','hashres','imagemin','shell:readyToShip','unlock']);
     grunt.registerTask('shipit',['lock','sshexec:makeBuildLive','unlock']);
-    grunt.registerTask('imageminify' ,'imagemin');
 
 
 };

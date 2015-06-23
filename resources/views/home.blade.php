@@ -71,7 +71,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" name="destination_station" id="destination_station" class="form-control input-class" required placeholder="Enter Destination Station">
+                                        <input type="text" name="destination_station" id="destination_station" class="form-control input-class" required="1" placeholder="Enter Destination Station">
                                     </div>
 
                                     <div class="form-group">
@@ -80,7 +80,7 @@
 
                                     <div class="form-group">
                                         <div class='input-group date date-time-picker' >
-                                            <input type='text' class="form-control" name="journey_date" placeholder="Enter Journey Date"/>
+                                            <input type='text' class="form-control" name="journey_date" required="1" placeholder="Enter Journey Date"/>
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -130,7 +130,8 @@
     </div>
 </section>     
 
-@extends('footer')
+@include('footer')
+<script src="{{ asset('/js/build/autosuggest-inputs.js') }} "></script>
 
 </body>
 </html>
