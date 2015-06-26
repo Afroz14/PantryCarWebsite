@@ -26,7 +26,7 @@
 		</style>
 		<div class="container">
 			<div class="content">
-				<div class="title">Oops ! Our servers are getting maintained .Will be back right away ! </div>
+				<div class="title">Either page doesn't exist at this URL or you typed wrong URL</div>
 			</div>
 		</div>
 @include('footer')		

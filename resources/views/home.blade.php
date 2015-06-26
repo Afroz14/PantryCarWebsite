@@ -53,8 +53,9 @@
                                     </div>
 
                                     <div class="form-group buttons">
-                                        <button type="submit" class="btn btn-search">
-                                            GET YOUR FOOD
+                                        <button type="submit" class="btn btn-search" 
+                                          data-loading-text="GET MY FOOD<i class='fa-refresh fa-spin fa ml10'></i>">
+                                              <span>GET YOUR FOOD</span>
                                         </button>
                                     </div>
                                 </form>
@@ -88,7 +89,7 @@
                                     </div> 
 
                                     <div class="form-group buttons">
-                                        <button type="submit" class="btn btn-search">
+                                        <button type="submit" class="btn btn-search" data-loading-text="GET MY FOOD<i class='fa-refresh fa-spin fa ml10'></i>">
                                              GET YOUR FOOD
                                         </button>
                                     </div>

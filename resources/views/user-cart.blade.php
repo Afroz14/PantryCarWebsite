@@ -6,7 +6,7 @@
 
     <div class="container full-width-container-other">
         <section style="padding-bottom: 50px;">
-            <div class="row">
+            <div class="col-md-offset-1 col-md-10">
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-12">

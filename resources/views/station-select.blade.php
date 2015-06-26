@@ -23,7 +23,7 @@
                     <div class="floatleft station-select-header p10 uppercase" >{{ $record }}</div>
                   @endif
                   @if($iterator < ($totalRecord - 1))
-                    <div class="floatleft icon-angle-right breadcrumb-arrow"></div>
+                    <div class="floatleft fa fa-arrow-right breadcrumb-arrow"></div>
                   @endif  
                   <?php $iterator++; ?>
  	      	  @endforeach	
@@ -41,7 +41,7 @@
 				            	<div class="each-station__inner-block">{{ $eachStationDetail['HALT'] }}</div>
 				            	<div class="each-station__inner-block">{{ $eachStationDetail['DAY'] }}</div>
 				            	<div class="each-station__inner-block select-station-button">
-				            		    <a data-station-code = "{{ $station }}" href="#" class="pc-btn">
+				            		    <a  data-loading-text="GET MY FOOD<i class='fa-refresh fa-spin fa ml10'></i>" href="{{ $eachStationDetail['stationSeoUrl'] }}"  class="pc-btn loading-text-button">
 					                        GET MY FOOD
 					                    </a>
 					            </div>
@@ -51,7 +51,7 @@
 		@else
 		<div class="no-result-grid">
 			 <div class="no-result-found">
-			 	No station found against given input .Please check and try again.
+			 	No station found against given input .Modify your search and try again.
 			 </div>	
 			 <div class="form-group buttons">
 	                    <a href="{{ url('/') }} " class="pc-btn">

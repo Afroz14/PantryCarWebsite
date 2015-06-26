@@ -5,6 +5,7 @@ use Illuminate\Contracts\Auth\UserProvider as UserProviderInterface;
 use Illuminate\Auth\GenericUser;
 use App\Libraries\Curl;
 use App\Config\Constants;
+use App\Http\Controllers\MailerController as Mailer;
 
 class CustomUserProvider implements UserProviderInterface {
 
@@ -143,8 +144,13 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->put($url,json_encode(array("verificationToken" => $code))); 
         $response = (array)json_decode($response);
-        if($response != null && isset($response['status']) && $response['status'] === true && isset($response['verified']) && $response['verified'] === true)
-          return true;
+        if($response != null && isset($response['status']) && $response['status'] === true && isset($response['verified']) && $response['verified'] === true){
+            if(!empty($response['emailId']) && !empty($response['name'])){
+                    $userData = array("emailId" =>$response['emailId'] ,"name" => $response['name']);
+                    Mailer::sendSuccessfullSignupMail($userData);
+           }
+            return true;
+         }  
         return false;
   }
 

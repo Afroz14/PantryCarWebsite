@@ -198,6 +198,7 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Socialize' => 'Laravel\Socialite\Facades\Socialite',
 		'Cart'      => 'Gloudemans\Shoppingcart\Facades\Cart',
+		'Helper'    => 'App\Libraries\Helper'
 
 	],
 

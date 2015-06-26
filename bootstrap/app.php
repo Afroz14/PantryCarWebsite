@@ -23,6 +23,9 @@ $app = new Illuminate\Foundation\Application(
 |
 */
 require __DIR__.'/environment.php';
+
+require app_path()."/Libraries/Helper.php";
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces

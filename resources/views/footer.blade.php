@@ -69,7 +69,7 @@
       $(function() {
             bootbox.dialog({
             title: "Login",
-            message: $('#loginform').html()
+            message: $('#pc-signin-signup-form').html()
           });
       });
     </script>

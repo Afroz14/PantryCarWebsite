@@ -162,7 +162,14 @@ class AuthController extends Controller {
             if(empty($user)){
                $userdata = array("emailId" => $email,"name" => $name);
                $registerController = new RegisterController;
+               $verificationToken =  str_random(60);
+               $userData = array(
+                          'emailId'   => $email,
+                          'name'      => $name,
+                          'verificationToken' => $verificationToken
+                           );
                if ($registerController->store($userdata)){
+                  Mailer::sendEmailVerificationMail($userData);
                   return array(true,"");
                }
                else{
@@ -182,7 +189,7 @@ class AuthController extends Controller {
       $userProvider = new CustomUserProvider();
       if(!empty($code)){
         if($userProvider->verifyUserAccount($code)){
-           return redirect('/')->with("success_message","Account Verified");
+           return redirect('/')->with("success_message","Account Verified .You can now login and order your meal");
         }
         else{
            return redirect('/')->with("error_message","Error while verifying your account");

@@ -1,6 +1,5 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Controllers\MailerController as Mailer;
 class HomeController extends Controller {
 
 	/*

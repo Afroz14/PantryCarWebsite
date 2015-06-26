@@ -23,7 +23,7 @@
                     <div class="floatleft station-select-header p10 uppercase" >{{ $record }}</div>
                   @endif
                   @if($iterator < ($totalRecord - 1))
-                    <div class="floatleft icon-angle-right breadcrumb-arrow"></div>
+                    <div class="floatleft fa fa-arrow-right breadcrumb-arrow"></div>
                   @endif  
                   <?php $iterator++; ?>
  	      	  @endforeach	
@@ -40,7 +40,7 @@
 				            	<div class="each-train__inner-block">{{ $eachTrainDetail['ARRIVAL_TIME_AT_DESTINATION'] }}</div>
 				            	<div class="each-train__inner-block">{{ $eachTrainDetail['DEPARTURE_TIME_AT_DESTINATION'] }}</div>
 				            	<div class="each-train__inner-block select-train-button">
-				            		 <a data-train-code = "{{ $train }}" data-source-station = "{{ $train_list_header['SRC_STATION'] }}" data-destination-station = "{{ $train_list_header['DESTINATION_STATION'] }}" data-doj ="{{ $train_list_header['DATE'] }}"  href="#" class="pc-btn">
+				            		 <a data-loading-text="GET MY FOOD<i class='fa-refresh fa-spin fa ml10'></i>" data-train-code = "{{ $train }}" data-source-station = "{{ $train_list_header['SRC_STATION'] }}" data-destination-station = "{{ $train_list_header['DESTINATION_STATION'] }}" data-doj ="{{ $train_list_header['DATE'] }}"  href="#" class="pc-btn loading-text-button">
 					                        GET MY FOOD
 					                  </a>
 					            </div>
@@ -50,7 +50,7 @@
 		@else
 		<div class="no-result-grid">
 			 <div class="no-result-found">
-			 	No Train found against your inputs .Please check and then try again .
+			 	No Train found against your inputs .Modify your search and then try again .
 			 </div>	
 			 <div class="form-group buttons">
 	                    <a href="{{ url('/') }} " class="pc-btn">

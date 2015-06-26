@@ -26,7 +26,7 @@
 		</style>
 		<div class="container">
 			<div class="content">
-				<div class="title">Oops ! Our servers are getting maintained .Will be back right away ! </div>
+				<div class="title">Oops ! Our Servers encountered some issue .Be patient</div>
 			</div>
 		</div>
 @include('footer')		

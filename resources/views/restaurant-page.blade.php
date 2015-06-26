@@ -11,6 +11,24 @@
  	      	  <h3 class="restaurant-name">Al Barista</h3>
  	      	  <div class="restaurant-address">New Delhi Railway Station</div>
  	      </div>
+          @if(isset($restaurant_header) && $restaurant_header !== "")
+	 	      <div class="station-select-header-wrap mt10">
+	 	      	<?php $totalRecord = count($restaurant_header);
+	 	      	 $iterator = 0;
+	 	      	 ?>
+	 	      	 @foreach($restaurant_header as $record)
+	 	      	  	  @if($iterator == 0)
+	                    <div class="floatleft station-select-header pr10 pb10 pt10" >{{ $record }}</div>
+	                  @else
+	                    <div class="floatleft station-select-header p10" >{{ $record }}</div>
+	                  @endif
+	                  @if($iterator < ($totalRecord - 1))
+	                    <div class="floatleft fa fa-arrow-right breadcrumb-arrow"></div>
+	                  @endif  
+	                  <?php $iterator++; ?>
+	 	      	  @endforeach	
+	 	      </div>
+ 	      @endif
 
  	      <div class="restaurant-content-wrapper">
  	      	<div class="restaurant-menu-details-wrap">

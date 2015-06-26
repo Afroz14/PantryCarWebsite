@@ -1,8 +1,10 @@
 
+/* --------------------
+ * - PantryCar 
+ * --------------------
+ */
+
 $.PC = {};
-//running loader at the top
-var nanobar = new Nanobar({"bg":"#e76f62","id":"nano"});
-nanobar.go(100);
 
 $.PC.showPNRTypehead = function(){
     $(".pnr-type-ahead").css({"height":"130px",'margin-bottom':"18px"});
@@ -72,58 +74,27 @@ $.PC.clearPnrResultWithThisMessage = function(message){
                  $("#pnr-search-result-container #pnr_result_message_any").removeClass("hidden");
                  $("#pnr-search-result-container .right-arrow-icon__pnr_result").addClass("hidden");
 };
-/*
--------------------------------------------------------
-  Bootbox popup
--------------------------------------------------------
-*/
-$('.pc_login').click(function(){
-		bootbox.dialog({
-		  title: "Login",
-		  message: $('#loginform').html(),
-           animate: true
-		});
-});
 
-$('.pc_signup').click(function(){
-        bootbox.dialog({
-          title: "Register",
-          message: $('#signup-form').html()
-        });
-});
+$.PC.cartCheckout = function(){
+   var allParametersFromCurrentlUrl = window.location.search.substring(1); 
+   window.location.href             = BASE_PATH + "/checkout?"+allParametersFromCurrentlUrl;
+};
 
-/*
--------------------------------------------------------
--------------------------------------------------------
-*/
-
-$(document).ready(function() {
-
-    $('.date-time-picker').datepicker({
-	        autoclose: true,
-	        todayBtn: true,
-            format:'dd-mm-yyyy'
-    });
-
-  $("#pnr_number").on("input",function(){
-     if($(this).val().length === 10){
-       $.PC.showPNRTypehead();
-     }
-     else{
-       $.PC.removePNRTypehead();
-     }
-  });
-
-
-/*
--------------------------------------------------------
-Signin process
--------------------------------------------------------
-*/
-
-    $('body').on('click','#login-button',function(event){
-
-         event.preventDefault();
+$.PC.showSigninTab = function(){
+     $('.form-signin-email-passwd').removeClass('hidden');
+     $('.login-links').removeClass('hidden');
+     $('.form-signup-email-passwd').addClass('hidden');
+     $('.signup-links').addClass('hidden');
+     $('.bootbox .modal-header .modal-title').html('Login');
+};
+$.PC.showSignupTab = function(){
+     $('.form-signup-email-passwd').removeClass('hidden');
+     $('.signup-links').removeClass('hidden');
+     $('.form-signin-email-passwd').addClass('hidden');
+     $('.login-links').addClass('hidden');
+     $('.bootbox .modal-header .modal-title').html('Signup');
+};
+$.PC.formLogin = function(){
          $('.bootbox-body .ajax_loader__wrapper').removeClass('hidden');
          $.ajax({
             cache: false,
@@ -165,17 +136,10 @@ Signin process
                  alert('Something went wrong.Please Try again later...');
             }
          });
-    });
+};
 
-/*
--------------------------------------------------------
-Signup process
--------------------------------------------------------
-*/
-    $('body').on('click','#signup-button',function(event){
-
-         event.preventDefault();
-         $('.bootbox-body .ajax_loader__wrapper').removeClass('hidden');
+$.PC.formSignup = function(){
+        $('.bootbox-body .ajax_loader__wrapper').removeClass('hidden');
          $.ajax({
             cache: false,
             dataType: 'json',
@@ -215,23 +179,67 @@ Signup process
                  alert('Something went  wrong.Please Try again later...');
             }
          });
-    });
+};
+
+
 /*
 -------------------------------------------------------
-Each station selection process
+  Bootbox popup
 -------------------------------------------------------
 */
-$('body').on('click','.select-station-button a',function(event){
-     event.preventDefault();
-     var stationCode  = $(this).data("station-code");
-     var newUrl       = window.location.href;
-     var seperator    = (url.indexOf("?") === -1)?"?":"&";
-     newUrl           = url + seperator + "station_code="+stationCode;
-     newUrl           = newUrl.replace("selectStation","selectRestaurant");
-     window.location.href =  newUrl;
-
+$('.pc_login').click(function(){
+		bootbox.dialog({
+		  title: "Login",
+		  message: $('#pc-signin-signup-form').html(),
+           animate: true
+		});
 });
 
+
+/*
+-------------------------------------------------------
+-------------------------------------------------------
+*/
+
+$(document).ready(function() {
+
+    $('.date-time-picker').datepicker({
+	        autoclose: true,
+	        todayBtn: true,
+            format:'dd-mm-yyyy'
+    });
+
+  $("#pnr_number").on("input",function(){
+     if($(this).val().length === 10){
+       $.PC.showPNRTypehead();
+     }
+     else{
+       $.PC.removePNRTypehead();
+     }
+  });
+
+
+/*
+-------------------------------------------------------
+Signin process
+-------------------------------------------------------
+*/
+
+    $('body').on('click','#login-button',function(event){
+         event.preventDefault();
+         $.PC.formLogin();
+
+    });
+
+/*
+-------------------------------------------------------
+Signup process
+-------------------------------------------------------
+*/
+    $('body').on('click','#signup-button',function(event){
+         event.preventDefault();
+         $.PC.formSignup();
+    });
 /*
 -------------------------------------------------------
 Each train selection process
@@ -255,20 +263,47 @@ $('body').on('click','.select-train-button a',function(event){
      form.submit();
 });
 
-  
+  $('body').on('click','#loadSignin',function(event){
+     event.preventDefault();
+     $.PC.showSigninTab();
+  });
+
+ $('body').on('click','#loadSignup',function(event){
+     event.preventDefault();
+     $.PC.showSignupTab();
+  });
+
+  $('body').on('click','.checkout-btn',function(event){
+     event.preventDefault();
+     $.PC.cartCheckout();
+  });
       
-    // Javascript to enable link to tab
-      var url = document.location.toString();
-      if (url.match('#')) {
+    // Javascript to enable link to tabb
+  var url = document.location.toString();
+  if (url.match('#')) {
           $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show');
       } 
 
       // Change hash for page-reload
-      $('body').on('shown.bs.tab','.nav-tabs a', function (e) {
+  $('body').on('shown.bs.tab','.nav-tabs a', function (e) {
           window.location.hash = e.target.hash;
       });
 
         
-    
 
 }); // DOM Ready close
+
+/* --------------------
+ * - button loaing text on click implementation
+ * --------------------
+ */
+$('form').on('submit',function(){
+    if($(this).find('button[data-loading-text]').length > 0){
+         $(this).find('button[data-loading-text]').button('loading'); 
+    }
+});
+
+$('.loading-text-button').on('click',function(){
+   $(this).button('loading'); 
+});
+

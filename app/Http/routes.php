@@ -21,7 +21,7 @@ Route::get('/login', function() {
 
 Route::get('/logout', function() {
 	 Auth::logout();
-     return Redirect::to('/');
+     return Redirect::back();
 });
 
 Route::get('/signup', function() {
@@ -53,8 +53,6 @@ Route::get('/selectStation',array('as' => 'select.station', 'uses' => 'StationCo
 
 Route::get('/selectTrain','TrainController@show');
 
-Route::get('/selectRestaurant','RestaurantController@show');
-
 Route::get("/profile","ProfileController@show");
 
 Route::get("/viewCart","CartController@show");
@@ -74,5 +72,15 @@ Route::post('/cartHandler',"CartController@handle");
 Route::get('/getCartMobile',"CartController@getCartContentMobile");
 
 Route::get('/getPnrDetail/{pnr_number}',"StationController@getPnrDetail");
+
+Route::get('/restaurants/{station_code}/{slug}','RestaurantController@show');
+
+Route::group(array('before' => 'auth'), function() {
+  Route::get("/checkout",'RestaurantController@show');
+});
+
+Route::filter('auth',function(){
+  if(Auth::guest()) return Redirect::back()->with('login', 1);
+});
 
 

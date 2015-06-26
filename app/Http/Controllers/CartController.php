@@ -27,7 +27,13 @@ class CartController extends Controller {
 	 */
 	public function show()
 	{
-        $cartContent       = self::getCartContent();
+        $cartContent           = self::getCartContent();
+        $overWriteFlag         = \Input::get('s');
+        $fixCheckoutButtonFlag = false;
+        if(!empty($overWriteFlag) && $overWriteFlag == 1)
+          $fixCheckoutButtonFlag = true;
+
+        $cartContent       = self::getCartContent($fixCheckoutButtonFlag); 
         return view('user-cart')->with('cartContent' ,$cartContent);
 	}
 
@@ -276,7 +282,7 @@ class CartController extends Controller {
      return $cartString;
 	}
 
-	public function getCartContent(){
+	public function getCartContent($fixCheckoutButtonFlag = false){
 
 		$content    = \Cart::content();
 		$cartString = "<ul class='cd-cart-items'>";
@@ -301,7 +307,7 @@ class CartController extends Controller {
         	    $cartString .= $cartItem;
         	    $cartString .= "</ul>";
         	    $cartString .= '<div class="cd-cart-total"><p>Total <span>Rs '.\Cart::total().'</span></p></div>';
-              $cartString .= '<a href="" class="checkout-btn">Checkout</a>';
+              $cartString .= '<a href="" class="checkout-btn '.(($fixCheckoutButtonFlag)? " fix-checkout-button-width":"").'">Checkout</a>';
           }
 
 		 return $cartString;
