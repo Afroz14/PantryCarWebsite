@@ -19,7 +19,7 @@ Oven.config = {
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '52.10.156.75',
+    HostName : '52.24.158.29',
     userName :'ubuntu'
 };
 
@@ -198,7 +198,8 @@ module.exports = function(grunt) {
                     'sudo chmod 777 resources/views/meta.blade.php',
                     'sudo chmod 777 resources/views/restaurant-page.blade.php',
                     'sudo chmod 777 resources/views/user-cart.blade.php',
-                    'grunt unlock;sudo grunt build'
+                    'grunt unlock;sudo grunt build',
+                    'sudo composer install'
                 ].join(' && '),    
             options:{
                 config: 'prodServer'
