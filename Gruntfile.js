@@ -194,7 +194,7 @@ module.exports = function(grunt) {
                     'sudo git pull origin master',
                     'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildCssDir %>/*',
                     'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildJsDir %>/*',
-                    'ln -s ~/Settings/.production.env <%= config.websiteLocationOnServerTemp %>/.production.env',
+                    'ln -sf ~/Settings/.production.env <%= config.websiteLocationOnServerTemp %>/.production.env',
                     'grunt unlock;sudo grunt build',
                     'sudo composer install',
                     'sudo npm install'
