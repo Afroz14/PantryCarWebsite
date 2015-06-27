@@ -5,6 +5,9 @@
  */
 
 $.PC = {};
+//running loader at the top
+var nanobar = new Nanobar({"bg":"#e76f62","id":"nano"});
+nanobar.go(100);
 
 $.PC.showPNRTypehead = function(){
     $(".pnr-type-ahead").css({"height":"130px",'margin-bottom':"18px"});
