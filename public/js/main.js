@@ -84,6 +84,7 @@ $.PC.cartCheckout = function(){
 };
 
 $.PC.showSigninTab = function(){
+     $(".alert-danger").addClass('hidden').empty(); 
      $('.form-signin-email-passwd').removeClass('hidden');
      $('.login-links').removeClass('hidden');
      $('.form-signup-email-passwd').addClass('hidden');
@@ -91,6 +92,7 @@ $.PC.showSigninTab = function(){
      $('.bootbox .modal-header .modal-title').html('Login');
 };
 $.PC.showSignupTab = function(){
+     $(".alert-danger").addClass('hidden').empty(); 
      $('.form-signup-email-passwd').removeClass('hidden');
      $('.signup-links').removeClass('hidden');
      $('.form-signin-email-passwd').addClass('hidden');
@@ -194,8 +196,12 @@ $('.pc_login').click(function(){
 		bootbox.dialog({
 		  title: "Login",
 		  message: $('#pc-signin-signup-form').html(),
-           animate: true
+          animate: true,
+          onEscape: function() {
+            $.PC.showSigninTab();
+          }  
 		});
+
 });
 
 

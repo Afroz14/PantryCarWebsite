@@ -108,6 +108,7 @@ return [
 	|
 	*/
 
+
 	'providers' => [
 
 		/*
@@ -147,6 +148,7 @@ return [
 		'App\Providers\AuthUserProvider',
 		'Laravel\Socialite\SocialiteServiceProvider',
 		'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
+		'Eusonlito\LaravelMeta\MetaServiceProvider',
 
 
 	],
@@ -198,7 +200,8 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Socialize' => 'Laravel\Socialite\Facades\Socialite',
 		'Cart'      => 'Gloudemans\Shoppingcart\Facades\Cart',
-		'Helper'    => 'App\Libraries\Helper'
+		'Helper'    => 'App\Libraries\Helper',
+		'Meta'      => 'Eusonlito\LaravelMeta\Facade',
 
 	],
 

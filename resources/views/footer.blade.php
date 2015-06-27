@@ -11,7 +11,7 @@
                  <i class="glyphicon glyphicon-map-marker pr10"></i><span>Kormangla ,Bangalore ,Karnataka</span>
               </p>
               <p>
-                 <i class="glyphicon glyphicon-phone-alt pr10"></i><span>+91 - 9911869145</span>
+                 <i class="fa fa-phone pr10"></i><span>+91 - 9911869145</span>
               </p>
               <p>
                  <i class="glyphicon glyphicon-envelope pr10"></i><span>care@pantrycar.co.in</span>

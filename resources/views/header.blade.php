@@ -11,7 +11,7 @@
 			</div>
 
           <div class="col-md-3 pt15" id="helpline-number">
-       	       <i class="glyphicon glyphicon-phone-alt pr10"></i><span class="color-grey">Call Us : <span class="color-orange">+91 - 9911869145</span> </span>
+       	       <i class="fa fa-phone pr10"></i><span class="color-grey">Call Us : <span class="color-orange">+91 - 9911869145</span> </span>
            </div>
 
 		</div>
