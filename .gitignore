@@ -9,3 +9,4 @@ Thumbs.db
 /public/css/build
 /public/js/build
 .htaccess
+*.env

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a7f6538f5f5bc49cbcdbcbd6ed3e487f",
+    "hash": "9ce93bdea13c0ba498156a89c2ba7d9b",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -283,6 +283,51 @@
                 "string"
             ],
             "time": "2014-12-20 21:24:13"
+        },
+        {
+            "name": "eusonlito/laravel-meta",
+            "version": "v2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eusonlito/laravel-Meta.git",
+                "reference": "f2a778453a731f7c3bd4c38c2a2a80bd8f36e494"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eusonlito/laravel-Meta/zipball/f2a778453a731f7c3bd4c38c2a2a80bd8f36e494",
+                "reference": "f2a778453a731f7c3bd4c38c2a2a80bd8f36e494",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Eusonlito\\LaravelMeta\\": "src/Eusonlito/LaravelMeta/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lito",
+                    "email": "lito@eordes.com"
+                }
+            ],
+            "description": "A package to manage Header Meta Tags",
+            "keywords": [
+                "head",
+                "laravel",
+                "meta",
+                "tags"
+            ],
+            "time": "2015-06-10 09:54:51"
         },
         {
             "name": "gloudemans/shoppingcart",
