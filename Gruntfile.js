@@ -196,7 +196,7 @@ module.exports = function(grunt) {
                     'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildJsDir %>/*',
                     'ln -s ~/Settings/.production.env <%= config.websiteLocationOnServerTemp %>/.production.env',
                     'grunt unlock;sudo grunt build',
-                    'sudo composer install'
+                    'sudo composer install',
                     'sudo npm install'
                 ].join(' && '),    
             options:{
