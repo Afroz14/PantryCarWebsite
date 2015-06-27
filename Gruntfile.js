@@ -197,6 +197,7 @@ module.exports = function(grunt) {
                     'ln -s ~/Settings/.production.env <%= config.websiteLocationOnServerTemp %>/.production.env',
                     'grunt unlock;sudo grunt build',
                     'sudo composer install'
+                    'sudo npm install'
                 ].join(' && '),    
             options:{
                 config: 'prodServer'
