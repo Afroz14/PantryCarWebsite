@@ -186,7 +186,6 @@ module.exports = function(grunt) {
    sshexec: {    
          deploy: {
                 command: [
-                    'ln -s ~/Settings/.production.env <%= config.websiteLocationOnServerTemp %>/.production.env',
                     'sudo cp --preserve=mode,ownership,timestamps -r <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerTemp %>',
                     'sudo chmod -R 777 <%= config.websiteLocationOnServerTemp %>',
                     'cd <%= config.websiteLocationOnServerTemp %>',
@@ -195,6 +194,7 @@ module.exports = function(grunt) {
                     'sudo git pull origin master',
                     'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildCssDir %>/*',
                     'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildJsDir %>/*',
+                    'ln -s ~/Settings/.production.env <%= config.websiteLocationOnServerTemp %>/.production.env',
                     'grunt unlock;sudo grunt build',
                     'sudo composer install'
                 ].join(' && '),    
