@@ -186,6 +186,7 @@ module.exports = function(grunt) {
    sshexec: {    
          deploy: {
                 command: [
+                    'ln -s ~/Settings/.production.env <%= config.websiteLocationOnServerTemp %>/.production.env',
                     'sudo cp --preserve=mode,ownership,timestamps -r <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerTemp %>',
                     'sudo chmod -R 777 <%= config.websiteLocationOnServerTemp %>',
                     'cd <%= config.websiteLocationOnServerTemp %>',
