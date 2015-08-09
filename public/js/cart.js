@@ -122,6 +122,11 @@ UserCart.prototype.updateItemQty = function(productToBeUpdated,itemSelector){
          });
 };
 
+UserCart.prototype.cartCheckout = function(){
+    $("#checkout-form").submit();
+};
+
+
 function checkIfTheItemToBeRemovedIsLastItem(){
 
     if($('#cd-cart-items-wrap .cd-cart-items').children().length === 0){
@@ -176,10 +181,7 @@ function appendItemToCart(cartItem,itemSelector,target){
 		       else
 		        {
 		        	$(cartItem).appendTo(cart);
-		        }  
-			   
-	           
-	              
+		        }       
         }
 }
 
@@ -215,7 +217,7 @@ jQuery(document).ready(function($){
 			$lateral_cart.removeClass('speed-in');
 		}
 	});
-	$('.each-category-menu-item').click(function(){
+	 $('.each-category-menu-item').click(function(){
 		var productToBeAddedInCart = {
            "productId"    : $(this).find('.item-name').attr('data-product-id'),
            "productTitle" : $(this).find('.item-name').attr('data-product-title'),
@@ -270,8 +272,41 @@ jQuery(document).ready(function($){
                userCart.updateItemQty(productDetail,$(this));
           }  
     });
+
+    /*var sticky            = $(".user-cart");
+    var stickywidthActual = '290px'; // This should be equal to value set in CSS
+    if(sticky.hasClass('full-width-cart') === false){
+          var stickyrStopper = $('#footer');
+          if (!!sticky.offset()) { 
+            var stickyTop = sticky.offset().top;
+            var stickOffset = 0;
+            var stickyStopperPosition = stickyrStopper.offset().top - 10 ;
+             $(window).scroll(function(){ 
+                var windowTop = $(window).scrollTop(); 
+                var generalSidebarHeight = sticky.innerHeight();
+                var stopPoint = stickyStopperPosition - generalSidebarHeight - stickOffset;
+                var diff = stopPoint + stickOffset;
+
+                  if (stopPoint < windowTop) {
+                      sticky.css({ position: 'absolute', top: diff ,'width': stickywidthActual});
+                  } else if (stickyTop < windowTop+stickOffset) {
+                      sticky.css({ position: 'fixed', top: stickOffset,'width': stickywidthActual });
+                  } else {
+                      sticky.css({position: 'absolute', top: 'initial','width': stickywidthActual});
+                  }
+            });
+          }
+   }*/
+
+
+
+ $('body').on('click','.checkout-btn',function(event){
+     event.preventDefault();
+     userCart.cartCheckout();
+  });
    
 });
+
 
 function toggle_panel_visibility ($lateral_panel, $background_layer, $body) {
 	if( $lateral_panel.hasClass('speed-in') ) {

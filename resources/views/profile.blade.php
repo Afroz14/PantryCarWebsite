@@ -5,7 +5,7 @@
 @include('header')
 
 <body>
-    <div class="container">
+    <div class="container no-border">
         <section style="padding-bottom: 50px;">
             <div class="row">
                 <div class="col-md-4">

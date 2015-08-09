@@ -37,13 +37,13 @@ return [
 	'facebook' => [
 	  'client_id' => getenv('FACEBOOK_CLIENT_ID'),
       'client_secret' => getenv('FACEBOOK_CLIENT_SECRET'),
-      'redirect' => url('/account/facebook'),
+      'redirect' => PHP_SAPI === 'cli' ? false : url('/account/facebook'),
 	],
 
 	'google' => [
-	  'client_id' => '284235294294-7iqavhd74kblladsojov09v1rh89lf4t.apps.googleusercontent.com',
-      'client_secret' => 'lKAT5dybOXXQZSqKgVlDC5tA',
-      'redirect' => url('/account/google'),
+	  'client_id' => '641991480398-tcscgo5bk3oq4e7o1gr8ed131r683gvf.apps.googleusercontent.com',
+      'client_secret' => 'sRx5reVY30LxLJlOF0s-3i7N',
+      'redirect' => PHP_SAPI === 'cli' ? false:url('/account/google'),
 	]
 
 ];

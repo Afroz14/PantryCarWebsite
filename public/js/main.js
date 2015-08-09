@@ -5,20 +5,44 @@
  */
 
 $.PC = {};
-//running loader at the top
-var nanobar = new Nanobar({"bg":"#e76f62","id":"nano"});
-nanobar.go(100);
 
-$.PC.showPNRTypehead = function(){
-    $(".pnr-type-ahead").css({"height":"130px",'margin-bottom':"18px"});
-    $("#pnr-search-form").css({"height":"150px"});
-    this.fetchPNRDetail();
+$.PC.options = {
+ 
+ screenSizes: {
+    xs: 480,
+    sm: 768,
+    md: 992,
+    lg: 1200
+  }
+};  
+
+$.PC.showPNRTypehead = function(fetchPnr){
+    $(".pnr-type-ahead").css({"height":"130px",'margin-bottom':"16px"});
+    if(fetchPnr === true){
+       this.fetchPNRDetail();
+    }
+    else{
+        $('.pnr-type-ahead').css({'box-shadow': '0 0 30px #2AB3DB'});
+    }
 };
 $.PC.removePNRTypehead = function(){
   $(".pnr-type-ahead").css({"height":"0px",'margin-bottom':"0px"});
-  $("#pnr-search-form").css({"height":"150px"});
 };
- 
+
+$.PC.handleRedirectAfterLoginOrSignup = function(){
+      if ($(".bootbox-body input[name=redirect_url]").length > 0 ){
+                if($(".bootbox-body input[name=redirect_method]").val() === 'GET'){
+                                 window.location = $(".bootbox-body input[name=redirect_url]").val();
+                }
+                else if($(".bootbox-body input[name=redirect_method]").val() === 'POST'){
+                                  $("#"+$(".bootbox-body input[name=redirect_controller]").val()).submit();
+                } 
+      }
+      else{
+          window.location.reload();
+      }
+};
+
 $.PC.fetchPNRDetail = function(){
        var pnrNumber = $("#pnr_number").val();
         $.ajax({
@@ -78,10 +102,43 @@ $.PC.clearPnrResultWithThisMessage = function(message){
                  $("#pnr-search-result-container .right-arrow-icon__pnr_result").addClass("hidden");
 };
 
-$.PC.cartCheckout = function(){
-   var allParametersFromCurrentlUrl = window.location.search.substring(1); 
-   window.location.href             = BASE_PATH + "/checkout?"+allParametersFromCurrentlUrl;
+$.PC.verifyAndSubmitPNR = function(button){
+        var pnrNumber = $("#pnr_number").val();
+        $.ajax({
+            cache: false,
+            dataType: 'json',
+            url: BASE_PATH + '/getPnrDetail/'+ pnrNumber ,
+            method:'GET',
+            beforeSend: function() { 
+                 $(button).button('loading'); 
+            },
+            success:function(data){
+                  //$(".pnr-type-ahead .horizontal-loader").addClass("hidden");
+                 $(button).button('reset'); 
+                    if(data && data.status){
+                        if(data.status === true)
+                          {
+                            $('#pnr-search-form').submit();
+                         }
+                        else{
+                              $.PC.showPNRTypehead(false);
+                              $.PC.clearPnrResultWithThisMessage("PNR not found !");
+                          } 
+                    }   
+                    else {
+                             $.PC.showPNRTypehead(false);
+                             $.PC.clearPnrResultWithThisMessage("PNR not found !");    
+                    } 
+            },
+            error:function(){
+                //$(".pnr-type-ahead .horizontal-loader").addClass("hidden");
+                $.PC.showPNRTypehead(false);
+                $.PC.clearPnrResultWithThisMessage("Oops ! some server error occured");  
+                $(button).button('reset'); 
+            }
+         });
 };
+
 
 $.PC.showSigninTab = function(){
      $(".alert-danger").addClass('hidden').empty(); 
@@ -133,7 +190,7 @@ $.PC.formLogin = function(){
                             $(".alert-danger").removeClass('hidden');
                     } 
                     else {
-                         location.reload();
+                           $.PC.handleRedirectAfterLoginOrSignup();
                     }
             },
             error:function(){
@@ -176,7 +233,7 @@ $.PC.formSignup = function(){
                          alert('Error while registering your account .Try again or contact support');
                     } 
                     else {
-                         location.reload();
+                          $.PC.handleRedirectAfterLoginOrSignup();
                     }
             },
             error:function(){
@@ -207,20 +264,24 @@ $('.pc_login').click(function(){
 
 /*
 -------------------------------------------------------
+* On DOM ready events
 -------------------------------------------------------
 */
 
 $(document).ready(function() {
 
+    var nowDate = new Date();
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
     $('.date-time-picker').datepicker({
 	        autoclose: true,
 	        todayBtn: true,
-            format:'dd-mm-yyyy'
+            format:'dd-mm-yyyy',
+            startDate:today
     });
 
   $("#pnr_number").on("input",function(){
      if($(this).val().length === 10){
-       $.PC.showPNRTypehead();
+       $.PC.showPNRTypehead(true);
      }
      else{
        $.PC.removePNRTypehead();
@@ -256,7 +317,6 @@ Each train selection process
 */
 
 $('body').on('click','.select-train-button a',function(event){
-     event.preventDefault();
      var form  = $(document.createElement('form')).css({display:'none'}).attr("method","GET").attr("action",BASE_PATH + '/selectStation');
      var input = $(document.createElement('input')).attr('name','train_num').val($(this).data('train-code'));
      form.append(input);
@@ -282,12 +342,14 @@ $('body').on('click','.select-train-button a',function(event){
      $.PC.showSignupTab();
   });
 
-  $('body').on('click','.checkout-btn',function(event){
-     event.preventDefault();
-     $.PC.cartCheckout();
+  $('body').on('click','#proceed-to-pay',function(event){
+           event.preventDefault();
+           window.location.href = BASE_PATH + "/processPayment";
   });
-      
-    // Javascript to enable link to tabb
+
+
+
+/* // Javascript to enable link to tabb
   var url = document.location.toString();
   if (url.match('#')) {
           $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show');
@@ -296,14 +358,10 @@ $('body').on('click','.select-train-button a',function(event){
       // Change hash for page-reload
   $('body').on('shown.bs.tab','.nav-tabs a', function (e) {
           window.location.hash = e.target.hash;
-      });
-
-        
-
-}); // DOM Ready close
+      });/*
 
 /* --------------------
- * - button loaing text on click implementation
+ * - button loading text on click implementation
  * --------------------
  */
 $('form').on('submit',function(){
@@ -316,3 +374,112 @@ $('.loading-text-button').on('click',function(){
    $(this).button('loading'); 
 });
 
+
+$('#pnr-form-submit').on('click',function(event){
+   event.preventDefault();
+   $('.pnr-type-ahead').css({'box-shadow': 'none'});
+   $.PC.verifyAndSubmitPNR($(this));
+
+});
+
+$('body').on('click','.res-category .all a',function(event){
+   event.preventDefault();
+   $(".res-category li ").removeClass("active");
+   eClass("active");
+   $(this).parent().addClass("active");
+   $('#res-menu-item-container .each-menu-category-wrap').addClass('active');
+
+});
+$('body').on('click','#station-search-button',function(event){
+
+    var _this =  $(this);
+    if($("#station-search-form")[0]. checkValidity() === true){
+
+            var srcStationCode  = $("#station-search-form #source_station").val();
+            var destStationCode = $("#station-search-form #destination_station").val();
+            var journeyDate     = $("#station-search-form #journey_date").val();
+             $.ajax({
+                    cache: false,
+                    url: BASE_PATH + '/selectTrain',
+                    method:'GET',
+                    data:{'_token':X_ACCESS_TOKEN,"source_station":srcStationCode,"destination_station":destStationCode,"journey_date":journeyDate},
+                    success:function(data){
+                      (_this).button('reset');
+                      $("#select-train-container").html(data);
+                            var box = bootbox.dialog({
+                                  title: "Select Train",
+                                  message: $('#select-train-container').html(),
+                                  animate: true,
+                                  onEscape: function() {
+                                    $('#select-train-container').html("");
+                                  }  
+                            });
+                            var marginTop =  box.height()/2;
+                            box.css({
+                                  'top': '50%',
+                                  'margin-top': function () {
+                                    return -(marginTop);
+                                  }
+                                });
+                    },
+                    error:function(){
+                        (_this).button('reset');
+                    }
+                 });
+   }
+
+});
+
+$('#station-search-form').submit(function(event){
+    event.preventDefault();
+});
+
+$('#view-hide-order-summary').click(function () {
+    if($('#view-hide-order-summary span').hasClass('glyphicon-chevron-down'))
+    {
+        $('#view-hide-order-summary').html("Hide Order Details <span class='glyphicon glyphicon-chevron-up'></span>");
+    }
+    else
+    {  
+        $('#view-hide-order-summary').html("View Order Details <span class='glyphicon glyphicon-chevron-down'></span>");
+    }
+});
+
+if($('#view-hide-order-summary-container').is(":visible")){
+    $("#cart-summary-container").addClass('collapse');
+}
+
+/* Animation starts for how it work section */
+function isElementInViewport(elem) {
+    var $elem = $(elem);
+    // Get the scroll position of the page.
+    var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
+    var viewportTop = $(scrollElem).scrollTop();
+    var viewportBottom = viewportTop + $(window).height();
+    // Get the position of the element on the page.
+    var elemTop = Math.round( $elem.offset().top );
+    var elemBottom = elemTop + $elem.height();
+    return ((elemTop < viewportBottom) && (elemBottom > viewportTop));
+}
+
+// Check if it's time to start the animation.
+function checkAnimation() {
+    var $elem = $('.each-how-it-works-block');
+    if(!$elem.length) {return; }
+    // If the animation has already been started
+    if ($elem.hasClass('animated')) { return; }
+    if (isElementInViewport($elem)) {
+        // Start the animation
+        $elem.addClass('animated fadeInUp');
+    }
+}
+
+// Capture scroll events
+$(window).scroll(function(){
+    if( $(window).width() > $.PC.options.screenSizes.xs ){
+       checkAnimation();
+   }
+});
+/* Animation ends */
+
+}); //DOM Ends

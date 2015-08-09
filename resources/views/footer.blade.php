@@ -1,5 +1,5 @@
-  <div class="col-md-12" id="footer" >
-    <div class="bs-docs-section">
+<div class="col-md-12" id="footer" >
+    <div class="pt20">
       <div class="row">
            <div class="col-md-offset-1 col-md-3 col-lg-3 footer-content">
               <h5>PantryCar</h5>
@@ -43,16 +43,18 @@
 
       <div class="row pt10">
           <div class="col-lg-12 col-md-12 footer-content">
-              <div class="col-lg-8 col-md-8">
+              <div class="col-lg-6 col-md-6">
                 <p class="grey" >
                   &copy; 2015 pantrycar.co.in . All rights reserved
                 </p>
                   <img src="{{ asset('/img/cod.png') }}" class="img-responsive"><br>
               </div>
-              <div class="col-lg-4 col-lg-4 linkset pt20">
+              <div class="col-lg-6 col-lg-6 linkset pt20">
                  <a>Terms and Conditions</a>
                  <a>Privacy Policy</a>    
-                 <a>Disclaimer</a>   
+                 <a>Disclaimer</a> 
+                 <a href="{{ url('/contact-us') }}">Contact Us</a>
+                 <a href="{{ url('/merchants') }}">Merchants</a>
               </div>
           </div>
       </div>
@@ -62,9 +64,9 @@
 
      <!-- Scripts -->
      <script>window.BASE_PATH = "<?php echo url() ;?>"; </script>
-     <script>window.X_ACCESS_TOKEN = "<?php echo csrf_token(); ?>"</script>
+     <script>window.X_ACCESS_TOKEN = "<?php echo Session::token(); ?>"</script>
      <script src="{{ asset('/js/build/app.min.js') }} "></script>
-     @if(Session::get('login') === 1)
+     @if(Session::get('login') === true)
       <script>
       $(function() {
             bootbox.dialog({

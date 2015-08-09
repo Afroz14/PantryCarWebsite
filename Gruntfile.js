@@ -10,7 +10,8 @@ var Oven = Oven || {};
 //All server related configurations must be put here
 Oven.config = {
 
-    cssDir: "public/css/less",
+    cssLessDir: "public/css/less",
+    cssDir: "public/css",
     jsDir: "public/js",
     buildCssDir: "public/css/build",
     buildJsDir: "public/js/build",
@@ -19,7 +20,7 @@ Oven.config = {
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '52.26.67.57',
+    HostName : '52.24.136.129',
     userName :'ubuntu'
 };
 
@@ -53,7 +54,7 @@ module.exports = function(grunt) {
                     cleancss: false
                 },
                 files: {
-                  '<%= config.buildCssDir %>/app.css' : '<%= config.cssDir %>/app.less',
+                  '<%= config.buildCssDir %>/app.css' : '<%= config.cssLessDir %>/app.less',
                 }
             }
       },
@@ -62,7 +63,7 @@ module.exports = function(grunt) {
     cssmin: {
       build: {
         files: {
-          '<%= config.buildCssDir %>/app.min.css': '<%= config.buildCssDir %>/app.css'
+          '<%= config.buildCssDir %>/app.min.css': ['<%= config.buildCssDir %>/app.css','<%= config.cssDir %>/animate.min.css']
         }
       }
     },
@@ -72,7 +73,7 @@ module.exports = function(grunt) {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             },
-            all: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/awesomplete.min.js','!<%= config.jsDir %>/bootbox.min.js','!<%= config.jsDir %>/bootstrap.min.js','!<%= config.jsDir %>/horizontal.scroll.min.js','!<%= config.jsDir %>/jquery-2.1.3.min.js','!<%= config.jsDir %>/jquery-ui.min.js','!<%= config.jsDir %>/typehead.min.js','!<%= config.jsDir %>/nanobar.min.js','!<%= config.jsDir %>/bootstrap-datepicker.min.js']
+            all: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/awesomplete.min.js','!<%= config.jsDir %>/bootbox.min.js','!<%= config.jsDir %>/bootstrap.min.js','!<%= config.jsDir %>/horizontal.scroll.min.js','!<%= config.jsDir %>/jquery-2.1.3.min.js','!<%= config.jsDir %>/jquery-ui.min.js','!<%= config.jsDir %>/typehead.min.js','!<%= config.jsDir %>/bootstrap-datepicker.min.js','!<%= config.jsDir %>/pacer.min.js']
       },
 
     jsvalidate: {
@@ -240,7 +241,7 @@ module.exports = function(grunt) {
 
     watch: {
       styles: {
-        files: ['<%= config.cssDir %>**/*.less'], // which files to watch
+        files: ['<%= config.cssLessDir %>**/*.less'], // which files to watch
         tasks: ['less'],
         options: {
           nospawn: true

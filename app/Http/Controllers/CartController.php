@@ -27,14 +27,8 @@ class CartController extends Controller {
 	 */
 	public function show()
 	{
-        $cartContent           = self::getCartContent();
-        $overWriteFlag         = \Input::get('s');
-        $fixCheckoutButtonFlag = false;
-        if(!empty($overWriteFlag) && $overWriteFlag == 1)
-          $fixCheckoutButtonFlag = true;
-
-        $cartContent       = self::getCartContent($fixCheckoutButtonFlag); 
-        return view('user-cart')->with('cartContent' ,$cartContent);
+        $cartContent       = self::getCartContent(); 
+        return view('user-cart')->with('cartContent' ,$cartContent)->with('itemCount',\Cart::count(false));
 	}
 
 /*
@@ -282,7 +276,7 @@ class CartController extends Controller {
      return $cartString;
 	}
 
-	public function getCartContent($fixCheckoutButtonFlag = false){
+	public function getCartContent(){
 
 		$content    = \Cart::content();
 		$cartString = "<ul class='cd-cart-items'>";
@@ -307,10 +301,35 @@ class CartController extends Controller {
         	    $cartString .= $cartItem;
         	    $cartString .= "</ul>";
         	    $cartString .= '<div class="cd-cart-total"><p>Total <span>Rs '.\Cart::total().'</span></p></div>';
-              $cartString .= '<a href="" class="checkout-btn '.(($fixCheckoutButtonFlag)? " fix-checkout-button-width":"").'">Checkout</a>';
+              $cartString .= '<a href="" class="checkout-btn">Checkout</a>';
           }
 
 		 return $cartString;
 	}
+
+/* @method : To return static HTML version of cart summary page on checkout
+   @param :  none 
+   @return : html text
+ */
+
+  public function getCartSummaryStaticHTML(){
+        $content    = \Cart::content();
+        $cartString = "<ul class='cart-summary'>";
+        $iterator   = 0;
+
+        foreach($content as $row)
+        {
+            $cartString .=  "<li data-index='".$iterator."'>";
+            $cartString .= '<div class="cart-item-name" >'.$row->name.'</div>';
+            $cartString .= '<div class="cart-item-qty pt5" >x '.$row->qty.'</div>';
+            $cartString .= '<div class="cart-item-total textright pr10">Rs '.$row->subtotal.'</div>';
+            $cartString .= '</li>';
+            $iterator++;
+        }
+
+        $cartString .= "</ul>";
+        $cartString .= '<div class="payment-total mt20"><span class="floatleft">Amount Payable</span><span class="floatright" >Rs '.\Cart::total().'</span></div>';
+        return $cartString;
+  }
 
 }

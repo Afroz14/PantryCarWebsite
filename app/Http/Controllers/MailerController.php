@@ -21,9 +21,12 @@ class MailerController extends Controller {
 	{
 		$userEmail =  $userData['emailId'];
 		$userName  =  $userData['name'];
-        Mail::send('emails.welcome-email', array('username'=>$userName), function($message) use($userEmail,$userName){
-            $message->to($userEmail, $userName)->subject('Welcome to PantryCar ');
-        });
+		if(getenv("SEND_EMAIL") == true ) {
+			        Mail::send('emails.welcome-email', array('username'=>$userName), function($message) use($userEmail,$userName){
+                             $message->to($userEmail, $userName)->subject('Welcome to PantryCar ');
+                 });
+		}
+
 	}
 
 	public static function sendEmailVerificationMail($userData)
@@ -32,9 +35,21 @@ class MailerController extends Controller {
 		$userName  		  =  $userData['name'];
 		$verificationToken = $userData['verificationToken'];
 		$link 			  =  URL::route('activate-account',$verificationToken);
-        Mail::send('emails.confirm-email', array('username'=>$userName,'link' => $link), function($message) use($userEmail,$userName){
-            $message->to($userEmail, $userName)->subject('Activate your account ');
-        });
+		if(getenv("SEND_EMAIL") == true ) {
+		        Mail::send('emails.confirm-email', array('username'=>$userName,'link' => $link), function($message) use($userEmail,$userName){
+		            $message->to($userEmail, $userName)->subject('Activate your account ');
+		        });
+      }
+	}
+
+	public static function sendPasswordResetEmail($emailId,$resetToken){
+        $link 			  =  URL::route('password-reset',$resetToken);
+        if(getenv("SEND_EMAIL") == true ) {
+		        Mail::send('emails.password', array('username'=>$emailId,'link' => $link), function($message) use($emailId){
+		            $message->to($emailId, $emailId)->subject('Password Reset');
+		        });
+      }
+
 	}
 
 

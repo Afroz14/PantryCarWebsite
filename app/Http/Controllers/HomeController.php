@@ -1,6 +1,5 @@
 <?php 
 namespace App\Http\Controllers;
-use Meta;
 
 class HomeController extends Controller {
 
@@ -40,10 +39,19 @@ class HomeController extends Controller {
 		return view('login');
 	}
 
-		public function signup()
+    public function signup()
 	{
 		return view('signup');
 	}
 
+    public function contactUsPage(){
+    	return view('contact-us');
+    }
 
+   public function orderTrackerPage(){
+   	   return view('order-tracker');
+   }
+   public function merchantPage(){
+   	   return view('merchants');
+   }
 }

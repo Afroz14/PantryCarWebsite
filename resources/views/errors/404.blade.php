@@ -26,6 +26,8 @@
 		</style>
 		<div class="container">
 			<div class="content">
+				<i class="fa fa-frown-o" style=" font-size: 250px;
+"></i>
 				<div class="title">Either page doesn't exist at this URL or you typed wrong URL</div>
 			</div>
 		</div>

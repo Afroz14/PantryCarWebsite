@@ -12,52 +12,52 @@
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Full Name</label>
-							<div class="col-md-6">
+							<div class="col-md-8">
 								<input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
+							<div class="col-md-8">
 								<input type="email" class="form-control" name="email" value="{{ Auth::user()->id  }}">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Phone number</label>
-							<div class="col-md-6">
+							<div class="col-md-8">
 								<input type="text" class="form-control" name="phone_number" value="{{ Auth::user()->contactNo  }}">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Address</label>
-							<div class="col-md-6">
+							<div class="col-md-8">
 								<input type="text" class="form-control" name="address">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">State</label>
-							<div class="col-md-6">
+							<div class="col-md-8">
 								<input type="text" class="form-control" name="state">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Pincode</label>
-							<div class="col-md-6">
+							<div class="col-md-8">
 								<input type="text" class="form-control" name="pincode">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-8 col-md-offset-4">
-								<button type="submit" class="btn btn-primary" >
+								<button type="submit" class="btn pc-btn" >
 									Save Changes
 								</button>
-								<button type="submit" class="btn btn-primary" >
+								<button type="submit" class="btn pc-btn" >
 									Cancel
 								</button>
 							</div>

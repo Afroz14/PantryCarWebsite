@@ -18,6 +18,7 @@ class AuthController extends Controller {
 
   public function login() {
 
+    $intendedURL =  \Redirect::intended('/')->getTargetUrl();
     // Getting all post data
     $data = \Input::all();
     // Applying validation rules.
@@ -40,7 +41,7 @@ class AuthController extends Controller {
 		     );
       $rememberMe = empty(\Input::get('remember'))?false:true;
       if (Auth::attempt($userData,$rememberMe)) {
-        return \Response::json(['success' => true], 200);
+        return \Response::json(['success' => true,"next" => $intendedURL], 200);
        }
 
       else
@@ -81,7 +82,7 @@ class AuthController extends Controller {
      
        $registerController = new RegisterController;
        if ($registerController->store($userData)){
-        $email = Mailer::sendEmailVerificationMail($userData);
+        //$email = Mailer::sendEmailVerificationMail($userData);
         return \Response::json(['success' => true], 200);
        }
       else
@@ -112,7 +113,7 @@ class AuthController extends Controller {
          list($responseStatus,$errorIfAny) = $this->createOrloginUser($user,"facebook");
 
          if($responseStatus == true )
-            return redirect('/');
+            return self::handleSocialPostRedirect();
          else
             return redirect('/')->with("error_message",$errorIfAny);
              
@@ -126,7 +127,6 @@ class AuthController extends Controller {
     
   }
 
-
   
   public function google() {
 
@@ -135,7 +135,7 @@ class AuthController extends Controller {
          $user   = \Socialize::with('google')->user();
          list($responseStatus,$errorIfAny) = $this->createOrloginUser($user,"google");
          if($responseStatus == true )
-            return redirect('/');
+            return self::handleSocialPostRedirect();
          else
             return redirect('/')->with("error_message",$errorIfAny);   
     }
@@ -151,7 +151,6 @@ class AuthController extends Controller {
         
         $email = $user->getEmail();
         $name  = $user->getName();
-
         if(empty($email))
         {
              return array(false ,"No email id found with your $provider account .");
@@ -169,11 +168,11 @@ class AuthController extends Controller {
                           'verificationToken' => $verificationToken
                            );
                if ($registerController->store($userdata)){
-                  Mailer::sendEmailVerificationMail($userData);
+                  //Mailer::sendEmailVerificationMail($userData);
                   return array(true,"");
                }
                else{
-                   return array(false ,"error_message","Error while signup with you $provider account .Please try again .");
+                   return array(false ,"Error while signup with you $provider account .Please try again .");
                }
             }
             else{
@@ -189,7 +188,7 @@ class AuthController extends Controller {
       $userProvider = new CustomUserProvider();
       if(!empty($code)){
         if($userProvider->verifyUserAccount($code)){
-           return redirect('/')->with("success_message","Account Verified .You can now login and order your meal");
+            return redirect('/')->with("success_message","Account Verified .You can now order your meal right away");
         }
         else{
            return redirect('/')->with("error_message","Error while verifying your account");
@@ -200,4 +199,75 @@ class AuthController extends Controller {
       }
       
   }
+
+  public function handleSocialPostRedirect(){
+       return redirect("/signup-login-redirect");
+  }
+
+  public function signupLoginRedirect(){
+      return view("signup-login-redirect");
+    }
+
+   public function forgotPassword(){
+      return view('auth/password');
+   } 
+
+   public function sendPasswordResetToken(){
+
+      $emailId = \Input::get('email');
+     if(!empty($emailId)){
+         $resetToken   = str_random(60);
+         $userProvider = new CustomUserProvider();
+         if($userProvider->updatePasswordResetToken($emailId,$resetToken)){
+                     $email = Mailer::sendPasswordResetEmail($emailId,$resetToken);
+                     return redirect('/forgotPassword')->with('status',"A password reset link has been sent to ".$emailId." .Please check ");
+         }
+         else{
+                 return redirect('/forgotPassword')->with('errors',"Something went wrong .Please try again .");
+         }
+
+     }
+     else{
+         $errors = array("Email id was empty.");
+         return redirect('/forgotPassword')->with('errors',$errors);
+     }
+   }
+   public function passwordReset($resetToken){
+      if(!empty($resetToken)){
+          return view('auth.password-reset')->with('code',$resetToken);
+      }
+      else{
+          return redirect('/')->with('error_message','Link invalid');
+      }
+   }
+  public function changePassword(){
+
+    $data = \Input::all();
+    // Applying validation rules.
+    $rules = array(
+            'password'      => 'required|min:6|same:cpassword',
+            'cpassword'     => 'required|min:6'
+       );
+     $code     = \Input::get('code');
+     $password = \Input::get('password');
+
+     if(empty($code)){
+        return redirect('/')->with("error_message","Something went wrong .Try again.");
+     }
+
+    $validator = \Validator::make($data, $rules);
+    if ($validator->fails()){
+       return redirect('/passwordReset/'.$code)->withErrors($validator->getMessageBag()->toArray());
+    }
+    else{
+         $userProvider = new CustomUserProvider();
+         if($userProvider->changePassword($code,$password)){
+            return redirect('/')->with('success_message','Your new password has been updated .You can now login with new password .');
+         }
+         else{
+             return redirect('/passwordReset/'.$code)->withErrors(array("Something went wrong .Please try again."));  
+         }
+    }
+  }
+
 }

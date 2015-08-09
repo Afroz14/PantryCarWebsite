@@ -1,4 +1,3 @@
-
 @section('login-content')
 <div class="container-fluid omit" id="pc-signin-signup-form">
 	<div class="row">
@@ -37,7 +36,7 @@
 							<div class="col-md-10 col-md-offset-2">
 								<button type="submit" class="btn btn-primary" id = "login-button">Login</button>
 
-								<a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
+								<a class="btn btn-link" href="{{ url('/forgotPassword') }}">Forgot Your Password?</a>
 							</div>
 						</div>
 					</form>
@@ -91,8 +90,8 @@
                     </div>
                     <div class="col-md-5">
 					 <div class="social-login-links">
-					     <button class="btn-social btn-fb" id="fb-login-button" onclick="location.href='{{ url('/facebook') }}';">Sign in with Facebook</button>
-						 <button class="btn-social btn-google" id="google-login-button" onclick="location.href='{{ url('/google') }}';">Sign in with Google</button>
+					     <button class="btn-social btn-fb" id="fb-login-button" onclick='location.href= "{{ url("/facebook") }}" ;'>Sign in with Facebook</button>
+						 <button class="btn-social btn-google" id="google-login-button" onclick='location.href="{{ url("/google") }}" ;'>Sign in with Google</button>
 					 </div>
 				  </div>
 				  <div class="col-md-12 center login-links"><p> Don't have pantrycar account ? <a href="#" id="loadSignup">Click here </a> to create one<p> </div>
@@ -101,6 +100,11 @@
 			</div>
 		</div>
 		<div class="ajax_loader__wrapper hidden"></div>
+     		 @if(Session::get('login') === true && Session::get('redirect_param_availiable') === true)
+               <input type="hidden" name="redirect_url"  value="{{ Session::get('redirect_url') }}" >
+               <input type="hidden" name="redirect_method"  value="{{ Session::get('redirect_method') }}" >
+               <input type="hidden" name="redirect_controller"  value="{{ Session::get('redirect_controller')  }}" >
+		     @endif
 	</div>
 </div>
 

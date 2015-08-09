@@ -6,6 +6,7 @@ use Illuminate\Auth\GenericUser;
 use App\Libraries\Curl;
 use App\Config\Constants;
 use App\Http\Controllers\MailerController as Mailer;
+use Auth;
 
 class CustomUserProvider implements UserProviderInterface {
 
@@ -48,7 +49,7 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->get($url); 
-        $response = (array)json_decode($response);
+        $response = json_decode($response,true);
         if($response == null || isset($response['status']) && $response['status'] === false){
             return null;
         }  
@@ -74,12 +75,14 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json',"Accept: application/json"));
         $response = $this->curl->post($url, json_encode($postParam));
-        $response = (array)json_decode($response);
-        if($response == null || isset($response['status']) && $response['status'] === false){
-            return null;
+        $response = json_decode($response,true);
+        if(isset($response['status']) && $response['status'] === true){
+             $userArray = array("id" => $response['emailId'],"name" => $response['name']);
+             return new GenericUser($userArray);
         } 
-        $userArray = array("id" => $response['emailId'],"name" => $response['name']);
-        return new GenericUser($userArray);
+
+        return null;
+ 
     }
 
 
@@ -97,7 +100,7 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->post($url, json_encode($postParam));
-        $response = (array)json_decode($response);
+        $response = json_decode($response,true);
         if($response == null || isset($response['status']) && $response['status'] === true)
             return true;
 
@@ -113,7 +116,7 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->get($url,array("token" => $token));  
-        $response = (array)json_decode($response); 
+        $response = json_decode($response,true); 
         if($response == null || isset($response['status']) && $response['status'] === false)
             return null;
         $userArray = array("id" => $response['emailId'],"name" => $response['name']);
@@ -143,15 +146,56 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HEADER, true);
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->put($url,json_encode(array("verificationToken" => $code))); 
-        $response = (array)json_decode($response);
+        $response = json_decode($response,true);
         if($response != null && isset($response['status']) && $response['status'] === true && isset($response['verified']) && $response['verified'] === true){
             if(!empty($response['emailId']) && !empty($response['name'])){
                     $userData = array("emailId" =>$response['emailId'] ,"name" => $response['name']);
-                    Mailer::sendSuccessfullSignupMail($userData);
-           }
-            return true;
+                    $userArray = new GenericUser(array("id" => $response['emailId'],"name" => $response['name']));
+                    Auth::login($userArray);
+                    return true;
          }  
         return false;
+    }
   }
 
+/**
+    * update password reset token
+    *
+    * @param $emailid
+    * @param $resetToken 
+    * @return bool
+    */
+
+   public function updatePasswordResetToken($emailId,$resetToken){
+        $url       = API_HOST.UPDATE_PASSWORD_RESET_TOKEN_ROUTE.$emailId."/update_password_reset_token";
+        $this->curl->setOption(CURLOPT_HEADER, true);
+        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        $response = $this->curl->put($url,json_encode(array("passResetToken" => $resetToken))); 
+        $response = json_decode($response,true);
+        if($response != null && isset($response['status']) && $response['status'] === true ){
+                    return true;
+         }  
+        return false;
+    }
+  
+      /**
+    * Change password based on the code passed.
+    *
+    * @param $code reset token
+    * @param $password 
+    * @return bool
+    */
+
+   public function changePassword($code,$password){
+        $url       = API_HOST.CHANGE_PASSWORD_ROUTE.$code."/reset_password";
+        $this->curl->setOption(CURLOPT_HEADER, true);
+        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        $response = $this->curl->put($url,json_encode(array("loginPass" => $password))); 
+        $response = json_decode($response,true);
+        var_dump($response);die();
+        if($response != null && isset($response['status']) && $response['status'] === true){
+              return true;
+         }  
+        return false;
+    }
 }

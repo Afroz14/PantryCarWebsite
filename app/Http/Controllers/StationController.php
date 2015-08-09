@@ -3,6 +3,7 @@
 use App\Libraries\Curl;
 use App\Config\Constants;
 use Cocur\Slugify\Slugify;
+use Breadcrumbs;
 
 class StationController extends Controller {
 
@@ -22,16 +23,19 @@ class StationController extends Controller {
 	public function show()
 	{
         $search_type = \Input::get("search_type");
-        $breadcrumbHTML = $this->breadcrumb->getBreadCrumb(1);
+        $breadcrumbParam = null;
+        
 		if(isset($search_type)) {
             if($search_type == 'pnr_search'){
 			        $pnrNumber = \Input::get("pnr_number");
 				    $response =  self::getPnrDetail($pnrNumber);
 				    if(isset($response) && isset($response['status']) && $response['status'] === true) {
 				    	$trainNum    = $response['trainNum'];
-				 		$srcStation  = $response['srcStationCode'];
-	        			$destStation = $response['destStationCode'];
-	        			$journeyDate = $response['doj'];
+				 		$srcStation  = $breadcrumbParam['source_station'] = $response['srcStationCode'];
+	        			$destStation = $breadcrumbParam['destination_station'] = $response['destStationCode'];
+	        			$journeyDate = $breadcrumbParam['journey_date'] = $response['date'];
+				        $breadcrumbParam['search_type'] = $search_type;
+				        $breadcrumbParam['pnr_number']  = $pnrNumber;
 				    }	
 			      }
 			 else if($search_type == 'train_search')    {
@@ -49,31 +53,41 @@ class StationController extends Controller {
 					        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 					        $response = $this->curl->get($url,$param);
 					        $response = (array)json_decode($response);
+
+					        $breadcrumbParam = \Input::all();
         			}
 			  }  
 			  else{
 			  	 $response = null;
 			  }
-		      
+
+		   
+
 		  if(isset($response) && isset($response['status']) && $response['status'] === true) {
-		      	   if(isset($response['doj']))
-		        	 $stationHeader        = array("DATE" => $response['doj'],"TRAIN_NAME" => $response['trainName'],"TRAIN_NUMBER" =>$response['trainNum'], "ROUTE" => $response['srcStationName'] ." TO " .$response['destStationName']);
-		           else
-		        	  $stationHeader       = array("DATE" => $response['date'],"TRAIN_NAME" => $response['trainName'],"TRAIN_NUMBER" =>$response['trainNum'], "ROUTE" => $response['srcStationName'] ." TO " .$response['destStationName']);
+		      	 
+		        	  $stationHeader       = array( "journey_date"        => "<i class='fa fa-calendar pr10'></i>".date('d M Y' ,strtotime($response['date'])),
+		        	 	                             "route"              => "<i class='fa fa-map-marker pr10'></i>".$response['srcStationName'] ." TO " .$response['destStationName'],
+		        	 	                             "train_name"         => "<i class='fa fa-train pr10'></i> [ ".$response['trainNum'] ." ] ".$response['trainName']
+		        	 	                            );
+		        	                          
 		        	
 		        	$stationsListDetails  = array();
 		        	foreach ($response['trainStoppages'] as $station) {
 		        		$station = (array)$station;
-		        		$parentUrlParam    = \Helper::httpBuildQuery(array( "train_num"           => $trainNum,
-		        			                                       			"source_station"      => $srcStation,
-		        			                                       			"destination_station" => $destStation,
-		        			                                       			"journey_date"        => $journeyDate,
-		        			                                       			"train_name"          => $response['trainName'],
-	 	        			                                 ));
+		        		$buildParam = array("train_num"           => $trainNum,
+                                   			"source_station"      => $srcStation,
+                                   			"destination_station" => $destStation,
+                                   			"journey_date"        => $journeyDate,
+                                   			"train_name"          => $response['trainName'],
+                                   			"search_type"		  => $search_type
+	 	        			                  );
+		        		if($search_type == "pnr_search")
+		        			$buildParam['pnr_number'] = $pnrNumber;
+		        		$parentUrlParam    = \Helper::httpBuildQuery($buildParam);
 		        		$eachStationSeoUrl = "restaurants/".$station['stationCode']."/".$this->slugify->slugify("restaurants near by ".$station['stationName']. " railway station ")."?".$parentUrlParam;
 		        		$stationsListDetails[$station['stationCode']] = array("STATION_NAME" => $station['stationName'],
-		        															  "ARRIVAL_TIME" =>"ARRIVAL ".$station['arrivalTime'], 
-		        															  "HALT" => "HALT ".$station['stoppageTime'],
+		        															  "ARRIVAL_TIME" => $station['arrivalTime'], 
+		        															  "HALT" => $station['stoppageTime'],
 		        															  "DAY" =>"DAY " .$station['day'],
 		        															  "stationSeoUrl" => $eachStationSeoUrl
 		        															 );
@@ -81,13 +95,13 @@ class StationController extends Controller {
 		            return view('station-select')
 		                       ->with("station_list",$stationsListDetails)
 		                       ->with("station_header",$stationHeader)
-		                       ->with("breadcrumb",$breadcrumbHTML);
+		                       ->with("breadcrumbParam",$breadcrumbParam);
 		       }
 		      else{
 		        	  return view('station-select')
 		        	         ->with("station_list","")
 		        	         ->with("station_header","")
-		        	         ->with("breadcrumb",$breadcrumbHTML);
+		        	         ->with("breadcrumbParam",$breadcrumbParam);
 		        } 
 
 		}
@@ -95,7 +109,7 @@ class StationController extends Controller {
 			return view('station-select')
 			       ->with("station_list","")
 			       ->with("station_header","")
-			       ->with("breadcrumb",$breadcrumbHTML);
+			       ->with("breadcrumbParam",$breadcrumbParam);
 		}
             
 	}

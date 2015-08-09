@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	//'url' => 'http://localhost:8888/MAMP/pantrycar/public',
+	'url' => 'http://localhost:8888/MAMP/pantrycar',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -149,7 +149,7 @@ return [
 		'Laravel\Socialite\SocialiteServiceProvider',
 		'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
 		'Eusonlito\LaravelMeta\MetaServiceProvider',
-
+        'DaveJamesMiller\Breadcrumbs\ServiceProvider',
 
 	],
 
@@ -202,6 +202,7 @@ return [
 		'Cart'      => 'Gloudemans\Shoppingcart\Facades\Cart',
 		'Helper'    => 'App\Libraries\Helper',
 		'Meta'      => 'Eusonlito\LaravelMeta\Facade',
+		'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
 
 	],
 
