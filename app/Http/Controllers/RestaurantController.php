@@ -86,7 +86,7 @@ class RestaurantController extends Controller {
 
 	public function getDetail($restaurantId){
        
-        if(!empty($restaurantId) ){
+        /*if(!empty($restaurantId) ){
        
        	  $url       = API_HOST.o;
           $this->curl->setOption(CURLOPT_HEADER, true);
@@ -116,7 +116,7 @@ class RestaurantController extends Controller {
 		}
 		else{
 		    \App::abort(404);
-		}
+		}*/
        self::cleanUpCartIfNeeded($restaurantId);
        var_dump($restaurantId);die();
        $cartController  = new CartController;
