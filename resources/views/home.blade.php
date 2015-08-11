@@ -131,7 +131,7 @@
 </div> 
 
 @include('footer')
-<script src="{{ asset('/js/build/autosuggest-inputs.js') }} "></script>
+<script src="{{ asset('/js/build/autosuggest.js') }} "></script>
 
 </body>
 </html>

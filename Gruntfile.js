@@ -25,12 +25,16 @@ Oven.config = {
 };
 
 
+var timer = require("grunt-timer");
 
 module.exports = function(grunt) {
 
+  timer.init(grunt, { deferLogs: true, friendlyTime: true, color: "blue" });
+  
   var _privateKey = grunt.file.exists(Oven.config.privateKeyPath) ? grunt.file.read(Oven.config.privateKeyPath) : '';
 
   // Load all modules here
+
    grunt.loadNpmTasks('grunt-ssh');
    grunt.loadNpmTasks('grunt-contrib-cssmin');
    grunt.loadNpmTasks('grunt-contrib-less');
@@ -73,7 +77,7 @@ module.exports = function(grunt) {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             },
-            all: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/awesomplete.min.js','!<%= config.jsDir %>/bootbox.min.js','!<%= config.jsDir %>/bootstrap.min.js','!<%= config.jsDir %>/horizontal.scroll.min.js','!<%= config.jsDir %>/jquery-2.1.3.min.js','!<%= config.jsDir %>/jquery-ui.min.js','!<%= config.jsDir %>/typehead.min.js','!<%= config.jsDir %>/bootstrap-datepicker.min.js','!<%= config.jsDir %>/pacer.min.js']
+            all: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/lib/*.js']
       },
 
     jsvalidate: {
@@ -82,7 +86,7 @@ module.exports = function(grunt) {
                 esprimaOptions: {},
                 verbose: false
             },
-            files: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js']
+            files: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/lib/*.js']
         },
 
      phplint: {
@@ -105,16 +109,16 @@ module.exports = function(grunt) {
         },
         build: {
             files: {
-                '<%= config.buildJsDir %>/app.min.js': [ '<%= config.jsDir %>/jquery-2.1.3.min.js',
-                                                                                   '<%= config.jsDir %>/bootstrap.min.js',
-                                                                                   '<%= config.jsDir %>/bootbox.min.js',
-                                                                                   '<%= config.jsDir %>/bootstrap-datepicker.min.js',
-                                                                                   '<%= config.jsDir %>/nanobar.min.js',
-                                                                                   '<%= config.jsDir %>/main.js',
-                                                                                   
-                                                                                    ],
-                '<%= config.buildJsDir %>/cart.min.js':  ['<%= config.jsDir %>/cart.js'],
-                '<%= config.buildJsDir %>/autosuggest-inputs.js':  ['<%= config.jsDir %>/awesomplete.min.js','<%= config.jsDir %>/autosuggest-inputs.js']
+                '<%= config.buildJsDir %>/bundle.min.js': [ '<%= config.jsDir %>/lib/jquery-2.1.3.min.js',
+                                                                                   '<%= config.jsDir %>/lib/bootstrap.min.js',
+                                                                                   '<%= config.jsDir %>/lib/bootbox.min.js',
+                                                                                   '<%= config.jsDir %>/lib/bootstrap-datepicker.min.js',
+                                                                                   '<%= config.jsDir %>/modules/auth/Auth.js',
+                                                                                   '<%= config.jsDir %>/modules/Stations.js',
+                                                                                   '<%= config.jsDir %>/main.js'
+                                                          ],
+                '<%= config.buildJsDir %>/cart.min.js':  ['<%= config.jsDir %>/modules/cart.js'],
+                '<%= config.buildJsDir %>/autosuggest.js':  ['<%= config.jsDir %>/lib/awesomplete.min.js','<%= config.jsDir %>/modules/AutoSuggest.js']
             }
         }
    },
@@ -231,9 +235,9 @@ module.exports = function(grunt) {
             
             src: [
                  '<%= config.buildCssDir %>/app.min.css' ,
-                 '<%= config.buildJsDir %>/app.min.js',
+                 '<%= config.buildJsDir %>/bundle.min.js',
                  '<%= config.buildJsDir %>/cart.min.js',
-                 '<%= config.buildJsDir %>/autosuggest-inputs.js'
+                 '<%= config.buildJsDir %>/autosuggest.js'
             ],
             dest: ['resources/views/footer.blade.php','resources/views/meta.blade.php','resources/views/restaurant-page.blade.php','resources/views/user-cart.blade.php','resources/views/home.blade.php']
         }
@@ -267,7 +271,7 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('default' ,'localbuild');
-    grunt.registerTask('localbuild', ['lock','phplint' ,'jsvalidate','jshint' ,'shell:cleanBuilds','less:production','cssmin','uglify','shell:readyToShip','unlock']);
+    grunt.registerTask('localbuild', ['phplint' ,'jsvalidate','jshint' ,'shell:cleanBuilds','less:production','cssmin','uglify','shell:readyToShip']);
     grunt.registerTask('deploy',['lock','sshexec:deploy','unlock'])
     grunt.registerTask('build', ['lock','phplint' ,'jsvalidate','jshint','shell:cleanBuilds','less:production','cssmin','uglify','hashres','imagemin','shell:readyToShip','unlock']);
     grunt.registerTask('shipit',['lock','sshexec:makeBuildLive','unlock']);
