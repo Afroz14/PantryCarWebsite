@@ -20,7 +20,7 @@ Oven.config = {
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '52.24.151.124',
+    HostName : '54.186.101.119',
     userName :'ubuntu'
 };
 
@@ -201,9 +201,9 @@ module.exports = function(grunt) {
                     'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildCssDir %>/*',
                     'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildJsDir %>/*',
                     'ln -sf ~/Settings/.production.env <%= config.websiteLocationOnServerTemp %>/.production.env',
-                    'grunt unlock;sudo grunt build',
                     'sudo composer install',
-                    'sudo npm install'
+                    'sudo npm install',
+                    'grunt unlock;sudo grunt build'
                 ].join(' && '),    
             options:{
                 config: 'prodServer'
