@@ -14,7 +14,7 @@ var Cart = {
         cartUserQty: ('.user-cart-qty'),
         cartCheckoutButton: ('.checkout-btn'),
         cartTrigger: $('#cart-trigger'),
-        cartTotal: $(".cd-cart-total"),
+        cartTotal: (".cd-cart-total"),
         checkoutForm :$("#checkout-form")
 
     },
@@ -38,7 +38,7 @@ var Cart = {
                     Cart.settings.cartTrigger.append(data.cartItemCount);
                     Cart.appendItemToCart(data.cartItem, itemSelector, data.itemIndex);
                     Cart.checkIfTheItemTobeAddedIsFirstItem();
-                    Cart.settings.cartTotal.html(data.totalPrice);
+                    $(Cart.settings.cartTotal).html(data.totalPrice);
                 }
             },
             error: function() {}
@@ -74,7 +74,7 @@ var Cart = {
                 if (data.status !== 'undefined' && data.status == 'true') {
                     Cart.settings.cartTrigger.find('#label-cart-item-count').remove();
                     Cart.settings.cartTrigger.append(data.cartItemCount);
-                    Cart.settings.cartTotal.html(data.totalPrice);
+                    $(Cart.settings.cartTotal).html(data.totalPrice);
                     $(itemSelector).closest('li').remove();
                     Cart.checkIfTheItemToBeRemovedIsLastItem();
                 }
@@ -97,7 +97,7 @@ var Cart = {
                 if (data.status !== 'undefined' && data.status == 'true') {
                     Cart.settings.cartTrigger.find('#label-cart-item-count').remove();
                     Cart.settings.cartTrigger.append(data.cartItemCount);
-                    Cart.settings.cartTotal.html(data.totalPrice);
+                    $(Cart.settings.cartTotal).html(data.totalPrice);
                     $(itemSelector).siblings('.user-cart-qty').val(data.newQty);
                     $(itemSelector).parent().siblings('.cd-price').html(data.itemSubtotal);
                 }
@@ -121,7 +121,7 @@ var Cart = {
                 if (data.status !== 'undefined' && data.status == 'true') {
                     Cart.settings.cartTrigger.find('#label-cart-item-count').remove();
                     Cart.settings.cartTrigger.append(data.cartItemCount);
-                    Cart.settings.cartTotal.html(data.totalPrice);
+                    $(Cart.settings.cartTotal).html(data.totalPrice);
                     $(itemSelector).siblings('.user-cart-qty').val(data.newQty);
                     $(itemSelector).parent().siblings('.cd-price').html(data.itemSubtotal);
                 }
@@ -144,7 +144,7 @@ var Cart = {
                 if (data.status !== 'undefined' && data.status == 'true') {
                     Cart.settings.cartTrigger.find('#label-cart-item-count').remove();
                     Cart.settings.cartTrigger.append(data.cartItemCount);
-                    Cart.settings.cartTotal.html(data.totalPrice);
+                    $(Cart.settings.cartTotal).html(data.totalPrice);
                     $(itemSelector).siblings('.user-cart-qty').val(data.newQty);
                     $(itemSelector).parent().siblings('.cd-price').html(data.itemSubtotal);
                 }

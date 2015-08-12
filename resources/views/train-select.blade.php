@@ -21,8 +21,8 @@
 			 	No Train found against your inputs .Modify your search and then try again .
 			 </div>	
 			 <div class="form-group buttons">
-	                    <a href="{{ url('/') }} " class="pc-btn">
-	                        GO HOME
+	                    <a href="#" class="pc-btn bootbox-close-button" data-dismiss="modal">
+	                        Close
 	                    </a>
 	          </div>
           </div> 

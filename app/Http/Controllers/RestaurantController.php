@@ -137,7 +137,8 @@ class RestaurantController extends Controller {
        	                              "journey_date" => $journeyDate,
        	                              "station_code" => $stationCode,
        	                              "search_type" => $searchType,
-       	                              "restaurant_id" => "al-barista-16"
+       	                              "restaurant_id" => "al-barista-16",
+       	                              "restaurant_name" => "Al Barista"
        	                             );
         \Session::put('checkoutFormParamters',$checkoutFormParamters);
 

@@ -114,7 +114,7 @@ module.exports = function(grunt) {
                                                                                    '<%= config.jsDir %>/lib/bootbox.min.js',
                                                                                    '<%= config.jsDir %>/lib/bootstrap-datepicker.min.js',
                                                                                    '<%= config.jsDir %>/modules/auth/Auth.js',
-                                                                                   '<%= config.jsDir %>/modules/Stations.js',
+                                                                                   '<%= config.jsDir %>/modules/TrainsList.js',
                                                                                    '<%= config.jsDir %>/modules/Pnr.js',
                                                                                    '<%= config.jsDir %>/main.js'
                                                           ],

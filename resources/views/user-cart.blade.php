@@ -8,6 +8,7 @@
         <section style="padding-bottom: 50px;">
             <div class="col-md-offset-1 col-md-10">
 							<h3 class="head-common-color pc-heading">Inside Your cart</h3>
+							@if(\Cart::count(false) >0 )
 							<div class="col-md-8 ml-negative-15">
 								  <div class="mb20 overflow-hidden ">
 									 <div class="floatleft cart-restaurant-image" >
@@ -56,6 +57,18 @@
 							 	      </ul>
 							 	      <a href="" class="checkout-btn mt20">Checkout</a>
 							</div>
+							@else
+							 <div class="user-cart full-width-cart clear">
+							 	<ul class='cd-cart-items'>
+							 		<span class='cart-empty'>Your cart is empty .</span>
+							    </ul>
+							    <div class="form-group buttons text-center mt20">
+				                    <a href="{{ url('/') }} " class="pc-btn">
+				                        GO HOME
+				                    </a>
+	                         </div>		
+							 </div>
+							@endif
 				</div>  
 		</section>	 
      </div>
