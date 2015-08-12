@@ -47,8 +47,7 @@ class HomeController extends Controller {
     public function contactUsPage(){
     	return view('contact-us');
     }
-
-   public function orderTrackerPage(){
+    public function orderTrackerPage(){
    	   return view('order-tracker');
    }
    public function merchantPage(){

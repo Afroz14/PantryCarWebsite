@@ -30,7 +30,7 @@ var timer = require("grunt-timer");
 module.exports = function(grunt) {
 
   timer.init(grunt, { deferLogs: true, friendlyTime: true, color: "blue" });
-  
+
   var _privateKey = grunt.file.exists(Oven.config.privateKeyPath) ? grunt.file.read(Oven.config.privateKeyPath) : '';
 
   // Load all modules here
@@ -115,6 +115,7 @@ module.exports = function(grunt) {
                                                                                    '<%= config.jsDir %>/lib/bootstrap-datepicker.min.js',
                                                                                    '<%= config.jsDir %>/modules/auth/Auth.js',
                                                                                    '<%= config.jsDir %>/modules/Stations.js',
+                                                                                   '<%= config.jsDir %>/modules/Pnr.js',
                                                                                    '<%= config.jsDir %>/main.js'
                                                           ],
                 '<%= config.buildJsDir %>/cart.min.js':  ['<%= config.jsDir %>/modules/cart.js'],

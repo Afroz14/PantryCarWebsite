@@ -7179,6 +7179,16 @@ user-cart .cd-cart-total::after {
     text-align: center;
     text-decoration: none;
 }
+#cart-order-details .checkout-btn {
+    display: block;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background: #7dcf85;
+    color: #FFF;
+    text-align: center;
+    text-decoration: none;
+}
 .full-width-cart {
     border: 0px;
 }
@@ -7188,11 +7198,11 @@ user-cart .cd-cart-total::after {
 .full-width-cart .cd-cart-total p {
     width: 200px;
     float: right;
+    font-size:18px;
+    padding-top:10px;
 }
 .full-width-cart .checkout-btn {
-    width: 200px;
-    float: right;
-    margin-top: 20px;
+   display:none;
 }
 .full-width-cart .user-cart-item-name {
     padding-bottom: 20px;
@@ -7906,6 +7916,20 @@ input[type=radio]+span {
     overflow: hidden;
     padding: 20px;
 }
+.cart-restaurant-info-wrap {
+   position:relative;
+   float:left;
+}
+.cart-restaurant-info-wrap .restaurant-name-small-1{
+   width:100%;
+   font-size:20px;
+}
+.cart-restaurant-info-wrap .restaurant-attributes-small span i{
+    color:@pc_green;
+}
+.cart-restaurant-info-wrap .restaurant-attributes-small span{
+    display:block;
+}
 /* All media css must be defined here at the end of the files */
 
 @media(max-width:@tab_device_start) {
@@ -8042,6 +8066,14 @@ input[type=radio]+span {
     }
     #send-otp-button {
         margin-top: 10px;
+    }
+    #cart-order-details h4{
+       border-top:1px solid #e0e6ef;
+       text-align:left !important;
+       padding-top:30px;
+    }
+    .cart-restaurant-image img{
+       width:100%;
     }
 }
 @media (max-width: @tab_device_edge) {

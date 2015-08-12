@@ -7,9 +7,9 @@ var Auth = {
     loadSignup: ('#loadSignup'),
     showLoginDialogButton: ('.pc_login'),
     siginSignupFormHTML: $('#pc-signin-signup-form').html(),
-    signinForm: $('.bootbox-body .form-signin-email-passwd'),
-    signupForm: $('.bootbox-body .form-signup-email-passwd'),
-    ajaxLoader: $('.bootbox-body .ajax_loader__wrapper')
+    signinForm: ('.bootbox-body .form-signin-email-passwd'),
+    signupForm: ('.bootbox-body .form-signup-email-passwd'),
+    ajaxLoader: ('.bootbox-body .ajax_loader__wrapper')
   },
 
   init: function() {
@@ -28,18 +28,18 @@ var Auth = {
   },
 
   login: function() {
-    Auth.settings.ajaxLoader.removeClass('hidden');
+    $(Auth.settings.ajaxLoader).removeClass('hidden');
     $.ajax({
       cache: false,
       dataType: 'json',
       url: BASE_PATH + '/login',
       method: 'POST',
-      data: Auth.settings.signinForm.serialize(),
+      data: $(Auth.settings.signinForm).serialize(),
       beforeSend: function() {
         $(".alert-danger").addClass('hidden').empty();
       },
       success: function(data) {
-        Auth.settings.ajaxLoader.addClass('hidden');
+        $(Auth.settings.ajaxLoader).addClass('hidden');
         if (data.success === false) {
           var arr = data.errors;
           $(".alert-danger").html("");
@@ -60,7 +60,7 @@ var Auth = {
         }
       },
       error: function() {
-        Auth.settings.ajaxLoader.addClass('hidden');
+        $(Auth.settings.ajaxLoader).addClass('hidden');
         alert('Something went wrong.Please Try again later...');
       }
     });
@@ -68,7 +68,7 @@ var Auth = {
   },
   signup: function(categoryId, categoryName) {
 
-    Auth.settings.ajaxLoader.removeClass('hidden');
+    $(Auth.settings.ajaxLoader).removeClass('hidden');
     $.ajax({
       cache: false,
       dataType: 'json',
@@ -79,7 +79,7 @@ var Auth = {
         $(".alert-danger").addClass('hidden').empty();
       },
       success: function(data) {
-        Auth.settings.ajaxLoader.addClass('hidden');
+        $(Auth.settings.ajaxLoader).addClass('hidden');
         if (data.success === false) {
           var arr = data.errors;
           $(".alert-danger").html("");
@@ -99,7 +99,7 @@ var Auth = {
         }
       },
       error: function() {
-        Auth.settings.ajaxLoader.addClass('hidden');
+        $(Auth.settings.ajaxLoader).addClass('hidden');
         alert('Something went  wrong.Please Try again later...');
       }
     });

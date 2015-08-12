@@ -4,21 +4,59 @@
 <body>
 @include('header')
 
-    <div class="container full-width-container-other">
+    <div class="full-width-container-other">
         <section style="padding-bottom: 50px;">
             <div class="col-md-offset-1 col-md-10">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-12">
-							<h3 class="head-common-color">Inside Your cart</h3>
-							<div class="cart-item-count mt10 mb10">Total items : {{ $itemCount }}</div>
-									 <div class="user-cart full-width-cart">
-								          {!! $cartContent !!}
-							 	      </div>
-					</div>
-				  </div>
+							<h3 class="head-common-color pc-heading">Inside Your cart</h3>
+							<div class="col-md-8 ml-negative-15">
+								  <div class="mb20 overflow-hidden ">
+									 <div class="floatleft cart-restaurant-image" >
+										 <img src="{{ asset('img/blurback.jpg')}}" width="174" height="94"  />
+								     </div>	
+								     <div class="pl10 cart-restaurant-info-wrap">
+								     	<div class="restaurant-name-small-1">Al Barista</div>
+								     	<div class="restaurant-attributes-small">
+								     		<span><i class="fa fa-check-circle pr10"></i>Cash On Delivery : Availiable</span>
+								     		<span><i class="fa fa-check-circle pr10"></i>Delivery Charges : Free</span>
+								     	</div>
+								        <div class="cart-item-count mt10 mb10">Total items : {{ $itemCount }} </div>
+								     </div>
+								 </div>		  
+									  <div class="user-cart full-width-cart clear">
+										          {!! $cartContent !!}
+									 </div>
+							 </div>
+							<div class="col-md-4 ml-negative-15" id="cart-order-details">
+								 <h4 class="head-common-color text-center">Order Details</h4>
+									<ul class="booking-info-list">
+							        		 <li>
+							        		 	 <span>
+							        		 	 	 <p class="booking-info-component-label">Date of Journey</p>
+							        		 	 	 <p class="booking-info-component-value">2013-07-01</p>
+							        		 	 </span>	
+							                 </li>
+							                 <li>
+							        		 	 <span>
+							        		 	 	 <p class="booking-info-component-label">Train Number</p>
+							        		 	 	 <p class="booking-info-component-value">1233</p>
+							        		 	 </span>	
+							                 </li>
+							                 <li>
+							        		 	 <span>
+							        		 	 	 <p class="booking-info-component-label">Train Name</p>
+							        		 	 	 <p class="booking-info-component-value">Gorakhdham Express</p>
+							        		 	 </span>	
+							                 </li>
+							                 <li>
+							        		 	 <span>
+							        		 	 	 <p class="booking-info-component-label">Station Selected</p>
+							        		 	 	 <p class="booking-info-component-value">Chennai</p>
+							        		 	 </span>	
+							                 </li>
+							 	      </ul>
+							 	      <a href="" class="checkout-btn mt20">Checkout</a>
+							</div>
 				</div>  
-			 </div>
 		</section>	 
      </div>
 

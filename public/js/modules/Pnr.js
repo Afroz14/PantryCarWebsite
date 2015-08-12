@@ -10,7 +10,7 @@ var Pnr = {
   },
 
   showPNRTypehead: function(fetchPnr) {
-    Pnr.settings.pnrTypeHead.css({
+    this.settings.pnrTypeHead.css({
       "height": "130px",
       'margin-bottom': "16px"
     });
@@ -30,7 +30,7 @@ var Pnr = {
     });
   },
   fetchPNRDetail: function() {
-    var pnrNumber = $("#pnr_number").val();
+    var pnrNumber = $(Pnr.settings.pnrInput).val();
     $.ajax({
       cache: false,
       dataType: 'json',
@@ -119,7 +119,7 @@ var Pnr = {
 
   bindUIActions: function() {
 
-    $('body').on('click', Auth.settings.pnrInput, function(event) {
+    $('body').on('input', Pnr.settings.pnrInput, function(event) {
       if ($(this).val().length === 10) {
         Pnr.showPNRTypehead(true);
       } else {
@@ -128,7 +128,7 @@ var Pnr = {
     });
 
 
-    $('body').on('click', Auth.settings.pnrSubmit, function(event) {
+    $('body').on('click', Pnr.settings.pnrSubmit, function(event) {
       event.preventDefault();
       Pnr.settings.pnrTypeHead.css({
         'box-shadow': 'none'

@@ -36,8 +36,6 @@ Route::get('account/google', 'Auth\AuthController@google');
 Route::post('login', array('uses'=>'Auth\AuthController@login','as' => 'login.form'));
 Route::post('signup', 'Auth\AuthController@signup');
 
-Route::get('about-us', 'HomeController@aboutUsPage');
-
 Route::get('/terms-and-conditons', 'HomeController@tncPage');
 
 Route::get('/privacy-policy', 'HomeController@privacyPolicyPage');
