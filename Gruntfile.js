@@ -118,7 +118,7 @@ module.exports = function(grunt) {
                                                                                    '<%= config.jsDir %>/modules/Pnr.js',
                                                                                    '<%= config.jsDir %>/main.js'
                                                           ],
-                '<%= config.buildJsDir %>/cart.min.js':  ['<%= config.jsDir %>/modules/cart.js'],
+                '<%= config.buildJsDir %>/cart.min.js':  ['<%= config.jsDir %>/modules/Cart.js'],
                 '<%= config.buildJsDir %>/autosuggest.js':  ['<%= config.jsDir %>/lib/awesomplete.min.js','<%= config.jsDir %>/modules/AutoSuggest.js']
             }
         }
