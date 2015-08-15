@@ -312,7 +312,40 @@ var Cart = {
             event.preventDefault();
             Cart.cartCheckout();
         });
+
+        $('body').on('click','.bootbox #complete-journey-detail-popup',function(event){
+
+              var trainNum  = $('.bootbox #complete-journey-detail-popup-form #train_num').val();
+              var trainName = $('.bootbox #complete-journey-detail-popup-form #train_name').val();
+              var stationCode = $('.bootbox #complete-journey-detail-popup-form #station_name').val();
+              var journeyDate = $('.bootbox #complete-journey-detail-popup-form #journey_date').val();
+
+              $('#checkout-form input[name="train_num"]').val(trainNum);
+              $('#checkout-form input[name="train_name"]').val(trainNum);
+              $('#checkout-form input[name="station_code"]').val(stationCode);
+              $('#checkout-form input[name="journey_date"]').val(journeyDate);
+
+              if ($('.bootbox #complete-journey-detail-popup-form')[0].checkValidity() === true) { 
+                  var currentUrl = window.location.href;
+                  currentUrl     = Utils.removeParam("completeDetails",currentUrl);
+                  var url = Utils.updateQueryStringParameter(currentUrl,"train_num",trainNum);
+                  url = Utils.updateQueryStringParameter(url,"train_name",trainName);
+                  url = Utils.updateQueryStringParameter(url,"station_code",stationCode);
+                  url = Utils.updateQueryStringParameter(url,"journey_date",journeyDate);
+                  url = Utils.updateQueryStringParameter(url,"checkout",1);
+                  window.location.href = url;
+              }
+        });
+       
+       if(Utils.getParameterByName('checkout') == 1){
+          Cart.cartCheckout();
+       }
+
+       $('.bootbox #complete-journey-detail-popup-form').submit(function(event) {
+            event.preventDefault();
+        });
     }
+
 };
 
 $(document).ready(function() {

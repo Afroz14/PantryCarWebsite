@@ -117,7 +117,7 @@ class RestaurantController extends Controller {
 		else{
 		    \App::abort(404);
 		}*/
-       self::cleanUpCartIfNeeded($restaurantId);
+       $this->cleanUpCartIfNeeded($restaurantId);
        $cartController  = new CartController;
        $cartContent     = $cartController->getCartContent();
        $breadcrumbParam = null;

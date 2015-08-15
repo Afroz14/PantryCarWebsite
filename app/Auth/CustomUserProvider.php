@@ -5,8 +5,8 @@ use Illuminate\Contracts\Auth\UserProvider as UserProviderInterface;
 use Illuminate\Auth\GenericUser;
 use App\Libraries\Curl;
 use App\Config\Constants;
-use App\Http\Controllers\MailerController as Mailer;
 use Auth;
+use App\Events\NewUserSignedUp;
 
 class CustomUserProvider implements UserProviderInterface {
 
@@ -152,6 +152,7 @@ class CustomUserProvider implements UserProviderInterface {
                     $userData = array("emailId" =>$response['emailId'] ,"name" => $response['name']);
                     $userArray = new GenericUser(array("id" => $response['emailId'],"name" => $response['name']));
                     Auth::login($userArray);
+                    \Event::fire(new NewUserSignedUp($userData['emailId'], $userData['name']));
                     return true;
          }  
         return false;
@@ -192,7 +193,6 @@ class CustomUserProvider implements UserProviderInterface {
         $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $response = $this->curl->put($url,json_encode(array("loginPass" => $password))); 
         $response = json_decode($response,true);
-        var_dump($response);die();
         if($response != null && isset($response['status']) && $response['status'] === true){
               return true;
          }  

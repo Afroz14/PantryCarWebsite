@@ -167,8 +167,10 @@
 	<input type="hidden" value="al-barista-16" name="restaurant_id" >
 </form>
 
+@include('partials/complete-journey-details-popup')
 
 @include('footer')
 <script src="{{ asset('/js/build/cart.min.js') }} "></script>
+<script src="{{ asset('/js/build/autosuggest.js') }} "></script>
 </body>
 </html>

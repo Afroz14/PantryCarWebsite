@@ -9,6 +9,7 @@
             <div class="col-md-offset-1 col-md-10">
 							<h3 class="head-common-color pc-heading">Inside Your cart</h3>
 							@if(\Cart::count(false) >0 )
+						   <?php $parameters = \Session::get("checkoutFormParamters") ;?> 
 							<div class="col-md-8 ml-negative-15">
 								  <div class="mb20 overflow-hidden ">
 									 <div class="floatleft cart-restaurant-image" >
@@ -27,33 +28,37 @@
 										          {!! $cartContent !!}
 									 </div>
 							 </div>
-							<div class="col-md-4 ml-negative-15" id="cart-order-details">
+							<div class="col-md-4 ml-negative-15" id="cart-journey-details">
 								 <h4 class="head-common-color text-center">Order Details</h4>
 									<ul class="booking-info-list">
+										  @if(!empty($parameters))
 							        		 <li>
 							        		 	 <span>
 							        		 	 	 <p class="booking-info-component-label">Date of Journey</p>
-							        		 	 	 <p class="booking-info-component-value">2013-07-01</p>
+							        		 	 	 <p class="booking-info-component-value">{{ $parameters['journey_date'] }}</p>
 							        		 	 </span>	
 							                 </li>
 							                 <li>
 							        		 	 <span>
 							        		 	 	 <p class="booking-info-component-label">Train Number</p>
-							        		 	 	 <p class="booking-info-component-value">1233</p>
+							        		 	 	 <p class="booking-info-component-value">{{ $parameters['train_num'] }}</p>
 							        		 	 </span>	
 							                 </li>
 							                 <li>
 							        		 	 <span>
 							        		 	 	 <p class="booking-info-component-label">Train Name</p>
-							        		 	 	 <p class="booking-info-component-value">Gorakhdham Express</p>
+							        		 	 	 <p class="booking-info-component-value">{{ $parameters['train_name'] }}</p>
 							        		 	 </span>	
 							                 </li>
 							                 <li>
 							        		 	 <span>
 							        		 	 	 <p class="booking-info-component-label">Station Selected</p>
-							        		 	 	 <p class="booking-info-component-value">Chennai</p>
+							        		 	 	 <p class="booking-info-component-value">{{ $parameters['station_code'] }}</p>
 							        		 	 </span>	
 							                 </li>
+							                @else
+							                   <li>No Journey Details found</li> 
+							                @endif
 							 	      </ul>
 							 	      <a href="" class="checkout-btn mt20">Checkout</a>
 							</div>
@@ -75,7 +80,6 @@
 
 <form id="checkout-form" method="POST" action="{{ url('/checkout') }}">
 	<input type="hidden" value="{{ csrf_token() }}" name="_token" >
-	<?php $parameters = \Session::get("checkoutFormParamters") ;?> 
 	<?php if(!empty($parameters)) : ?>
 		@foreach($parameters as $param => $val)
 		    <input type ="hidden" name ="{{ $param }}" value="{{ $val }}" />
@@ -83,9 +87,11 @@
      <?php endif ;?>	
 </form>
 
+@include('partials/complete-journey-details-popup')
 
 @include('footer')
 <script src="{{ asset('/js/build/cart.min.js') }} "></script>
+<script src="{{ asset('/js/build/autosuggest.js') }} "></script>
 </body>
 </html>   			
 

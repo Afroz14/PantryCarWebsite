@@ -142,6 +142,30 @@ $(document).ready(function() {
       checkAnimation();
     }
   });
-  /* Animation ends */
+
+
+  if(Utils.getParameterByName('login') == 1){
+          bootbox.dialog({
+              title: "Login",
+              message: $('#pc-signin-signup-form').html()
+            });
+  }
+
+  if(Utils.getParameterByName('completeDetails') == 1){
+
+            bootbox.dialog({
+                title: "Complete Details",
+                message: $('#complete-journey-detail-popup').html()
+            });
+
+           $('.date-time-picker').datepicker({
+                  autoclose: true,
+                  todayBtn: true,
+                  format: 'dd-mm-yyyy',
+                  startDate: today
+            });
+   }
+   
+
 
 }); //DOM Ends

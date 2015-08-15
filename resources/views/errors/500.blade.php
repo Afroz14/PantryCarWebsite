@@ -14,7 +14,7 @@
 				        <li><a href="{{ url('/contact-us') }}">Contact us</a></li>
 				        <li><a href="{{ url('/merchants') }}">Merchants</a></li>
 				        <li><a href="{{ url('/privacy-policy') }}">Privacy Policies</a></li>
-              </ul>
+                </ul>
 			</div>
 			<div class="col-md-4">
 				 	<img src="{{ asset('/img/error-icon.gif') }}" width="313" height="428">

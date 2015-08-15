@@ -33,12 +33,11 @@ class  CartCheckout extends Controller {
        $searchType    = \Input::get("search_type");
        $restaurantId  = \Input::get("restaurant_id");
 
-       if(!empty($trainNum) && !empty($trainName) && !empty($srcStation) && !empty($destStation) && !empty($journeyDate) && !empty($stationCode) && !empty($searchType) ){
+       if(!empty($trainNum) && !empty($trainName) && !empty($journeyDate) && !empty($stationCode) ){
        	     $breadcrumbParam = \Input::all();
        	     $bookingDetailHeader   = array( "DATE"              => date('D , d M Y',strtotime($journeyDate)),
 				                             "TRAIN_NUM"         => $trainNum,
 				                             "TRAIN_NAME"        => "<i class='fa fa-train pr10'></i>".strtoupper($trainName),
-				                             "ROUTE"             => $srcStation ." TO ". $destStation,
 				                             "STATION_SELECTED"  => "<i class='fa fa-map-marker pr10'></i>".$stationCode
 				                          );
        	     return view('cart-checkout')

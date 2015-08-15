@@ -10,6 +10,7 @@ var AutoSuggest = {
 		this.bindUIActions();
 	},
 	bindUIActions: function() {
+		if(this.settings.sourceStation){
 		var sourceStationAutocomplete = new Awesomplete(this.settings.sourceStation, {
 			replace: function(text) {
 				this.input.value = text;
@@ -17,7 +18,8 @@ var AutoSuggest = {
 			}
 		});
 		sourceStationAutocomplete.list = this.settings.stationsList;
-
+      }
+      if(this.settings.destinationStation){
 		var destinationStationAutocomplete = new Awesomplete(this.settings.destinationStation, {
 			replace: function(text) {
 				this.input.value = text;
@@ -25,6 +27,10 @@ var AutoSuggest = {
 			}
 		});
 		destinationStationAutocomplete.list = this.settings.stationsList;
+	}
+
+		
+		if(this.settings.trainNum){
 		var trainAutocomplete = new Awesomplete(this.settings.trainNum, {
 			replace: function(text) {
 				this.input.value = text;
@@ -33,8 +39,24 @@ var AutoSuggest = {
 		});
 		trainAutocomplete.list = this.settings.trainsList;
 	}
+		var trainNumPopup = Utils.getElementInsideContainer("bootbox","train_num_","class");
+		if(typeof trainNumPopup !== 'undefined'){
+		trainAutocomplete = new Awesomplete(trainNumPopup, {
+			replace: function(text) {
+				this.input.value = text;
+				trainNumHidden        = Utils.getElementInsideContainer("bootbox","train_num","class");
+				trainNameHidden       = Utils.getElementInsideContainer("bootbox","train_name","class");
+				trainNameArray        = text.split(' ');
+				trainNumHidden.value  = trainNameArray[0];
+				trainNameHidden.value = trainNameArray.slice(1).join(' ');
+			}
+		});
+		trainAutocomplete.list = this.settings.trainsList;
+	}
+	}
 };
 
 $(document).ready(function() {
 	AutoSuggest.init();
 });
+

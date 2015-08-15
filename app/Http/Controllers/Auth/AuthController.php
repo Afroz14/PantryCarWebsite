@@ -11,6 +11,8 @@ use Auth;
 use Illuminate\Auth\GenericUser;
 use App\Config\Constants;
 use App\Http\Controllers\MailerController as Mailer;
+use App\Events\PasswordReset;
+use App\Events\UserVerification;
 
 
 class AuthController extends Controller {
@@ -82,7 +84,7 @@ class AuthController extends Controller {
      
        $registerController = new RegisterController;
        if ($registerController->store($userData)){
-        //$email = Mailer::sendEmailVerificationMail($userData);
+        \Event::fire(new UserVerification($userData['emailId'], $userData['name'],$userData['verificationToken']));
         return \Response::json(['success' => true], 200);
        }
       else
@@ -219,7 +221,7 @@ class AuthController extends Controller {
          $resetToken   = str_random(60);
          $userProvider = new CustomUserProvider();
          if($userProvider->updatePasswordResetToken($emailId,$resetToken)){
-                     $email = Mailer::sendPasswordResetEmail($emailId,$resetToken);
+                     \Event::fire(new PasswordReset($emailId, $resetToken));
                      return redirect('/forgotPassword')->with('status',"A password reset link has been sent to ".$emailId." .Please check ");
          }
          else{

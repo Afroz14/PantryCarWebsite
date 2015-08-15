@@ -66,13 +66,3 @@
      <script>window.BASE_PATH = "<?php echo url() ;?>"; </script>
      <script>window.X_ACCESS_TOKEN = "<?php echo Session::token(); ?>"</script>
      <script src="{{ asset('/js/build/bundle.min.js') }} "></script>
-     @if(Session::get('login') === true)
-      <script>
-      $(function() {
-            bootbox.dialog({
-            title: "Login",
-            message: $('#pc-signin-signup-form').html()
-          });
-      });
-    </script>
-    @endif

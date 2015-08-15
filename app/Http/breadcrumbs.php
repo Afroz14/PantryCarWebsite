@@ -19,7 +19,9 @@ Breadcrumbs::register('Choose Station', function($breadcrumbs,$param)
     	 $appendParamurl = Helper::httpBuildQuery($param);
          $breadcrumbs->parent('home');
    }
-    $breadcrumbs->push('Choose Station', URL::to('/selectStation')."?".$appendParamurl);
+   if(!empty($appendParamurl)){
+      $breadcrumbs->push('Choose Station', URL::to('/selectStation')."?".$appendParamurl);
+   }
 });
 
 Breadcrumbs::register('Choose Restaurant', function($breadcrumbs,$param) use ($slugify)
@@ -36,7 +38,12 @@ Breadcrumbs::register('Choose Menu', function($breadcrumbs,$param)
         $restaurantsUrl = $param['restaurant_id'];
         unset($param['restaurant_id']);
         $appendParamurl = Helper::httpBuildQuery($param);
-        $restaurantsUrl = URL::to('/').'/restaurant/'.$restaurantsUrl."?".$appendParamurl;
+        if(!empty($appendParamurl)){
+            $restaurantsUrl = URL::to('/').'/restaurant/'.$restaurantsUrl."?".$appendParamurl;
+        }
+        else{
+            $restaurantsUrl = URL::to('/').'/restaurant/'.$restaurantsUrl;
+        }
     }
     else{
         $restaurantsUrl = '#';

@@ -1,4 +1,5 @@
 <?php
+use App\Config\Constants;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -15,7 +16,9 @@
 Route::get('/', 'HomeController@index');
 
 Route::get('/login', function() {
-     return Redirect::to('/')->with('login', 1);
+       $previousUrl = URL::to('/');
+       $nextUrl     = \Helper::httpBuildUrl($previousUrl,array("query" => "login=1"),HTTP_URL_JOIN_QUERY);
+       return \Redirect::to($nextUrl);
 });
 
 Route::get('/logout', function() {
@@ -28,12 +31,15 @@ Route::get('/signup', function() {
 });
 
 Route::get('facebook', 'Auth\AuthController@facebook_redirect');
+
 Route::get('account/facebook', 'Auth\AuthController@facebook');
 
 Route::get('google', 'Auth\AuthController@google_redirect');
+
 Route::get('account/google', 'Auth\AuthController@google');
 
 Route::post('login', array('uses'=>'Auth\AuthController@login','as' => 'login.form'));
+
 Route::post('signup', 'Auth\AuthController@signup');
 
 Route::get('/terms-and-conditons', 'HomeController@tncPage');
@@ -64,7 +70,6 @@ Route::get('account/activate/{code}',array('as'   => 'activate-account','uses' =
 
 Route::get('passwordReset/{code}',array('as'   => 'password-reset','uses' => 'Auth\AuthController@passwordReset'));
 
-
 Route::get("/signup-login-redirect","Auth\AuthController@signupLoginRedirect");
 
 Route::get('/restaurant/{restaurantId}',"RestaurantController@getDetail");
@@ -79,34 +84,7 @@ Route::get('/restaurants/{station_code}/{slug}','RestaurantController@show');
 
 Route::get("/processPayment","PaymentController@handle");
 
-Route::group(array('before' => 'checkout_auth'), function() { Route::post("/checkout",array('as' => 'checkout' ,'uses' => 'CartCheckout@handle')); });
-
-/* Prior moving on to checkout page , make sure that user is authenticated first */
-Route::filter('checkout_auth',function(){
-  if(Auth::guest()) {
-  	   $redirectParam =  array();
-       $redirectParam["_token"]              = \Input::get("_token");
-       $redirectParam['train_num']           = \Input::get("train_num");
-       $redirectParam['train_name']          = \Input::get("train_name");
-	     $redirectParam['source_station']      = \Input::get("source_station");
-       $redirectParam['destination_station'] = \Input::get("destination_station"); 
-       $redirectParam['journey_date'] 		   = \Input::get("journey_date");
-       $redirectParam['station_code']        = \Input::get("station_code");
-       $redirectParam['search_type']         = \Input::get("search_type");
-       $redirectParam['restaurant_id']       = \Input::get("restaurant_id");
-       $redirectParam['redirect_method']     = "POST"; 
-       $redirectParam['redirect_route']      = route("checkout");
-       Session::set("socialAuthRedirectParam",$redirectParam);
-
-  	   return Redirect::back()->with('login', true)
-  						   ->with("redirect_param_availiable",true)
-  						   ->with("redirect_url",route("checkout"))
-  	             ->with("redirect_method",'POST')
-  	             ->with("redirect_controller","checkout-form");
-
-  }
-
-});
+Route::group(['middleware' => 'cart.auth'], function() { Route::post("/checkout",array('as' => 'checkout' ,'uses' => 'CartCheckout@handle')); });
 
 Route::get('/forgotPassword','Auth\AuthController@forgotPassword');
 

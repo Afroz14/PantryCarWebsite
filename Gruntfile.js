@@ -116,6 +116,7 @@ module.exports = function(grunt) {
                                                                                    '<%= config.jsDir %>/modules/auth/Auth.js',
                                                                                    '<%= config.jsDir %>/modules/TrainsList.js',
                                                                                    '<%= config.jsDir %>/modules/Pnr.js',
+                                                                                   '<%= config.jsDir %>/modules/Utils.js',
                                                                                    '<%= config.jsDir %>/main.js'
                                                           ],
                 '<%= config.buildJsDir %>/cart.min.js':  ['<%= config.jsDir %>/modules/Cart.js'],

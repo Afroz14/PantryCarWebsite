@@ -14,6 +14,15 @@ class EventServiceProvider extends ServiceProvider {
 		'event.name' => [
 			'EventListener',
 		],
+		'App\Events\NewUserSignedUp' => [
+             'App\Handlers\Events\EmailNewUserSignup'
+        ],
+        'App\Events\UserVerification'=> [
+            'App\Handlers\Events\EmailUserVerification'
+        ],
+        'App\Events\PasswordReset' => [
+            'App\Handlers\Events\EmailPasswordReset'
+        ]
 	];
 
 	/**
