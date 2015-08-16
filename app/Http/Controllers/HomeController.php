@@ -43,7 +43,9 @@ class HomeController extends Controller {
 	{
 		return view('signup');
 	}
-
+    public function aboutUsPage(){
+    	return view('about-us');
+    }
     public function contactUsPage(){
     	return view('contact-us');
     }

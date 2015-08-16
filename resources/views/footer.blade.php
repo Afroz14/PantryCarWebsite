@@ -53,14 +53,14 @@
                  <a>Terms and Conditions</a>
                  <a>Privacy Policy</a>    
                  <a>Disclaimer</a> 
-                 <a href="{{ url('/contact-us') }}">Contact Us</a>
+                 <a href="{{ url('/contact-us') }}">Contact us</a>
+                 <a href="{{ url('/about-us') }}">About us</a>
                  <a href="{{ url('/merchants') }}">Merchants</a>
               </div>
           </div>
       </div>
       </div>  
    </div>  
- 
 
      <!-- Scripts -->
      <script>window.BASE_PATH = "<?php echo url() ;?>"; </script>

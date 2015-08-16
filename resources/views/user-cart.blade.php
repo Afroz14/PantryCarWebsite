@@ -29,7 +29,7 @@
 									 </div>
 							 </div>
 							<div class="col-md-4 ml-negative-15" id="cart-journey-details">
-								 <h4 class="head-common-color text-center">Order Details</h4>
+								 <h4 class="head-common-color text-center">Journey Details</h4>
 									<ul class="booking-info-list">
 										  @if(!empty($parameters))
 							        		 <li>

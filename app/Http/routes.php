@@ -50,6 +50,8 @@ Route::get('/disclaimer', 'HomeController@disclaimerPage');
 
 Route::get('/contact-us', 'HomeController@contactUsPage');
 
+Route::get('/about-us', 'HomeController@aboutUsPage');
+
 Route::get('/order-tracker','HomeController@orderTrackerPage');
 
 Route::get("/merchants","HomeController@merchantPage");
