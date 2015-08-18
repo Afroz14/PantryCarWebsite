@@ -8,5 +8,6 @@ composer.phar
 Thumbs.db
 /public/css/build
 /public/js/build
+/public/img/svg
 .htaccess
 *.env

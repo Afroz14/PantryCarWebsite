@@ -42,7 +42,7 @@
 <div class="col-md-12 text-center bottom-line-wrap ">
     <h3>We are currently serving at these locations</h3>
     <div class="bottom-line"></div>
-    <img src="{{  asset('/img/india-map-location.svg') }}" class="svg-map">
+    <img src="{{  asset('/img/svg/india-map-location.svg') }}" class="svg-map">
 </div>
 
 <div class="col-md-4 col-md-offset-4 pc-rectangle-block mb20 text-center p20">

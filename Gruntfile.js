@@ -13,14 +13,16 @@ Oven.config = {
     cssLessDir: "public/css/less",
     cssDir: "public/css",
     jsDir: "public/js",
+    svgDir:"public/svg",
     buildCssDir: "public/css/build",
     buildJsDir: "public/js/build",
     buildImgDir:"public/img",
+    buildSvgDir:"public/img/svg",
     privateKeyPath:"/Users/afroz/Downloads/main-website.pem", // gets changed : Depending on the machine from where you are deploying
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '54.186.101.119',
+    HostName : '54.187.44.132',
     userName :'ubuntu'
 };
 
@@ -45,6 +47,8 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-phplint');
    grunt.loadNpmTasks('grunt-jsvalidate');
    grunt.loadNpmTasks('grunt-contrib-jshint');
+   grunt.loadNpmTasks('grunt-svgmin');
+   grunt.loadNpmTasks('grunt-contrib-clean');
   
 
    grunt.initConfig({
@@ -106,7 +110,7 @@ module.exports = function(grunt) {
                   compress: {
                         evaluate: false
                     }
-        },
+        }, 
         build: {
             files: {
                 '<%= config.buildJsDir %>/bundle.min.js': [ '<%= config.jsDir %>/lib/jquery-2.1.3.min.js',
@@ -124,6 +128,33 @@ module.exports = function(grunt) {
             }
         }
    },
+
+   svgmin: {
+          options: {
+              plugins: [
+                  {
+                      removeViewBox: false
+                  }, {
+                      removeUselessStrokeAndFill: false
+                  }
+              ]
+          },
+        dist: {
+            files: [{
+              expand: true,
+              cwd: '<%= config.svgDir %>',
+              src: ['**/*.svg'],
+              dest: '<%= config.buildSvgDir %>',
+              ext: '.svg'
+            }]
+        }
+    },
+
+     clean: {
+        css: ["<%= config.buildCssDir %>/*.css"],
+        js:  ["<%= config.buildJsDir %>/*.js"],
+        svg: ["<%= config.buildSvgDir %>/*.svg"]
+    },
 
     imagemin: {
               png: {
@@ -166,12 +197,6 @@ module.exports = function(grunt) {
 
    shell: {
 
-     cleanBuilds: {
-                command: [
-                    'rm -rf <%= config.buildCssDir %>/*',
-                    'rm -rf <%= config.buildJsDir %>/*'
-                ].join(' && ')
-      },
       pull:{
         command:[
                     'git stash',
@@ -199,8 +224,6 @@ module.exports = function(grunt) {
                     'sudo git stash',
                     'sudo git checkout master',
                     'sudo git pull origin master',
-                    'echo "Cleaning Css build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildCssDir %>/*',
-                    'echo "Cleaning Js build directory ..." ;rm -rf <%= config.websiteLocationOnServerTemp %>/<%= config.buildJsDir %>/*',
                     'ln -sf ~/Settings/.production.env <%= config.websiteLocationOnServerTemp %>/.production.env',
                     'sudo composer install',
                     'sudo npm install',
@@ -254,7 +277,6 @@ module.exports = function(grunt) {
         }
       }
     }
-
   });
 
    grunt.registerTask('lock', function() {
@@ -273,10 +295,9 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('default' ,'localbuild');
-    grunt.registerTask('localbuild', ['phplint' ,'jsvalidate','jshint' ,'shell:cleanBuilds','less:production','cssmin','uglify','shell:readyToShip']);
+    grunt.registerTask('localbuild', ['phplint' ,'jsvalidate','jshint' ,'clean','less:production','cssmin','uglify','svgmin', 'shell:readyToShip']);
     grunt.registerTask('deploy',['lock','sshexec:deploy','unlock'])
-    grunt.registerTask('build', ['lock','phplint' ,'jsvalidate','jshint','shell:cleanBuilds','less:production','cssmin','uglify','hashres','imagemin','shell:readyToShip','unlock']);
+    grunt.registerTask('build', ['lock','phplint' ,'jsvalidate','jshint','clean','less:production','cssmin','uglify','hashres','imagemin','svgmin', 'shell:readyToShip','unlock']);
     grunt.registerTask('shipit',['lock','sshexec:makeBuildLive','unlock']);
-
 
 };
