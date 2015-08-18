@@ -9,8 +9,7 @@
 
 
 class CartController extends Controller {
-
-
+  
 	/**
 	 * Create a new controller instance.
 	 *
@@ -27,7 +26,7 @@ class CartController extends Controller {
 	 */
 	public function show()
 	{
-        $cartContent       = $this->getCartContent(); 
+        $cartContent       = $this->getCartContent();
         $this->setCheckoutParam();
         return view('user-cart')->with('cartContent' ,$cartContent)->with('itemCount',\Cart::count(false));
 	}
@@ -329,6 +328,7 @@ class CartController extends Controller {
         }
 
         $cartString .= "</ul>";
+        $cartString .= "<h5 class='mt20 pc-green'>Add any instruction</h5><textarea class='col-md-12 mb20' rows='4'>Write any instruction(s)</textarea>";
         $cartString .= '<div class="payment-total mt20"><span class="floatleft">Amount Payable</span><span class="floatright" >Rs '.\Cart::total().'</span></div>';
         return $cartString;
   }
@@ -358,5 +358,4 @@ class CartController extends Controller {
         }
         \Session::put('checkoutFormParamters',$parameters);
   }
-
 }

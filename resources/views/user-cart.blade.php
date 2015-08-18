@@ -6,7 +6,7 @@
 
     <div class="full-width-container-other">
         <section style="padding-bottom: 50px;">
-            <div class="col-md-offset-1 col-md-10">
+            <div class="col-md-offset-1 col-md-10 mb20">
 							<h3 class="head-common-color pc-heading">Inside Your cart</h3>
 							@if(\Cart::count(false) >0 )
 						   <?php $parameters = \Session::get("checkoutFormParamters") ;?> 

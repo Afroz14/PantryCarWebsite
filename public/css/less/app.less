@@ -122,6 +122,7 @@ textarea {
     color: inherit;
     font: inherit;
     margin: 0;
+    border:1px solid @pc_border_color;
 }
 button {
     overflow: visible;
@@ -7182,6 +7183,7 @@ user-cart .cd-cart-total::after {
     color: #FFF;
     text-align: center;
     text-decoration: none;
+    font-size:14px;
 }
 #cart-journey-details .checkout-btn {
     display: block;
@@ -7192,6 +7194,7 @@ user-cart .cd-cart-total::after {
     color: #FFF;
     text-align: center;
     text-decoration: none;
+    font-size:14px;
 }
 .full-width-cart {
     border: 0px;
@@ -7912,13 +7915,13 @@ input[type=radio]+span {
     background-size: cover;
     width: 100%;
     overflow: hidden;
-    height: 900px;
+    height: 400px;
 }
 .merchant-header h3 {
     text-align: center;
     color: white;
     position: relative;
-    top: 25%;
+    top: 50%;
 }
 #merchant-listing-form {
     border: 1px solid #e4e4e4;
@@ -8014,5 +8017,8 @@ input[type=radio]+span {
 .pc-rectangle-block{
      background:#f5f5f5;
      border:1px solid @pc_border_color;
+}
+.pc-green{
+    color :@pc_green !important;
 }
 @import "app-media.less";

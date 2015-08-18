@@ -33,7 +33,7 @@
       								<input type="email" class="form-control" name="email" placeholder="* Email">
       						</div>
       						<div class="form-group">
-      								<input type="text" class="form-control" name="message" placeholder="* Message">
+      								<textarea class="form-control" name="message" placeholder="* Message" rows="4"></textarea>
       						</div>
       						 <div class="form-group buttons">
                                         <button type="submit" class="btn btn-search" id= "station-search-button" data-loading-text="SUBMIT<i class='fa-refresh fa-spin fa ml10'></i>">
