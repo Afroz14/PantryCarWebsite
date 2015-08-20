@@ -52,6 +52,8 @@ Route::get('/contact-us', 'HomeController@contactUsPage');
 
 Route::get('/about-us', 'HomeController@aboutUsPage');
 
+Route::get('/locations', 'HomeController@location');
+
 Route::get('/order-tracker','HomeController@orderTrackerPage');
 
 Route::get("/merchants","HomeController@merchantPage");

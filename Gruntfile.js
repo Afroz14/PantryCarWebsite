@@ -22,7 +22,7 @@ Oven.config = {
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '54.187.153.38',
+    HostName : '52.24.248.23',
     userName :'ubuntu'
 };
 
@@ -71,7 +71,8 @@ module.exports = function(grunt) {
     cssmin: {
       build: {
         files: {
-          '<%= config.buildCssDir %>/app.min.css': ['<%= config.buildCssDir %>/app.css','<%= config.cssDir %>/animate.min.css']
+          '<%= config.buildCssDir %>/vendors.min.css': ['<%= config.cssDir %>/vendors/animate.min.css','<%= config.cssDir %>/vendors/font-awesome.css','<%= config.cssDir %>/vendors/datetimepicker.min.css'],
+          '<%= config.buildCssDir %>/app.min.css': ['<%= config.buildCssDir %>/app.css']
         }
       }
     },
@@ -81,7 +82,7 @@ module.exports = function(grunt) {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             },
-            all: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/lib/*.js']
+            all: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/vendors/*.js']
       },
 
     jsvalidate: {
@@ -90,7 +91,7 @@ module.exports = function(grunt) {
                 esprimaOptions: {},
                 verbose: false
             },
-            files: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/lib/*.js']
+            files: ['<%= config.jsDir %>/**/*.js','!<%= config.jsDir %>/build/*.js','!<%= config.jsDir %>/vendors/*.js']
         },
 
      phplint: {
@@ -113,18 +114,21 @@ module.exports = function(grunt) {
         }, 
         build: {
             files: {
-                '<%= config.buildJsDir %>/bundle.min.js': [ '<%= config.jsDir %>/lib/jquery-2.1.3.min.js',
-                                                                                   '<%= config.jsDir %>/lib/bootstrap.min.js',
-                                                                                   '<%= config.jsDir %>/lib/bootbox.min.js',
-                                                                                   '<%= config.jsDir %>/lib/bootstrap-datepicker.min.js',
-                                                                                   '<%= config.jsDir %>/modules/auth/Auth.js',
-                                                                                   '<%= config.jsDir %>/modules/TrainsList.js',
-                                                                                   '<%= config.jsDir %>/modules/Pnr.js',
-                                                                                   '<%= config.jsDir %>/modules/Utils.js',
-                                                                                   '<%= config.jsDir %>/main.js'
+                '<%= config.buildJsDir %>/bundle.min.js': [ '<%= config.jsDir %>/modules/auth/Auth.js',
+                                                            '<%= config.jsDir %>/modules/TrainsList.js',
+                                                            '<%= config.jsDir %>/modules/Pnr.js',
+                                                            '<%= config.jsDir %>/modules/Utils.js',
+                                                            '<%= config.jsDir %>/main.js'
+
                                                           ],
                 '<%= config.buildJsDir %>/cart.min.js':  ['<%= config.jsDir %>/modules/Cart.js'],
-                '<%= config.buildJsDir %>/autosuggest.js':  ['<%= config.jsDir %>/lib/awesomplete.min.js','<%= config.jsDir %>/modules/AutoSuggest.js']
+
+                '<%= config.buildJsDir %>/vendors.min.js':  [ '<%= config.jsDir %>/vendors/jquery-2.1.3.min.js',
+                                                          '<%= config.jsDir %>/vendors/bootstrap.min.js',
+                                                          '<%= config.jsDir %>/vendors/bootbox.min.js',
+                                                          '<%= config.jsDir %>/vendors/bootstrap-datepicker.min.js'
+                                                        ],
+                '<%= config.buildJsDir %>/autosuggest.js':  ['<%= config.jsDir %>/vendors/awesomplete.min.js','<%= config.jsDir %>/modules/AutoSuggest.js']
             }
         }
    },
@@ -262,7 +266,9 @@ module.exports = function(grunt) {
                  '<%= config.buildCssDir %>/app.min.css' ,
                  '<%= config.buildJsDir %>/bundle.min.js',
                  '<%= config.buildJsDir %>/cart.min.js',
-                 '<%= config.buildJsDir %>/autosuggest.js'
+                 '<%= config.buildJsDir %>/autosuggest.js',
+                 '<%= config.buildJsDir %>/vendors.min.js',
+                 '<%= config.buildCssDir %>/vendors.min.css'
             ],
             dest: ['resources/views/footer.blade.php','resources/views/meta.blade.php','resources/views/restaurant-page.blade.php','resources/views/user-cart.blade.php','resources/views/home.blade.php']
         }

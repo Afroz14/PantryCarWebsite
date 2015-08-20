@@ -39,20 +39,46 @@
              </ul>
           </div>
   </div>
-<div class="col-md-12 text-center bottom-line-wrap ">
-    <h3>We are currently serving at these locations</h3>
-    <div class="bottom-line"></div>
-    <img src="{{  asset('/img/svg/india-map-location.svg') }}" class="svg-map">
-</div>
-
-<div class="col-md-4 col-md-offset-4 pc-rectangle-block mb20 text-center p20">
-        <h3><strong>Haven't found out your station ?</strong></h3>
-        <h5 class="mb20">Use PantryCar feedback to get things working out .</h5>
-        <a href="{{ url('/contact-us') }}" class="pc-btn">
-              Write to us
-            </a>
-</div>
  
+<div class="col-md-12 text-center bottom-line-wrap mb20 mt10 about-team">
+    <h3>Meet the team</h3>
+    <div class="bottom-line"></div>
+    <div class="col-md-8 col-md-offset-2 mt20">
+      <div class="col-md-3"><img src="{{ asset('/img/kunal.agarwal.jpg') }}" width="170"  height="170" class="headshot"></div>
+      <div class="col-md-9 text-left">
+          <h4><strong>Kunal Agarwal , The Protagonist</strong></h4>
+          <p class="team-people-desc overflow-hidden">Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him  .</p>
+           <div class="team-people-link"><a href="https://www.facebook.com/kunal.agarwal129"><i class="fa fa-facebook-official"></i></a></div>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2 mt20">
+      <div class="col-md-3"><img src="{{ asset('/img/afroz.alam.jpg') }}" width="170"  height="170" class="headshot"></div>
+      <div class="col-md-9 text-left">
+          <h4><strong>Afroz Alam , JARM</strong></h4>
+           <p class="team-people-desc overflow-hidden">Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him  .</p>
+           <div class="team-people-link"><a href="https://www.facebook.com/Afroz.Caustically.yours"><i class="fa fa-facebook-official"></i></a></div>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2 mt20">
+      <div class="col-md-3"><img src="{{ asset('/img/akshay.singh.jpg') }}" width="170"  height="170" class="headshot"></div>
+      <div class="col-md-9 text-left">
+          <h4><strong>Akshay Singh , Business Ninja</strong></h4>
+           <p class="team-people-desc overflow-hidden">Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him  .</p>
+          <div class="team-people-link"><a href="https://www.facebook.com/akshaysingh21"><i class="fa fa-facebook-official"></i></a></div>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2 mt20">
+      <div class="col-md-3"><img src="{{ asset('/img/amit.shukla.jpg') }}" width="170"  height="170" class="headshot"></div>
+      <div class="col-md-9 text-left">
+          <h4><strong>Amit Shukla , Business Ninja </strong></h4>
+           <p class="team-people-desc overflow-hidden">Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him Some Random Text about him  .</p>
+           <div class="team-people-link"><a href="https://www.facebook.com/shukla.amit1408"><i class="fa fa-facebook-official"></i></a></div>
+      </div>
+    </div>
+ </div>
 @include('footer')
 </body>
 </html>

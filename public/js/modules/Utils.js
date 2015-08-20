@@ -62,5 +62,25 @@ var Utils = {
 			        }
 			    }
 			    return rtn;
-	   }
+	   },
+	  isElementInViewport : function(elem) {
+			    var $elem = $(elem);
+			    var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
+			    var viewportTop = $(scrollElem).scrollTop();
+			    var viewportBottom = viewportTop + $(window).height();
+			    var elemTop = Math.round($elem.offset().top);
+			    var elemBottom = elemTop + $elem.height();
+			    return ((elemTop < viewportBottom) && (elemBottom > viewportTop));
+	    }, 
+      startAnimation : function(elem) {
+			    if (!elem.length) {
+			      return;
+			    }
+			    if (elem.hasClass('animated')) {
+			      return;
+			    }
+			    if (this.isElementInViewport(elem)) {
+			      elem.addClass('animated fadeInUp');
+			    }
+      }
 };

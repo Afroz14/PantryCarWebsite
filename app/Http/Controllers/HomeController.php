@@ -55,4 +55,7 @@ class HomeController extends Controller {
    public function merchantPage(){
    	   return view('merchants');
    }
+   public function location(){
+   	   return view('location');
+   }
 }

@@ -4,6 +4,9 @@
            <div class="col-md-offset-1 col-md-3 col-lg-3 footer-content">
               <h5>PantryCar</h5>
               <p>Pantry Car is an online food delivery network in Trains </p>
+              <h5 class="mt20 pt20">Restaurant owner ?</h5>
+              <p>Join our network to boost up your sales and reach out more and more loyal customers .</p>
+              <a class="btn btn-primary" href="{{ url('/merchants') }}">Join Now</a>
            </div>
            <div class="col-md-offset-1 col-lg-3 col-md-3 footer-content">
               <h5>Contact Us </h5>
@@ -55,7 +58,7 @@
                  <a>Disclaimer</a> 
                  <a href="{{ url('/contact-us') }}">Contact us</a>
                  <a href="{{ url('/about-us') }}">About us</a>
-                 <a href="{{ url('/merchants') }}">Merchants</a>
+                 <a href="{{ url('/locations') }}">Locations</a>
               </div>
           </div>
       </div>
@@ -65,4 +68,5 @@
      <!-- Scripts -->
      <script>window.BASE_PATH = "<?php echo url() ;?>"; </script>
      <script>window.X_ACCESS_TOKEN = "<?php echo Session::token(); ?>"</script>
+     <script src="{{ asset('/js/build/vendors.min.js') }} "></script>
      <script src="{{ asset('/js/build/bundle.min.js') }} "></script>

@@ -25,6 +25,7 @@ $(document).ready(function() {
 
   var nowDate = new Date();
   var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+
   $('.date-time-picker').datepicker({
     autoclose: true,
     todayBtn: true,
@@ -98,7 +99,6 @@ $(document).ready(function() {
 
   });
 
-
   $('#view-hide-order-summary').click(function() {
     if ($('#view-hide-order-summary span').hasClass('glyphicon-chevron-down')) {
       $('#view-hide-order-summary').html("Hide Order Details <span class='glyphicon glyphicon-chevron-up'></span>");
@@ -111,39 +111,16 @@ $(document).ready(function() {
     $("#cart-summary-container").addClass('collapse');
   }
 
-  /* Animation starts for how it work section */
-  function isElementInViewport(elem) {
-    var $elem = $(elem);
-    var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
-    var viewportTop = $(scrollElem).scrollTop();
-    var viewportBottom = viewportTop + $(window).height();
-    var elemTop = Math.round($elem.offset().top);
-    var elemBottom = elemTop + $elem.height();
-    return ((elemTop < viewportBottom) && (elemBottom > viewportTop));
-  }
-
-  // Check if it's time to start the animation.
-  function checkAnimation() {
-    var $elem = $('.each-how-it-works-block');
-    if (!$elem.length) {
-      return;
-    }
-    if ($elem.hasClass('animated')) {
-      return;
-    }
-    if (isElementInViewport($elem)) {
-      $elem.addClass('animated fadeInUp');
-    }
-  }
-
-  // Capture scroll events
+  
+// Capture scroll events
   $(window).scroll(function() {
+    var elem = $('.each-how-it-works-block');
     if ($(window).width() > $.PC.options.screenSizes.xs) {
-      checkAnimation();
+      Utils.startAnimation(elem);
     }
   });
 
-
+//Invoke login popup
   if(Utils.getParameterByName('login') == 1){
           bootbox.dialog({
               title: "Login",
@@ -151,10 +128,11 @@ $(document).ready(function() {
             });
   }
 
+//Invoke Complete Journey Details Popup
   if(Utils.getParameterByName('completeDetails') == 1){
 
             bootbox.dialog({
-                title: "Complete Details",
+                title: "Complete Journey Details",
                 message: $('#complete-journey-detail-popup').html()
             });
 

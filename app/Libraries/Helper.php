@@ -24,9 +24,6 @@ class Helper{
   |----------------------------------------------
   | Custom implementation of http_build_url
   |----------------------------------------------
-  |
-  | 
-  |
   */
    public static function  httpBuildUrl($url, $parts = array(), $flags = HTTP_URL_REPLACE, &$new_url = false){
            $keys = array('user','pass','port','path','query','fragment');
@@ -106,6 +103,11 @@ class Helper{
             ;
   }
 
+/*
+|----------------------------------------------
+| Remove any GET param from the URL passed
+|----------------------------------------------
+*/
   public static function removeKeyFromUrl($url,$varname){
         list($urlpart, $qspart) = array_pad(explode('?', $url), 2, '');
         parse_str($qspart, $qsvars);

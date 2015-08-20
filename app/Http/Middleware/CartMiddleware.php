@@ -20,6 +20,7 @@ class CartMiddleware {
 
 		  if(empty($trainNum) || empty($trainName) || empty($journeyDate) || empty($stationCode)){
 		       $previousUrl = \URL::previous();
+		       $previousUrl = \Helper::removeKeyFromUrl($previousUrl,'completeDetails');
 		       $nextUrl     = \Helper::httpBuildUrl($previousUrl,array("query" => "completeDetails=1"),HTTP_URL_JOIN_QUERY);
 		       return \Redirect::to($nextUrl);
 		  }
