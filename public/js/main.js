@@ -93,7 +93,6 @@ $(document).ready(function() {
   $('body').on('click', '.res-category .all a', function(event) {
     event.preventDefault();
     $(".res-category li ").removeClass("active");
-    eClass("active");
     $(this).parent().addClass("active");
     $('#res-menu-item-container .each-menu-category-wrap').addClass('active');
 
@@ -112,7 +111,7 @@ $(document).ready(function() {
   }
 
   
-// Capture scroll events
+  // Capture scroll events
   $(window).scroll(function() {
     var elem = $('.each-how-it-works-block');
     if ($(window).width() > $.PC.options.screenSizes.xs) {

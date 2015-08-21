@@ -16,7 +16,6 @@ class RestaurantController extends Controller {
 	public function __construct()
 	{
 		$this->curl = new Curl;
-		$this->breadcrumb = new BreadCrumb();
 	}
 
 	public function show($stationCode)
@@ -52,7 +51,7 @@ class RestaurantController extends Controller {
 		        			$buildParam['pnr_number'] = $pnrNumber;
 
 	       	   		 $parentUrlParam    = \Helper::httpBuildQuery($buildParam);
-	       	   		 $breadcrumbParam = \Input::all();
+	       	   		 $breadcrumbParam   = \Input::except("login","_token",'checkout','completeDetails');
                      $breadcrumbParam['station_code'] = $stationCode;
                      unset($breadcrumbParam['train_name']);
        	   	    }
@@ -149,7 +148,7 @@ class RestaurantController extends Controller {
 				                                "TRAIN_NUM"         => "<i class='fa fa-train pr10'></i> [ ".$trainNum." ] ".$trainName,
 				                                "STATION_SELECTED"  => "<i class='fa fa-map-marker pr10'></i>".$stationCode
 				                          );
-	       	   		$breadcrumbParam = \Input::all();
+	       	   		$breadcrumbParam = \Input::except("login","_token",'checkout','completeDetails');
 	      } 	   		
 	   return view('restaurant-page')
 	           ->with('cartContent',$cartContent)

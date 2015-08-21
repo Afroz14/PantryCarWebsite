@@ -34,7 +34,7 @@ class  CartCheckout extends Controller {
        $restaurantId  = \Input::get("restaurant_id");
 
        if(!empty($trainNum) && !empty($trainName) && !empty($journeyDate) && !empty($stationCode) ){
-       	     $breadcrumbParam = \Input::all();
+       	     $breadcrumbParam = \Input::except("login","_token",'checkout','completeDetails');
        	     $bookingDetailHeader   = array( "DATE"              => date('D , d M Y',strtotime($journeyDate)),
 				                             "TRAIN_NUM"         => $trainNum,
 				                             "TRAIN_NAME"        => "<i class='fa fa-train pr10'></i>".strtoupper($trainName),

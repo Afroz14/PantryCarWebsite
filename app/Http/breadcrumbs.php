@@ -54,7 +54,6 @@ Breadcrumbs::register('Choose Menu', function($breadcrumbs,$param)
 
 Breadcrumbs::register('Checkout', function($breadcrumbs,$param)
 {
-    unset($param['_token']);
     $breadcrumbs->parent('Choose Menu',$param);
     $breadcrumbs->push('Checkout', '#');
 });

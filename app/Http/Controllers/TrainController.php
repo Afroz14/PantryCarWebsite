@@ -15,8 +15,6 @@ class TrainController extends Controller {
 	public function __construct()
 	{
 		 $this->curl = new Curl;
-     $this->breadcrumb = new BreadCrumb();
-
 	}
 
 	public function show()
@@ -25,7 +23,6 @@ class TrainController extends Controller {
         $destStation = \Input::get("destination_station");
         $journeyDate = \Input::get("journey_date");
         $trainNum    = \Input::get("train_num");
-        $breadcrumbHTML = $this->breadcrumb->getBreadCrumb(1);
         if(empty($srcStation) || empty($destStation) || empty($destStation)){
           return view('train-select')->with("train_list","")->with("train_list_header","");
 

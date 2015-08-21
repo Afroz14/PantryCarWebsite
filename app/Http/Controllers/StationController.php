@@ -16,7 +16,6 @@ class StationController extends Controller {
 	public function __construct()
 	{
 		 $this->curl       = new Curl;
-		 $this->breadcrumb = new BreadCrumb();
 		 $this->slugify    = new Slugify();
 	}
 
@@ -54,7 +53,7 @@ class StationController extends Controller {
 					        $response = $this->curl->get($url,$param);
 					        $response = (array)json_decode($response);
 
-					        $breadcrumbParam = \Input::all();
+					        $breadcrumbParam = \Input::except("login","_token",'checkout','completeDetails');
         			}
 			  }  
 			  else{
