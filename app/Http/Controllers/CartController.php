@@ -328,8 +328,8 @@ class CartController extends Controller {
         }
 
         $cartString .= "</ul>";
-        $cartString .= "<h5 class='mt20 pc-green'>Add any instruction</h5><textarea class='col-md-12 mb20' rows='4'>Write any instruction(s)</textarea>";
-        $cartString .= '<div class="payment-total mt20"><span class="floatleft">Amount Payable</span><span class="floatright" >Rs '.\Cart::total().'</span></div>';
+        $cartString .= "<h5 class='mt20 pc-green'>Add any instruction</h5><textarea class='col-md-12 col-sm-6 col-xs-12  mb20' rows='4'>Write any instruction(s)</textarea>";
+        $cartString .= '<div class="payment-total mt20 overflow-hidden"><span class="floatleft">Amount Payable</span><span class="floatright" >Rs '.\Cart::total().'</span></div>';
         return $cartString;
   }
 

@@ -5,7 +5,7 @@
 @include('header')
 
  <div class="full-width-container-other" >
-        <div class="container-grid">
+        <div class="col-md-10 col-md-offset-1">
         	@if(!empty($breadcrumbParam))
         	{!! Breadcrumbs::render('Choose Menu',$breadcrumbParam) !!}
         	<?php  $fixMargin = ""; ?>
@@ -76,7 +76,7 @@
  	         </div>
 
  	         	<!-- Mobile -->
-            <div class="panel-group accordion" id="restaurant-menu-grid-small">
+            <div class="panel-group accordion mt20" id="restaurant-menu-grid-small">
  	         	<div class="panel panel-default">
  	         		 <div class="panel-heading">
  	         		 	  <h4 class="panel-title">

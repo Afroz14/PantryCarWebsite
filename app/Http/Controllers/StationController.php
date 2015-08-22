@@ -119,7 +119,7 @@ class StationController extends Controller {
 				        $this->curl->setOption(CURLOPT_HEADER, true);
 				        $this->curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 				        $response = $this->curl->get($url); 
-				        $response = json_decode($response,true); 
+				        $response = json_decode($response,true);
                     }
 				    else{
 				    	$response =  array("status" => "false");

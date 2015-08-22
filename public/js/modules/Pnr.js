@@ -3,7 +3,8 @@ var Pnr = {
   settings: {
     pnrTypeHead: $('.pnr-type-ahead'),
     pnrInput: ('#pnr_number'),
-    pnrSubmit: ('#pnr-form-submit')
+    pnrSubmit: ('#pnr-form-submit'),
+    pnrSearchForm : $("#pnr-search-form")
   },
   init: function() {
     this.bindUIActions();
@@ -50,11 +51,15 @@ var Pnr = {
             $("#pnr-search-result-container #pnr_train_num").html(data.trainNum);
             $("#pnr-search-result-container #pnr_src_station_name").html(data.srcStationName);
             $("#pnr-search-result-container #pnr_src_station_code").html(data.srcStationCode);
-            $("#pnr-search-result-container #pnr_status").html("Confirmed");
+            if(data.passengers.length){
+               $("#pnr-search-result-container #pnr_status").html(data.passengers[0].currentStatus);
+            }
             $("#pnr-search-result-container #pnr_train_name").html(data.trainName);
             $("#pnr-search-result-container #pnr_dest_station_name").html(data.destStationName);
             $("#pnr-search-result-container #pnr_dest_station_code").html(data.destStationCode);
-            $("#pnr-search-result-container #pnr_seat").html("B2 45");
+            if(data.passengers.length){
+                $("#pnr-search-result-container #pnr_seat").html(data.passengers[0].bookingStatus);
+            }
             $("#pnr-search-result-container .right-arrow-icon__pnr_result").removeClass("hidden");
           } else {
             Pnr.clearPnrResultWithThisMessage("PNR not found !");
@@ -129,11 +134,13 @@ var Pnr = {
 
 
     $('body').on('click', Pnr.settings.pnrSubmit, function(event) {
-      event.preventDefault();
+      //event.preventDefault();
       Pnr.settings.pnrTypeHead.css({
         'box-shadow': 'none'
       });
-      Pnr.verifyAndSubmitPNR($(this));
+      if (Pnr.settings.pnrSearchForm[0].checkValidity() === true) {
+           Pnr.verifyAndSubmitPNR($(this));
+        }
     });
   }
 };

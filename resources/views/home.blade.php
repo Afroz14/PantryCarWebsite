@@ -100,7 +100,7 @@
   <section class="col-md-12 how-it-works-grid">
     <div class="col-md-12 how-it-works-wrap">
        <div class="center pc-heading-home pb20">How it works</div>
-        <div class="col-md-4 each-how-it-works-block">
+        <div class="col-md-4 col-sm-12 col-xs-12 each-how-it-works-block">
           <div class="center">
             <img src="{{ asset ('/img/how_it_works_icon.png') }}" alt="">
           </div>
@@ -108,7 +108,7 @@
             <h4>Enter PNR/Train Details</h4>
           </div>
         </div>
-        <div class="col-md-4 each-how-it-works-block">
+        <div class="col-md-4 col-sm-12 col-xs-12 each-how-it-works-block">
           <div class="center">
             <img src="{{ asset ('/img/how_it_works_icon.png') }}" alt="">
           </div>
@@ -116,7 +116,7 @@
             <h4>Choose your favorite menu</h4>
           </div>
         </div>
-        <div class="col-md-4 each-how-it-works-block" >
+        <div class="col-md-4 col-sm-12 col-xs-12 each-how-it-works-block" >
           <div class="center">
             <img src="{{ asset ('/img/how_it_works_icon.png') }}" alt="">
           </div>

@@ -20,7 +20,7 @@
                  <i class="glyphicon glyphicon-envelope pr10"></i><span>care@pantrycar.co.in</span>
               </p>
            </div>
-           <div class="col-lg-3 col-md-3 footer-content">
+           <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 footer-content">
               <h5>News Letter</h5>
               <p>Type your email address below and subscribe to our newsletter</p>
               <p><form role="form">
@@ -33,7 +33,7 @@
                   </form>              
               </p>
            </div>
-           <div class="col-md-12 center mt35 mb20">
+           <div class="col-md-12 col-sm-12 col-xs-12  center mt35 mb20">
             <ul>
              <li class="floatleft pr10"><a href="#"><img class="tool" title="Facebook" src="{{ asset('/img/facebook.png') }}" alt=""></a></li>
               <li class="floatleft pr10"><a href="#"><img class="tool" title="Twitter" src="{{ asset('/img/twitter.png') }}" alt="" ></a></li>

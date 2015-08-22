@@ -26,7 +26,7 @@
           </div>
         </div>
 
-        <div class="col-md-8 col-md-pull-4 ml-negative-15" id="user-travel-details-container">
+        <div class="col-md-8 col-md-pull-4 col-sm-12 col-xs-12 ml-negative-15" id="user-travel-details-container">
         	<ul class="booking-info-list">
         		 <li>
         		 	 <span>
