@@ -4,6 +4,8 @@ use App\Libraries\Curl;
 use App\Config\Constants;
 use Cocur\Slugify\Slugify;
 use Breadcrumbs;
+use Input;
+use Helper;
 
 class StationController extends Controller {
 
@@ -21,12 +23,12 @@ class StationController extends Controller {
 
 	public function show()
 	{
-        $search_type = \Input::get("search_type");
+        $search_type = Input::get("search_type");
         $breadcrumbParam = null;
         
 		if(isset($search_type)) {
             if($search_type == 'pnr_search'){
-			        $pnrNumber = \Input::get("pnr_number");
+			        $pnrNumber = Input::get("pnr_number");
 				    $response =  self::getPnrDetail($pnrNumber);
 				    if(isset($response) && isset($response['status']) && $response['status'] === true) {
 				    	$trainNum    = $response['trainNum'];
@@ -38,10 +40,10 @@ class StationController extends Controller {
 				    }	
 			      }
 			 else if($search_type == 'train_search')    {
-			 		$trainNum    = \Input::get("train_num");
-			 		$srcStation  = \Input::get("source_station");
-        			$destStation = \Input::get("destination_station");
-        			$journeyDate = \Input::get("journey_date");
+			 		$trainNum    = Input::get("train_num");
+			 		$srcStation  = Input::get("source_station");
+        			$destStation = Input::get("destination_station");
+        			$journeyDate = Input::get("journey_date");
         			if(empty($trainNum) || empty($srcStation) || empty($destStation) || empty($destStation) || empty($journeyDate) ){
         				$response = null;
         			}
@@ -53,7 +55,7 @@ class StationController extends Controller {
 					        $response = $this->curl->get($url,$param);
 					        $response = (array)json_decode($response);
 
-					        $breadcrumbParam = \Input::except("login","_token",'checkout','completeDetails');
+					        $breadcrumbParam = Input::except("login","_token",'checkout','completeDetails');
         			}
 			  }  
 			  else{
@@ -82,7 +84,7 @@ class StationController extends Controller {
 	 	        			                  );
 		        		if($search_type == "pnr_search")
 		        			$buildParam['pnr_number'] = $pnrNumber;
-		        		$parentUrlParam    = \Helper::httpBuildQuery($buildParam);
+		        		$parentUrlParam    = Helper::httpBuildQuery($buildParam);
 		        		$eachStationSeoUrl = "restaurants/".$station['stationCode']."/".$this->slugify->slugify("restaurants near by ".$station['stationName']. " railway station ")."?".$parentUrlParam;
 		        		$stationsListDetails[$station['stationCode']] = array("STATION_NAME" => $station['stationName'],
 		        															  "ARRIVAL_TIME" => $station['arrivalTime'], 

@@ -16,13 +16,18 @@ use App\Config\Constants;
 Route::get('/', 'HomeController@index');
 
 Route::get('/login', function() {
-       $previousUrl = URL::to('/');
-       $nextUrl     = \Helper::httpBuildUrl($previousUrl,array("query" => "login=1"),HTTP_URL_JOIN_QUERY);
-       return \Redirect::to($nextUrl);
+	 if(Auth::guest()) {
+	       $previousUrl = URL::to('/');
+	       $nextUrl     = Helper::httpBuildUrl($previousUrl,array("query" => "login=1"),HTTP_URL_JOIN_QUERY);
+	       return Redirect::to($nextUrl);
+      } 
+    else{
+    	return Redirect::to('/');
+    }  
 });
 
 Route::get('/logout', function() {
-	   Auth::logout();
+	 Auth::logout();
      return Redirect::to('/');
 });
 

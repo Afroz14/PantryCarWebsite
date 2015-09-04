@@ -3,6 +3,8 @@
 use App\Libraries\Curl;
 use App\Config\Constants;
 use Breadcrumbs;
+use Input;
+use Redirect;
 
 class TrainController extends Controller {
 
@@ -19,10 +21,10 @@ class TrainController extends Controller {
 
 	public function show()
 	{  
-        $srcStation  = \Input::get("source_station");
-        $destStation = \Input::get("destination_station");
-        $journeyDate = \Input::get("journey_date");
-        $trainNum    = \Input::get("train_num");
+        $srcStation  = Input::get("source_station");
+        $destStation = Input::get("destination_station");
+        $journeyDate = Input::get("journey_date");
+        $trainNum    = Input::get("train_num");
         if(empty($srcStation) || empty($destStation) || empty($destStation)){
           return view('train-select')->with("train_list","")->with("train_list_header","");
 
@@ -30,7 +32,7 @@ class TrainController extends Controller {
         else{
            /* If train num is provided , redirect to station select direct */
             if(isset($trainNum) && !empty($trainNum))
-              return \Redirect::route('select.station',array("source_station"       => $srcStation ,
+              return Redirect::route('select.station',array("source_station"       => $srcStation ,
                                                               "destination_station" => $destStation,
                                                               "journey_date"        => $journeyDate,
                                                               "train_num"           => $trainNum,

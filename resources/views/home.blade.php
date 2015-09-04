@@ -20,7 +20,7 @@
   <div class="col-md-12 col-md-offset-3 mt20">
   	<div class="subheading"> BOOK YOUR MEAL ON THE GO </div>
         <div class="home-paging-landing-search-form">
-                                <form role="form" class="home-page-search-form" id= "pnr-search-form" method="get" action="{{ url ('/selectStation') }}">
+                                <form  data-enable-shim="true" role="form" class="home-page-search-form" id= "pnr-search-form" method="get" action="{{ url ('/selectStation') }}">
                                     <input name="search_type" type="hidden" value="pnr_search">
 
                                     <div class="form-group">

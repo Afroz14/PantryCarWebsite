@@ -7,6 +7,13 @@ use App\Libraries\Curl;
 use App\Config\Constants;
 use Auth;
 use App\Events\NewUserSignedUp;
+use Input;
+use Session;
+use Event;
+
+/*
+* Custom User authentication class which authenticate and authorize user with communicating api at the backend
+*/
 
 class CustomUserProvider implements UserProviderInterface {
 
@@ -27,8 +34,8 @@ class CustomUserProvider implements UserProviderInterface {
     public function __construct()
     {
         $this->curl = new Curl;
-        if (!empty(\Session::get('user'))) {
-           $this->user = unserialize(\Session::get('user'));
+        if (!empty(Session::get('user'))) {
+           $this->user = unserialize(Session::get('user'));
          } else {
              $this->user = null;
          }
@@ -56,7 +63,7 @@ class CustomUserProvider implements UserProviderInterface {
         $userArray = array("id" => $response['emailId'],"name" => $response['name'],"contactNo" =>  $response['contactNo']);
         $userObject      = new GenericUser($userArray);
         if (is_null($this->user)) {
-             \Session::set('user', serialize($userObject));
+             Session::set('user', serialize($userObject));
           }  
         return $userObject;
     }
@@ -152,7 +159,7 @@ class CustomUserProvider implements UserProviderInterface {
                     $userData = array("emailId" =>$response['emailId'] ,"name" => $response['name']);
                     $userArray = new GenericUser(array("id" => $response['emailId'],"name" => $response['name']));
                     Auth::login($userArray);
-                    \Event::fire(new NewUserSignedUp($userData['emailId'], $userData['name']));
+                    Event::fire(new NewUserSignedUp($userData['emailId'], $userData['name']));
                     return true;
          }  
         return false;
@@ -160,7 +167,7 @@ class CustomUserProvider implements UserProviderInterface {
   }
 
 /**
-    * update password reset token
+    * Update password reset token
     *
     * @param $emailid
     * @param $resetToken 

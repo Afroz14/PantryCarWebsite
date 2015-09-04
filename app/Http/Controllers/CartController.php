@@ -1,11 +1,13 @@
 <?php namespace App\Http\Controllers;
 
+use Input;
+use Session;
+use Cart;
 
  /*
  *  User Cart Controller
  *  Author : Afroz
  */
-
 
 
 class CartController extends Controller {
@@ -28,7 +30,7 @@ class CartController extends Controller {
 	{
         $cartContent       = $this->getCartContent();
         $this->setCheckoutParam();
-        return view('user-cart')->with('cartContent' ,$cartContent)->with('itemCount',\Cart::count(false));
+        return view('user-cart')->with('cartContent' ,$cartContent)->with('itemCount',Cart::count(false));
 	}
 
 /*
@@ -36,8 +38,8 @@ class CartController extends Controller {
 */
   public function handle(){
 
-     $productData   = \Input::get('productDetail');
-     $case          = \Input::get('case');
+     $productData   = Input::get('productDetail');
+     $case          = Input::get('case');
      $response      = array("status" => "false");
 
      switch($case){
@@ -68,9 +70,9 @@ class CartController extends Controller {
         $isProductAlreadyExistsinCart = false;
         
         if(!empty($productId)){
-           $isProductAlreadyExistsinCart = \Cart::search(array("id" => $productId));
+           $isProductAlreadyExistsinCart = Cart::search(array("id" => $productId));
            if(isset($isProductAlreadyExistsinCart))
-             $getCurrentStatusOfProduct = \Cart::get($isProductAlreadyExistsinCart[0]);
+             $getCurrentStatusOfProduct = Cart::get($isProductAlreadyExistsinCart[0]);
          }
 
 
@@ -83,10 +85,10 @@ class CartController extends Controller {
               {
               	$oldQty = $getCurrentStatusOfProduct['qty'];
               	$newQty = $oldQty +  1;
-              	\Cart::update($isProductAlreadyExistsinCart[0],$newQty);
-              	$updatedPriceForThisProduct  = \Cart::get($isProductAlreadyExistsinCart[0])['subtotal']; 
-              	$updatedTotalPrice           = '<p>Total <span>Rs '.\Cart::total().'</span></p>'; 
-                $cartArray                   =  json_decode(json_encode(\Cart::content()), true);
+              	Cart::update($isProductAlreadyExistsinCart[0],$newQty);
+              	$updatedPriceForThisProduct  = Cart::get($isProductAlreadyExistsinCart[0])['subtotal']; 
+              	$updatedTotalPrice           = '<p>Total <span>Rs '.Cart::total().'</span></p>'; 
+                $cartArray                   =  json_decode(json_encode(Cart::content()), true);
                 $itemIndex                   = array_search($isProductAlreadyExistsinCart[0], array_keys($cartArray));
                 $cartItemCount               = $this->getItemCountInCart();
                 
@@ -113,10 +115,10 @@ class CartController extends Controller {
               {
               	$oldQty = $getCurrentStatusOfProduct['qty'];
               	$newQty = $oldQty +  1;
-              	\Cart::update($isProductAlreadyExistsinCart[0],$newQty);
+              	Cart::update($isProductAlreadyExistsinCart[0],$newQty);
               	$cartItemCount              = $this->getItemCountInCart();
-                $updatedPriceForThisProduct = "Rs ".\Cart::get($isProductAlreadyExistsinCart[0])['subtotal']; 
-              	$updatedTotalPrice          = '<p>Total <span>Rs '.\Cart::total().'</span></p>'; 
+                $updatedPriceForThisProduct = "Rs ".Cart::get($isProductAlreadyExistsinCart[0])['subtotal']; 
+              	$updatedTotalPrice          = '<p>Total <span>Rs '.Cart::total().'</span></p>'; 
 
 			          $response  = array( "status"        => "true",
                                     "itemSubtotal"  => $updatedPriceForThisProduct,
@@ -133,14 +135,14 @@ class CartController extends Controller {
         	$productPrice = isset($data['productPrice'])?$data['productPrice']:'';
 
         	if(!empty($productId) && !empty($productTitle) &&  !empty($productPrice)){
-              $itemIndex = \Cart::count(false) ;
-        		  \Cart::add($productId, $productTitle, 1, $productPrice);
+              $itemIndex = Cart::count(false) ;
+        		  Cart::add($productId, $productTitle, 1, $productPrice);
 	        	  $cartItem  =  "<li data-index='".$itemIndex."'>";
     				  $cartItem .= '<div class="user-cart-item-name">'.$productTitle.'</div>';
     				  $cartItem .= '<span data-product-id = "'.$productId.'" class="cd-qty"><span class="dec-button"></span><input type="text" class="user-cart-qty" value="1" /><span class="inc-button"></span></span>';
     				  $cartItem .= '<div class="cd-price">Rs '.$productPrice.'</div>';
     				  $cartItem .= '</li>';
-              $updatedTotalPrice = '<p>Total <span>Rs '.\Cart::total().'</span></p>'; 
+              $updatedTotalPrice = '<p>Total <span>Rs '.Cart::total().'</span></p>'; 
     				  $cartItemCount     = $this->getItemCountInCart();
 				      $response = array(  "status"        => "true",
                                   "cartItem"      => $cartItem,
@@ -156,9 +158,12 @@ class CartController extends Controller {
 
 	}
 
+/*
+* Get HTML formatted Item count of cart
+*/
 	private function getItemCountInCart(){
-		if(\Cart::count() > 0)
-			return '<span id="label-cart-item-count">'.\Cart::count(false).'<span>';
+		if(Cart::count() > 0)
+			return '<span id="label-cart-item-count">'.Cart::count(false).'<span>';
 		else
 			return '';
 	}
@@ -178,18 +183,18 @@ class CartController extends Controller {
         $productId     = isset($data) && isset($data['productId'])?$data['productId']:'';
 
         if(!empty($productId)){
-          $rowId = \Cart::search(array("id" => $productId));
+          $rowId = Cart::search(array("id" => $productId));
         	if(isset($rowId) && !empty($case) && $case === 'decrementCount'){
               
-              $getCurrentStatusOfProduct = \Cart::get($rowId[0]);
+              $getCurrentStatusOfProduct = Cart::get($rowId[0]);
               if(isset($getCurrentStatusOfProduct) && isset($getCurrentStatusOfProduct['qty']))
               {
               	$oldQty = $getCurrentStatusOfProduct['qty'];
               	$newQty = $oldQty -  1;
-              	\Cart::update($rowId[0],$newQty);
+              	Cart::update($rowId[0],$newQty);
               	$cartItemCount              = $this->getItemCountInCart();
-                $updatedPriceForThisProduct = "Rs ".\Cart::get($rowId[0])['subtotal']; 
-                $updatedTotalPrice          = '<p>Total <span>Rs '.\Cart::total().'</span></p>'; 
+                $updatedPriceForThisProduct = "Rs ".Cart::get($rowId[0])['subtotal']; 
+                $updatedTotalPrice          = '<p>Total <span>Rs '.Cart::total().'</span></p>'; 
 
                 $response = array( "status"        => "true",
                                    "itemSubtotal"  => $updatedPriceForThisProduct,
@@ -201,8 +206,8 @@ class CartController extends Controller {
               }
         	}
         	else if(isset($rowId)){
-        		\Cart::remove($rowId[0]);
-            $updatedTotalPrice    = '<p>Total <span>Rs '.\Cart::total().'</span></p>'; 
+        		Cart::remove($rowId[0]);
+            $updatedTotalPrice    = '<p>Total <span>Rs '.Cart::total().'</span></p>'; 
             $cartItemCount        = $this->getItemCountInCart();
             $response = array( "status"        => "true",
                                "totalPrice"    => $updatedTotalPrice, 
@@ -216,6 +221,9 @@ class CartController extends Controller {
 		return array("status" => "false");
 	}
 
+/*
+* Update quantity of particular item inside cart
+*/
 
   private function updateItemQty($productData){
      $productId     = isset($productData) && isset($productData['productId'])?$productData['productId']:'';
@@ -224,13 +232,13 @@ class CartController extends Controller {
      $response = array("status" => "false");
 
      if(!empty($productId) && !empty($newQty) ){
-        $rowId = \Cart::search(array("id" => $productId));
+        $rowId = Cart::search(array("id" => $productId));
         if(isset($rowId)){
-            $getCurrentStatusOfProduct = \Cart::get($rowId[0]);
-            \Cart::update($rowId[0],$newQty);
+            $getCurrentStatusOfProduct = Cart::get($rowId[0]);
+            Cart::update($rowId[0],$newQty);
             $cartItemCount              = $this->getItemCountInCart();
-            $updatedPriceForThisProduct = "Rs ".\Cart::get($rowId[0])['subtotal']; 
-            $updatedTotalPrice          = '<p>Total <span>Rs '.\Cart::total().'</span></p>'; 
+            $updatedPriceForThisProduct = "Rs ".Cart::get($rowId[0])['subtotal']; 
+            $updatedTotalPrice          = '<p>Total <span>Rs '.Cart::total().'</span></p>'; 
 
             $response  = array(       "status"        => "true",
                                       "itemSubtotal"  => $updatedPriceForThisProduct,
@@ -245,11 +253,13 @@ class CartController extends Controller {
 
   }
 
-
+/*
+* HTML formatted cart content for small screen devices
+*/
 	public function getCartContentMobile(){
 
 		
-    $content    = \Cart::content();
+    $content    = Cart::content();
     $cartString = "<ul class='cd-cart-items'>";
     $cartItem   = "";
     $iterator   = 0;
@@ -276,9 +286,12 @@ class CartController extends Controller {
      return $cartString;
 	}
 
+/*
+* HTML formatted cart content for middle and large screen devices
+*/
 	public function getCartContent(){
 
-		$content    = \Cart::content();
+		$content    = Cart::content();
 		$cartString = "<ul class='cd-cart-items'>";
 		$cartItem   = "";
 		$iterator   = 0;
@@ -300,7 +313,7 @@ class CartController extends Controller {
         else{
         	    $cartString .= $cartItem;
         	    $cartString .= "</ul>";
-        	    $cartString .= '<div class="cd-cart-total"><p>Total <span>Rs '.\Cart::total().'</span></p></div>';
+        	    $cartString .= '<div class="cd-cart-total"><p>Total <span>Rs '.Cart::total().'</span></p></div>';
               $cartString .= '<a href="" class="checkout-btn">Checkout</a>';
           }
 
@@ -312,8 +325,8 @@ class CartController extends Controller {
    @return : html text
  */
 
-  public function getCartSummaryStaticHTML(){
-        $content    = \Cart::content();
+  public static function getCartSummaryStaticHTML(){
+        $content    = Cart::content();
         $cartString = "<ul class='cart-summary'>";
         $iterator   = 0;
 
@@ -328,8 +341,8 @@ class CartController extends Controller {
         }
 
         $cartString .= "</ul>";
-        $cartString .= "<h5 class='mt20 pc-green'>Add any instruction</h5><textarea class='col-md-12 col-sm-6 col-xs-12  mb20' rows='4'>Write any instruction(s)</textarea>";
-        $cartString .= '<div class="payment-total mt20 overflow-hidden"><span class="floatleft">Amount Payable</span><span class="floatright" >Rs '.\Cart::total().'</span></div>';
+        $cartString .= "<h5 class='mt20 pc-green'>Add any instruction</h5><textarea class='col-md-12 col-sm-6 col-xs-12  mb20' rows='4' placeholder='Write any instruction(s)'></textarea>";
+        $cartString .= '<div class="payment-total mt20 overflow-hidden"><span class="floatleft">Amount Payable</span><span class="floatright" >Rs '.Cart::total().'</span></div>';
         return $cartString;
   }
 
@@ -338,24 +351,21 @@ class CartController extends Controller {
 |----------------------------------------------
 | Set essential parameters for checkout page
 |----------------------------------------------
-|
-|
-|
 */
   public function setCheckoutParam(){
-        $parameters = \Session::get("checkoutFormParamters");
+        $parameters = Session::get("checkoutFormParamters");
         if(!isset($parameters['train_num'])){
-           $parameters['train_num'] = \Input::get('train_num');
+           $parameters['train_num'] = Input::get('train_num');
         }
         if(!isset($parameters['train_name'])){
-           $parameters['train_name'] = \Input::get('train_name');
+           $parameters['train_name'] = Input::get('train_name');
         }
         if(!isset($parameters['station_code'])){
-           $parameters['station_code'] = \Input::get('station_code');
+           $parameters['station_code'] = Input::get('station_code');
         }
         if(!isset($parameters['journey_date'])){
-           $parameters['journey_date'] = \Input::get('journey_date');
+           $parameters['journey_date'] = Input::get('journey_date');
         }
-        \Session::put('checkoutFormParamters',$parameters);
+        Session::put('checkoutFormParamters',$parameters);
   }
 }

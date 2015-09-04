@@ -10,9 +10,14 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use Auth;
 use Illuminate\Auth\GenericUser;
 use App\Config\Constants;
-use App\Http\Controllers\MailerController as Mailer;
 use App\Events\PasswordReset;
 use App\Events\UserVerification;
+use Input;
+use Redirect;
+use Response;
+use Event;
+use Socialize;
+use Validator;
 
 
 class AuthController extends Controller {
@@ -20,34 +25,34 @@ class AuthController extends Controller {
 
   public function login() {
 
-    $intendedURL =  \Redirect::intended('/')->getTargetUrl();
+    $intendedURL =  Redirect::intended('/')->getTargetUrl();
     // Getting all post data
-    $data = \Input::all();
+    $data = Input::all();
     // Applying validation rules.
     $rules = array(
 		              'email'    => 'required|email',
 		              'password' => 'required|min:6',
 	         );
-    $validator = \Validator::make($data, $rules);
+    $validator = Validator::make($data, $rules);
     if ($validator->fails()){
       
-      return \Response::json(array(
+      return Response::json(array(
         'success' => false,
         'errors' => $validator->getMessageBag()->toArray()
         ), 200);
     }
     else {
          $userData = array(
-		                        'email'    => \Input::get('email'),
-		                        'password' => \Input::get('password')
+		                        'email'    => Input::get('email'),
+		                        'password' => Input::get('password')
 		     );
-      $rememberMe = empty(\Input::get('remember'))?false:true;
+      $rememberMe = empty(Input::get('remember'))?false:true;
       if (Auth::attempt($userData,$rememberMe)) {
-        return \Response::json(['success' => true,"next" => $intendedURL], 200);
+        return Response::json(['success' => true,"next" => $intendedURL], 200);
        }
 
       else
-         return \Response::json(['fail' => true], 200);
+         return Response::json(['fail' => true], 200);
       }
   }
 
@@ -55,7 +60,7 @@ class AuthController extends Controller {
 
   public function signup() {
     // Getting all post data
-    $data = \Input::all();
+    $data = Input::all();
     // Applying validation rules.
     $rules = array(
             'email'         => 'required|email',
@@ -64,10 +69,10 @@ class AuthController extends Controller {
             'cpassword'     => 'required|min:6'
        );
 
-    $validator = \Validator::make($data, $rules);
+    $validator = Validator::make($data, $rules);
     if ($validator->fails()){
       
-      return \Response::json(array(
+      return Response::json(array(
         'success' => false,
         'errors' => $validator->getMessageBag()->toArray()
         ), 200);
@@ -75,20 +80,20 @@ class AuthController extends Controller {
     else {
       $verificationToken =  str_random(60);
       $userData = array(
-                          'emailId'   => \Input::get('email'),
-                          'loginPass' => \Input::get('password'),
-                          'contactNo' => \Input::get('phone-number'),
-                          'name'      => \Input::get('name'),
+                          'emailId'   => Input::get('email'),
+                          'loginPass' => Input::get('password'),
+                          'contactNo' => Input::get('phone-number'),
+                          'name'      => Input::get('name'),
                           'verificationToken' => $verificationToken
       );
      
        $registerController = new RegisterController;
        if ($registerController->store($userData)){
-        \Event::fire(new UserVerification($userData['emailId'], $userData['name'],$userData['verificationToken']));
-        return \Response::json(['success' => true], 200);
+        Event::fire(new UserVerification($userData['emailId'], $userData['name'],$userData['verificationToken']));
+        return Response::json(['success' => true], 200);
        }
       else
-         return \Response::json(['fail' => true], 200);
+         return Response::json(['fail' => true], 200);
 
     }
   }
@@ -96,22 +101,22 @@ class AuthController extends Controller {
 
 
   public function facebook_redirect() {
-    return \Socialize::with('facebook')->redirect();
+    return Socialize::with('facebook')->redirect();
   }
 
 
 
   public function google_redirect() {
-    return \Socialize::with('google')->redirect();
+    return Socialize::with('google')->redirect();
   }
 
   
  
   public function facebook() {
 
-    $error = \Input::get("error");
+    $error = Input::get("error");
     if(empty($error)){
-         $user   = \Socialize::with('facebook')->user();
+         $user   = Socialize::with('facebook')->user();
          list($responseStatus,$errorIfAny) = $this->createOrloginUser($user,"facebook");
 
          if($responseStatus == true )
@@ -132,9 +137,9 @@ class AuthController extends Controller {
   
   public function google() {
 
-    $error = \Input::get("error");
+    $error = Input::get("error");
     if(empty($error)){
-         $user   = \Socialize::with('google')->user();
+         $user   = Socialize::with('google')->user();
          list($responseStatus,$errorIfAny) = $this->createOrloginUser($user,"google");
          if($responseStatus == true )
             return self::handleSocialPostRedirect();
@@ -216,12 +221,12 @@ class AuthController extends Controller {
 
    public function sendPasswordResetToken(){
 
-      $emailId = \Input::get('email');
+      $emailId = Input::get('email');
      if(!empty($emailId)){
          $resetToken   = str_random(60);
          $userProvider = new CustomUserProvider();
          if($userProvider->updatePasswordResetToken($emailId,$resetToken)){
-                     \Event::fire(new PasswordReset($emailId, $resetToken));
+                     Event::fire(new PasswordReset($emailId, $resetToken));
                      return redirect('/forgotPassword')->with('status',"A password reset link has been sent to ".$emailId." .Please check ");
          }
          else{
@@ -244,20 +249,20 @@ class AuthController extends Controller {
    }
   public function changePassword(){
 
-    $data = \Input::all();
+    $data = Input::all();
     // Applying validation rules.
     $rules = array(
             'password'      => 'required|min:6|same:cpassword',
             'cpassword'     => 'required|min:6'
        );
-     $code     = \Input::get('code');
-     $password = \Input::get('password');
+     $code     = Input::get('code');
+     $password = Input::get('password');
 
      if(empty($code)){
         return redirect('/')->with("error_message","Something went wrong .Try again.");
      }
 
-    $validator = \Validator::make($data, $rules);
+    $validator = Validator::make($data, $rules);
     if ($validator->fails()){
        return redirect('/passwordReset/'.$code)->withErrors($validator->getMessageBag()->toArray());
     }
