@@ -126,8 +126,7 @@ module.exports = function(grunt) {
                 '<%= config.buildJsDir %>/vendors.min.js':  [ '<%= config.jsDir %>/vendors/jquery-2.1.3.min.js',
                                                           '<%= config.jsDir %>/vendors/bootstrap.min.js',
                                                           '<%= config.jsDir %>/vendors/bootbox.min.js',
-                                                          '<%= config.jsDir %>/vendors/bootstrap-datepicker.min.js',
-                                                          '<%= config.jsDir %>/vendors/jquery.html5form.min.js'
+                                                          '<%= config.jsDir %>/vendors/bootstrap-datepicker.min.js'
                                                         ],
                 '<%= config.buildJsDir %>/autosuggest.js':  ['<%= config.jsDir %>/vendors/awesomplete.min.js','<%= config.jsDir %>/modules/AutoSuggest.js']
             }
