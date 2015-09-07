@@ -142,7 +142,6 @@ $(document).ready(function() {
                   startDate: today
             });
    }
-   
-
+  
 
 }); //DOM Ends

@@ -22,7 +22,7 @@ Oven.config = {
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '52.26.80.25',
+    HostName : '52.88.156.73',
     userName :'ubuntu'
 };
 
@@ -126,7 +126,8 @@ module.exports = function(grunt) {
                 '<%= config.buildJsDir %>/vendors.min.js':  [ '<%= config.jsDir %>/vendors/jquery-2.1.3.min.js',
                                                           '<%= config.jsDir %>/vendors/bootstrap.min.js',
                                                           '<%= config.jsDir %>/vendors/bootbox.min.js',
-                                                          '<%= config.jsDir %>/vendors/bootstrap-datepicker.min.js'
+                                                          '<%= config.jsDir %>/vendors/bootstrap-datepicker.min.js',
+                                                          '<%= config.jsDir %>/vendors/sticky.min.js'
                                                         ],
                 '<%= config.buildJsDir %>/autosuggest.js':  ['<%= config.jsDir %>/vendors/awesomplete.min.js','<%= config.jsDir %>/modules/AutoSuggest.js']
             }
