@@ -362,7 +362,7 @@ var Cart = {
             $(this).click(function(){
                 var $href = $(this).attr('href');
                 var $anchor = $($href).offset();
-                $('body').animate({ scrollTop: $anchor.top - 40 });
+                $('body').animate({ scrollTop: $anchor.top });
                 return false;
             });
         });
