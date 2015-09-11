@@ -53,24 +53,24 @@
                  <div class="floatleft tab-content" id="res-menu-item-container">
 		 	      		<div class="tab-pane active each-menu-category-wrap" id="veg">
 		 	      		  <div class="menu-category">Veg</div>
-		 	      		    <div class="each-category-menu-item"><span class="item-name" data-product-id="1" data-product-title="Veg Thali" data-product-price="160">Veg Thali</span><span class="item-price">Rs 160</span> <div class="add-to-cart-label">add to cart</div></div>
-		 	      		   <div class="each-category-menu-item"><span class="item-name" data-product-id="2" data-product-title="Chole Bhature" data-product-price="200">Chole Bhature</span><span class="item-price">Rs 200</span><div class="add-to-cart-label">add to cart</div></div>
+		 	      		    <div class="each-category-menu-item"><span class="item-name" data-product-id="1" data-product-title="Veg Thali" data-product-price="160">Veg Thali</span><span class="item-price">Rs 160</span></div>
+		 	      		   <div class="each-category-menu-item"><span class="item-name" data-product-id="2" data-product-title="Chole Bhature" data-product-price="200">Chole Bhature</span><span class="item-price">Rs 200</span></div>
 		 	      		</div> 
 
 		 	      		<div class="tab-pane active each-menu-category-wrap" id="nonveg">
 		 	      		  <div class="menu-category">Non - Veg</div>
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="3" data-product-title="Non -Veg Thali" data-product-price="160">Non - Veg Thali</span><span class="item-price">Rs 240</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="4" data-product-title="Chicken Changezi" data-product-price="160">Chicken Changezi</span><span class="item-price">Rs 200</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="5" data-product-title="Butter Chicken" data-product-price="160">Butter Chicken</span><span class="item-price">Rs 180</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="6" data-product-title="Chicken Afgani" data-product-price="160">Chicken Afgani</span><span class="item-price">Rs 280</span><div class="add-to-cart-label">add to cart</div></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="3" data-product-title="Non -Veg Thali" data-product-price="160">Non - Veg Thali</span><span class="item-price">Rs 240</span></div>
+		 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="4" data-product-title="Chicken Changezi" data-product-price="160">Chicken Changezi</span><span class="item-price">Rs 200</span></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="5" data-product-title="Butter Chicken" data-product-price="160">Butter Chicken</span><span class="item-price">Rs 180</span></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="6" data-product-title="Chicken Afgani" data-product-price="160">Chicken Afgani</span><span class="item-price">Rs 280</span></div>
 		 	      		</div>  
 
 
 		               <div class="tab-pane active each-menu-category-wrap" id="beverages">
 		 	      		  <div class="menu-category"  >Beverages</div>
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="7" data-product-title="Cold Drink" data-product-price="160">Cold Drink</span><span class="item-price">Rs 20</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="8" data-product-title="Lemonade" data-product-price="160">Lemonade</span><span class="item-price">Rs 30</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="9" data-product-title="Apple Juice" data-product-price="160">Apple Juice</span><span class="item-price">Rs 30</span><div class="add-to-cart-label">add to cart</div></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="7" data-product-title="Cold Drink" data-product-price="160">Cold Drink</span><span class="item-price">Rs 20</span></div>
+		 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="8" data-product-title="Lemonade" data-product-price="160">Lemonade</span><span class="item-price">Rs 30</span></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="9" data-product-title="Apple Juice" data-product-price="160">Apple Juice</span><span class="item-price">Rs 30</span></div>
 		 	      		</div>  
  	         	</div>
  	         </div>
@@ -84,8 +84,8 @@
  	         		 	  	</h4>
  	         		   </div>
  	         		   <div class="panel-collapse collapse in each-menu-category-wrap" id="veg1">
-		 	      		    <div class="each-category-menu-item"><span class="item-name" data-product-id="1" data-product-title="Veg Thali" data-product-price="160">Veg Thali</span><span class="item-price">Rs 160</span> <div class="add-to-cart-label">add to cart</div></div>
-		 	      		   <div class="each-category-menu-item"><span class="item-name" data-product-id="2" data-product-title="Chole Bhature" data-product-price="200">Chole Bhature</span><span class="item-price">Rs 200</span><div class="add-to-cart-label">add to cart</div></div>
+		 	      		    <div class="each-category-menu-item"><span class="item-name" data-product-id="1" data-product-title="Veg Thali" data-product-price="160">Veg Thali</span><span class="item-price">Rs 160</span></div>
+		 	      		   <div class="each-category-menu-item"><span class="item-name" data-product-id="2" data-product-title="Chole Bhature" data-product-price="200">Chole Bhature</span><span class="item-price">Rs 200</span></div>
 		 	      		</div> 
  	           </div>
  	            <div class="panel panel-default">
@@ -95,10 +95,10 @@
  	         		 	  	</h4>
  	         		   </div>
  	         		   		 	      		<div class="panel-collapse collapse each-menu-category-wrap" id="nonveg1">
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="3" data-product-title="Non -Veg Thali" data-product-price="160">Non - Veg Thali</span><span class="item-price">Rs 240</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="4" data-product-title="Chicken Changezi" data-product-price="160">Chicken Changezi</span><span class="item-price">Rs 200</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="5" data-product-title="Butter Chicken" data-product-price="160">Butter Chicken</span><span class="item-price">Rs 180</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="6" data-product-title="Chicken Afgani" data-product-price="160">Chicken Afgani</span><span class="item-price">Rs 280</span><div class="add-to-cart-label">add to cart</div></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="3" data-product-title="Non -Veg Thali" data-product-price="160">Non - Veg Thali</span><span class="item-price">Rs 240</span></div>
+		 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="4" data-product-title="Chicken Changezi" data-product-price="160">Chicken Changezi</span><span class="item-price">Rs 200</span></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="5" data-product-title="Butter Chicken" data-product-price="160">Butter Chicken</span><span class="item-price">Rs 180</span></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="6" data-product-title="Chicken Afgani" data-product-price="160">Chicken Afgani</span><span class="item-price">Rs 280</span></div>
 		 	      		</div>  
  	           </div>	
 
@@ -110,9 +110,9 @@
  	         		 	  	</h4>
  	         		   </div>
  	         		   	<div class="panel-collapse collapse each-menu-category-wrap" id="beverages1">
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="7" data-product-title="Cold Drink" data-product-price="160">Cold Drink</span><span class="item-price">Rs 20</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="8" data-product-title="Lemonade" data-product-price="160">Lemonade</span><span class="item-price">Rs 30</span><div class="add-to-cart-label">add to cart</div></div>
-		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="9" data-product-title="Apple Juice" data-product-price="160">Apple Juice</span><span class="item-price">Rs 30</span><div class="add-to-cart-label">add to cart</div></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="7" data-product-title="Cold Drink" data-product-price="160">Cold Drink</span><span class="item-price">Rs 20</span></div>
+		 	      		  <div class="each-category-menu-item "><span class="item-name" data-product-id="8" data-product-title="Lemonade" data-product-price="160">Lemonade</span><span class="item-price">Rs 30</span></div>
+		 	      		  <div class="each-category-menu-item"><span class="item-name" data-product-id="9" data-product-title="Apple Juice" data-product-price="160">Apple Juice</span><span class="item-price">Rs 30</span></div>
 		 	      		</div>  
  	           </div>			   
  	        </div> 		

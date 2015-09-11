@@ -49,6 +49,8 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-jshint');
    grunt.loadNpmTasks('grunt-svgmin');
    grunt.loadNpmTasks('grunt-contrib-clean');
+   grunt.loadNpmTasks('grunt-autoprefixer');
+   grunt.loadNpmTasks('grunt-contrib-watch');
   
 
    grunt.initConfig({
@@ -187,6 +189,17 @@ module.exports = function(grunt) {
                   }]
               }
       },
+    autoprefixer: {
+            options: {
+                browsers: ['last 2 versions', 'Firefox > 15', 'ie 8', 'ie 9'],
+                cascade: false
+            },
+            dist:{
+              files:{
+                '<%= config.buildCssDir %>/app.css':'<%= config.buildCssDir %>/app.css'
+              }
+             }
+    },
 
     sshconfig:{
        
@@ -278,9 +291,10 @@ module.exports = function(grunt) {
     watch: {
       styles: {
         files: ['<%= config.cssLessDir %>**/*.less'], // which files to watch
-        tasks: ['less'],
+        tasks: ['less:production','autoprefixer','cssmin'],
         options: {
-          nospawn: true
+                spawn: true,
+                debounceDelay: 1000
         }
       }
     }
@@ -302,9 +316,9 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('default' ,'localbuild');
-    grunt.registerTask('localbuild', ['phplint' ,'jsvalidate','jshint' ,'clean','less:production','cssmin','uglify','svgmin', 'shell:readyToShip']);
+    grunt.registerTask('localbuild', ['phplint' ,'jsvalidate','jshint' ,'clean','less:production','autoprefixer','cssmin','uglify','svgmin', 'shell:readyToShip','watch']);
     grunt.registerTask('deploy',['lock','sshexec:deploy','unlock'])
-    grunt.registerTask('build', ['lock','phplint' ,'jsvalidate','jshint','clean','less:production','cssmin','uglify','hashres','imagemin','svgmin', 'shell:readyToShip','unlock']);
+    grunt.registerTask('build', ['lock','phplint' ,'jsvalidate','jshint','clean','less:production','autoprefixer','cssmin','uglify','hashres','imagemin','svgmin', 'shell:readyToShip','unlock']);
     grunt.registerTask('shipit',['lock','sshexec:makeBuildLive','unlock']);
-
+  
 };
