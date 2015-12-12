@@ -22,7 +22,7 @@ Oven.config = {
     websiteLocationOnServer :'/var/www/PantryCarWebsite/',
     websiteLocationOnServerTemp :'/var/www/PantryCarWebsiteTemp/',
     websiteLocationOnServerBackup :'/var/www/PantryCarWebsiteBackup/',
-    HostName : '52.88.156.73',
+    HostName : '52.26.42.119',
     userName :'ubuntu'
 };
 
@@ -36,22 +36,10 @@ module.exports = function(grunt) {
   var _privateKey = grunt.file.exists(Oven.config.privateKeyPath) ? grunt.file.read(Oven.config.privateKeyPath) : '';
 
   // Load all modules here
-
-   grunt.loadNpmTasks('grunt-ssh');
-   grunt.loadNpmTasks('grunt-contrib-cssmin');
-   grunt.loadNpmTasks('grunt-contrib-less');
-   grunt.loadNpmTasks('grunt-shell');
-   grunt.loadNpmTasks('grunt-contrib-uglify');
-   grunt.loadNpmTasks('grunt-hashres');
-   grunt.loadNpmTasks('grunt-contrib-imagemin');
-   grunt.loadNpmTasks('grunt-phplint');
-   grunt.loadNpmTasks('grunt-jsvalidate');
-   grunt.loadNpmTasks('grunt-contrib-jshint');
-   grunt.loadNpmTasks('grunt-svgmin');
-   grunt.loadNpmTasks('grunt-contrib-clean');
-   grunt.loadNpmTasks('grunt-autoprefixer');
-   grunt.loadNpmTasks('grunt-contrib-watch');
-  
+  // Automatically load required grunt tasks
+    require('jit-grunt')(grunt, {
+        useminPrepare: 'grunt-usemin'
+    });
 
    grunt.initConfig({
 
@@ -113,7 +101,7 @@ module.exports = function(grunt) {
                   compress: {
                         evaluate: false
                     }
-        }, 
+        },
         build: {
             files: {
                 '<%= config.buildJsDir %>/bundle.min.js': [ '<%= config.jsDir %>/modules/auth/Auth.js',
@@ -202,7 +190,7 @@ module.exports = function(grunt) {
     },
 
     sshconfig:{
-       
+
         prodServer: {
             host: "<%= config.HostName %>",
             username: "<%= config.userName %>",
@@ -233,7 +221,7 @@ module.exports = function(grunt) {
        }
    },
 
-   sshexec: {    
+   sshexec: {
          deploy: {
                 command: [
                     'sudo cp --preserve=mode,ownership,timestamps -r <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerTemp %>',
@@ -246,7 +234,7 @@ module.exports = function(grunt) {
                     'sudo composer install',
                     'sudo npm install',
                     'grunt unlock;sudo grunt build'
-                ].join(' && '),    
+                ].join(' && '),
             options:{
                 config: 'prodServer'
             }
@@ -256,12 +244,12 @@ module.exports = function(grunt) {
                 'sudo mv <%= config.websiteLocationOnServer %> <%= config.websiteLocationOnServerBackup %>',
                 'sudo mv <%= config.websiteLocationOnServerTemp %> <%= config.websiteLocationOnServer %>',
                 'sudo rm -rf <%= config.websiteLocationOnServerBackup %> || mv <%= config.websiteLocationOnServerBackup %> <%= config.websiteLocationOnServer %>'
-                ].join(' && '),    
+                ].join(' && '),
             options:{
                 config: 'prodServer'
             }
           },
-     } , 
+     } ,
 
      hashres: {
         options: {
@@ -271,11 +259,11 @@ module.exports = function(grunt) {
         },
 
         stage: {
-            
+
             options: {
                 // You can override encoding, fileNameFormat or renameFiles
             },
-            
+
             src: [
                  '<%= config.buildCssDir %>/app.min.css' ,
                  '<%= config.buildJsDir %>/bundle.min.js',
@@ -286,7 +274,7 @@ module.exports = function(grunt) {
             ],
             dest: ['resources/views/footer.blade.php','resources/views/meta.blade.php','resources/views/restaurant-page.blade.php','resources/views/user-cart.blade.php','resources/views/home.blade.php']
         }
-   },     
+   },
 
     watch: {
       styles: {
@@ -320,5 +308,5 @@ module.exports = function(grunt) {
     grunt.registerTask('deploy',['lock','sshexec:deploy','unlock'])
     grunt.registerTask('build', ['lock','phplint' ,'jsvalidate','jshint','clean','less:production','autoprefixer','cssmin','uglify','hashres','imagemin','svgmin', 'shell:readyToShip','unlock']);
     grunt.registerTask('shipit',['lock','sshexec:makeBuildLive','unlock']);
-  
+
 };
